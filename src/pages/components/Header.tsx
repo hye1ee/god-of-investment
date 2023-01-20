@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { APP_COLOR } from "../../utils/constants";
+import { APP_COLOR, height_size } from "../../utils/style";
 import { MediumText } from "./Text";
 import Button from "./Button";
 
@@ -40,7 +40,7 @@ export default () => {
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  height: 7.41vh;
+  height: ${height_size(80)};
 
   background-color: ${APP_COLOR.white};
   border-bottom: 1px solid ${APP_COLOR["gray-light"]};

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { width_size, height_size } from "../../utils/size";
-import { APP_COLOR } from "../../utils/constants";
+import { width_size, height_size, APP_COLOR } from "../../utils/style";
 
 interface ButtonProps {
   width?: number;

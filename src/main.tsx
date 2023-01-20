@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./index.css";
 import Header from "./pages/components/Header";
+import BodyLayout from "./pages/components/BodyLayout";
 import Login from "./pages/login/index";
 import Home from "./pages/home/index";
 import Detail from "./pages/detail/index";
@@ -15,15 +16,17 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <Header />
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/detail" element={<Detail />} />
-        <Route path="/issues" element={<Issues />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/simulation" element={<Simulation />} />
-        <Route path="/*" element={<Navigate replace to="/home" />} />
-      </Routes>
+      <BodyLayout>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/detail" element={<Detail />} />
+          <Route path="/issues" element={<Issues />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/simulation" element={<Simulation />} />
+          <Route path="/*" element={<Navigate replace to="/home" />} />
+        </Routes>
+      </BodyLayout>
     </BrowserRouter>
   </React.StrictMode>
 );
