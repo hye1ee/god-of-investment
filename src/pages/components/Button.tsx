@@ -42,7 +42,7 @@ const ButtonWrapper = styled.div<ButtonProps>`
       ? appColor[props.color]
       : props.transparent ?? false
       ? "none"
-      : appColor.purple};
+      : appColor.white};
   border-radius: ${(props) => (props.radius ? height_size(props.radius) : "")};
 
   cursor: pointer;

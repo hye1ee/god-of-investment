@@ -1,10 +1,21 @@
 import styled from "styled-components";
 
-import { font_size, appColor, width_size } from "../../utils/style";
+import {
+  font_size,
+  appColor,
+  width_size,
+  height_size,
+} from "../../utils/style";
 
 interface TextProps {
   size?: number;
   color?: string;
+
+  absolute?: boolean;
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
 }
 export type FontWeight = "bold" | "medium" | "regular";
 
@@ -13,6 +24,12 @@ export const BoldText = styled.div<TextProps>`
   font-weight: bold;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
+
+  ${(props) => props.absolute === true && `position: absolute;`}
+  ${(props) => props.top && `top: ${height_size(props.top)}`}
+  ${(props) => props.bottom && `bottom: ${height_size(props.bottom)}`}
+  ${(props) => props.left && `left: ${width_size(props.left)}`}
+  ${(props) => props.right && `right: ${width_size(props.right)}`}
 `;
 
 export const MediumText = styled.div<TextProps>`
@@ -20,6 +37,12 @@ export const MediumText = styled.div<TextProps>`
   font-weight: medium;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
+
+  ${(props) => props.absolute === true && `position: absolute;`}
+  ${(props) => props.top && `top: ${height_size(props.top)}`}
+  ${(props) => props.bottom && `bottom: ${height_size(props.bottom)}`}
+  ${(props) => props.left && `left: ${width_size(props.left)}`}
+  ${(props) => props.right && `right: ${width_size(props.right)}`}
 `;
 
 export const RegularText = styled.div<TextProps>`
@@ -27,6 +50,12 @@ export const RegularText = styled.div<TextProps>`
   font-weight: regular;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
+
+  ${(props) => props.absolute === true && `position: absolute;`}
+  ${(props) => props.top && `top: ${height_size(props.top)}`}
+  ${(props) => props.bottom && `bottom: ${height_size(props.bottom)}`}
+  ${(props) => props.left && `left: ${width_size(props.left)}`}
+  ${(props) => props.right && `right: ${width_size(props.right)}`}
 `;
 
 interface MixedTextProps {
