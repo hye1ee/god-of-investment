@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-import { width_size, height_size, APP_COLOR } from "../../utils/style";
+import { width_size, height_size, appColor } from "../../utils/style";
+import { BoldText, FontWeight, MixedText } from "./Text";
 
 interface ButtonProps {
   width?: number;
@@ -9,11 +10,22 @@ interface ButtonProps {
   color?: string;
   onClick?: () => void;
   transparent?: boolean;
-  children: JSX.Element;
+  textOption: {
+    text: string;
+    weight: FontWeight;
+    color: string;
+    size: number;
+  };
 }
 
 const Button = (props: ButtonProps) => {
-  return <ButtonWrapper {...props}>{props.children}</ButtonWrapper>;
+  const { text, weight, color, size } = props.textOption;
+
+  return (
+    <ButtonWrapper {...props}>
+      <MixedText text={[text]} weight={[weight]} color={color} size={size} />
+    </ButtonWrapper>
+  );
 };
 
 const ButtonWrapper = styled.div<ButtonProps>`
@@ -27,10 +39,10 @@ const ButtonWrapper = styled.div<ButtonProps>`
 
   background-color: ${(props) =>
     props.color
-      ? APP_COLOR[props.color]
+      ? appColor[props.color]
       : props.transparent ?? false
       ? "none"
-      : APP_COLOR["purple"]};
+      : appColor.purple};
   border-radius: ${(props) => (props.radius ? height_size(props.radius) : "")};
 
   cursor: pointer;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { APP_COLOR, height_size, width_size } from "../../../../utils/style";
+import { appColor, height_size, width_size } from "../../../../utils/style";
 
 const FilterHeader = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ const FilterHeader = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  background-color: ${APP_COLOR["purple-bright"]};
-  border: 1px solid ${APP_COLOR["gray-light"]};
+  background-color: ${appColor.purpleBright};
+  border: 1px solid ${appColor.grayLight};
 `;
 export default FilterHeader;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Button from "../../../components/Button";
 import { RegularText } from "../../../components/Text";
-import { APP_COLOR, height_size } from "../../../../utils/style";
+import { appColor, height_size } from "../../../../utils/style";
 
 export default () => {
   const [open, setOpen] = useState(false);
@@ -12,9 +12,14 @@ export default () => {
     <FilterWrapper>
       {open && <FilterBodyWrapper />}
       <FilterButtonWrapper onClick={() => setOpen((val) => !val)}>
-        <Button>
-          <RegularText color="gray">상세 검색</RegularText>
-        </Button>
+        <Button
+          textOption={{
+            text: "상세 검색",
+            color: "gray",
+            size: 14,
+            weight: "regular",
+          }}
+        />
       </FilterButtonWrapper>
     </FilterWrapper>
   );
@@ -40,7 +45,7 @@ const FilterBodyWrapper = styled.div`
   align-items: stretch;
   justify-content: flex-start;
 
-  background-color: ${APP_COLOR["gray"]};
+  background-color: ${appColor.gray};
 `;
 
 const FilterButtonWrapper = styled.div`
@@ -52,8 +57,8 @@ const FilterButtonWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  background-color: ${APP_COLOR["white"]};
-  border: 1px solid ${APP_COLOR["gray-light"]};
+  background-color: ${appColor.white};
+  border: 1px solid ${appColor.grayLight};
 
   cursor: pointer;
 `;
