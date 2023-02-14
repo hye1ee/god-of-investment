@@ -12,20 +12,25 @@ import Issues from "./pages/issues/index";
 import Search from "./pages/search/index";
 import Simulation from "./pages/simulation/index";
 
+import { Provider } from "react-redux";
+import { store } from "./states/store";
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <Header />
       <BodyLayout>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/detail" element={<Detail />} />
-          <Route path="/issues" element={<Issues />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/simulation" element={<Simulation />} />
-          <Route path="/*" element={<Navigate replace to="/home" />} />
-        </Routes>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/detail" element={<Detail />} />
+            <Route path="/issues" element={<Issues />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/simulation" element={<Simulation />} />
+            <Route path="/*" element={<Navigate replace to="/home" />} />
+          </Routes>
+        </Provider>
       </BodyLayout>
     </BrowserRouter>
   </React.StrictMode>

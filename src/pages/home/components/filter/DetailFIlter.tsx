@@ -10,8 +10,13 @@ import SelectButton from "../../../components/SelectButton";
 import UpArrow from "../../../../assets/upArrow.svg";
 import DownArrow from "../../../../assets/downArrow.svg";
 
+type ProjectType = "재개발" | "재건축";
+
 interface DetailFilterState {
-  type: "재개발" | "재건축";
+  type: {
+    redevelop: boolean;
+    reconstruct: boolean;
+  };
   priceAverage: {
     standard: "매물 가격" | "국토교통부 실거래가";
     min: number;
@@ -23,6 +28,23 @@ interface DetailFilterState {
     max: number;
   };
 }
+
+const defaultFilter: DetailFilterState = {
+  type: {
+    redevelop: true,
+    reconstruct: true,
+  },
+  priceAverage: {
+    standard: "매물 가격",
+    min: Number.NEGATIVE_INFINITY,
+    max: Number.POSITIVE_INFINITY,
+  },
+  priceEstimate: {
+    standard: "매물 가격",
+    min: Number.NEGATIVE_INFINITY,
+    max: Number.POSITIVE_INFINITY,
+  },
+};
 
 export default () => {
   const [open, setOpen] = useState(false);
@@ -61,6 +83,18 @@ export default () => {
 };
 
 const FilterBody = () => {
+  const [filter, setFilter] = useState({ ...defaultFilter });
+
+  const onType = (key: "redevelop" | "reconstruct") => () => {
+    console.log(key);
+    setFilter((prevFilter) => {
+      const newFilter = { ...prevFilter };
+      newFilter.type[key] = !newFilter.type[key];
+
+      return newFilter;
+    });
+  };
+
   return (
     <Wrapper
       direction="column"
@@ -69,8 +103,36 @@ const FilterBody = () => {
       gap={15}
       center={true}
     >
-      <Wrapper direction="column" width={327} height={54} gap={7}>
+      <Wrapper direction="column" width={327} height={54} gap={4}>
         <RegularText size={14}>{"사업 유형"}</RegularText>
+        <Wrapper direction="row" gap={13}>
+          <Button
+            textOption={{
+              text: "재개발 사업",
+              weight: "regular",
+              size: 14,
+              color: filter.type.redevelop ? "purple" : "gray",
+            }}
+            width={92}
+            height={30}
+            radius={15}
+            color={filter.type.redevelop ? "purpleLight" : "grayLight"}
+            onClick={onType("redevelop")}
+          />
+          <Button
+            textOption={{
+              text: "재건축 사업",
+              weight: "regular",
+              size: 14,
+              color: filter.type.reconstruct ? "purple" : "gray",
+            }}
+            width={92}
+            height={30}
+            radius={15}
+            color={filter.type.reconstruct ? "purpleLight" : "grayLight"}
+            onClick={onType("reconstruct")}
+          />
+        </Wrapper>
       </Wrapper>
       <Wrapper direction="column" width={327} height={208} gap={12}>
         <RegularText size={14}>{"지역 내 아파트 평균 시세"}</RegularText>

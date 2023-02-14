@@ -1,22 +1,23 @@
-import { useState } from "react";
 import { Wrapper } from "../../../components/Wrapper";
 import Button from "../../../components/Button";
 import { BorderColumn, BorderRow } from "../../../components/Border";
 import { locationNames } from "../../../../utils/constants";
 import { RegularText } from "../../../components/Text";
 
-export default () => {
-  const [location, setLocation] = useState(["서울시", "종로구"]);
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../states/store";
+import { updateLocation } from "../../../../states/searchSlice";
 
+export default () => {
   const onLocationFilter = () => {
     console.log("onLocationFilter button clicked");
   };
 
   return (
     <Wrapper direction="column" width="full">
-      <LocationTitle location={location} />
+      <LocationTitle />
       <BorderRow width={1} color="grayLight" />
-      <LocationSelector location={location} setLocation={setLocation} />
+      <LocationSelector />
       <BorderRow width={1} color="grayLight" />
 
       <Wrapper direction="row" width="full" height={75} center={true}>
@@ -39,7 +40,9 @@ export default () => {
   );
 };
 
-const LocationTitle = ({ location }: { location: string[] }) => {
+const LocationTitle = () => {
+  const location = useSelector((state: RootState) => state.search.location);
+
   return (
     <Wrapper direction="row" width="full" height={59}>
       <Wrapper
@@ -50,7 +53,7 @@ const LocationTitle = ({ location }: { location: string[] }) => {
         color="purpleBright"
       >
         <RegularText size={14} absolute={true} left={24}>
-          {location[0]}
+          {location.city}
         </RegularText>
       </Wrapper>
       <Wrapper
@@ -61,20 +64,17 @@ const LocationTitle = ({ location }: { location: string[] }) => {
         color="purpleBright"
       >
         <RegularText size={14} absolute={true} left={24}>
-          {location[1]}
+          {location.district}
         </RegularText>
       </Wrapper>
     </Wrapper>
   );
 };
 
-const LocationSelector = ({
-  location,
-  setLocation,
-}: {
-  location: string[];
-  setLocation: React.Dispatch<React.SetStateAction<string[]>>;
-}) => {
+const LocationSelector = () => {
+  const location = useSelector((state: RootState) => state.search.location);
+  const dispatch = useDispatch();
+
   return (
     <Wrapper direction="row" width="full" height={288}>
       <Wrapper direction="column" width={94.25} height="full">
@@ -82,9 +82,9 @@ const LocationSelector = ({
           .slice(0, 9)
           .map((name) => (
             <LocationName
-              active={name === location[0]}
+              active={name === location.city}
               name={name}
-              onClick={() => setLocation([name, locationNames[name][0]])}
+              onClick={() => dispatch(updateLocation({ key: "city", name }))}
             />
           ))}
       </Wrapper>
@@ -94,29 +94,32 @@ const LocationSelector = ({
           .slice(9)
           .map((name) => (
             <LocationName
-              active={name === location[0]}
+              active={name === location.city}
               name={name}
-              onClick={() => setLocation([name, locationNames[name][0]])}
+              onClick={() => {
+                console.log(updateLocation({ key: "city", name }));
+                dispatch(updateLocation({ key: "city", name }));
+              }}
             />
           ))}
       </Wrapper>
       <BorderColumn width={1} color="grayLight" />
       <Wrapper direction="column" width={94.25} height="full">
-        {locationNames[location[0]].slice(0, 9).map((name) => (
+        {locationNames[location.city].slice(0, 9).map((name) => (
           <LocationName
-            active={name === location[1]}
+            active={name === location.district}
             name={name}
-            onClick={() => setLocation((location) => [location[0], name])}
+            onClick={() => dispatch(updateLocation({ key: "district", name }))}
           />
         ))}
       </Wrapper>
       <BorderColumn width={1} color="grayLight" />
       <Wrapper direction="column" width={94.25} height="full">
-        {locationNames[location[0]].slice(9).map((name) => (
+        {locationNames[location.city].slice(9).map((name) => (
           <LocationName
-            active={name === location[1]}
+            active={name === location.district}
             name={name}
-            onClick={() => setLocation((location) => [location[0], name])}
+            onClick={() => dispatch(updateLocation({ key: "district", name }))}
           />
         ))}
       </Wrapper>
