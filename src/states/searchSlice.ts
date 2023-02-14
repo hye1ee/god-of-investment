@@ -16,10 +16,16 @@ const search = createSlice({
       if (key === 'city') { // if city changes, set default district
         state.location.district = locationNames[name][0];
       }
+    },
+    updateStep: (state, action: { type: string, payload: { index: number } }) => {
+      const { index } = action.payload;
+      state.step[index] = !state.step[index];
+    },
+    initStep: (state, action) => {
+      state.step = new Array(10).fill(false)
     }
-
   }
 })
 
-export const { updateLocation } = search.actions;
+export const { updateLocation, updateStep, initStep } = search.actions;
 export default search.reducer;

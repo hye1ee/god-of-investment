@@ -6,17 +6,12 @@ import { BorderRow } from "../../../components/Border";
 import { stepNames } from "../../../../utils/constants";
 import Button from "../../../components/Button";
 import ReturnIcon from "../../../../assets/return.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { updateStep, initStep } from "../../../../states/searchSlice";
+import { RootState } from "../../../../states/store";
 
 export default () => {
-  const [step, setStep] = useState(new Array(10).fill(false) as boolean[]);
-
-  const onStepInit = () => {
-    setStep(new Array(10).fill(false) as boolean[]);
-  };
-
-  const onStepFilter = () => {
-    console.log("stepFilter clicked");
-  };
+  const dispatch = useDispatch();
 
   return (
     <Wrapper direction="column" width="full">
@@ -44,37 +39,32 @@ export default () => {
             height={24}
             borderOption={{ width: 1, color: "grayLight" }}
             radius={12}
-            onClick={onStepInit}
+            onClick={() => dispatch(initStep({}))}
           />
         </AbsoluteWrapper>
       </Wrapper>
       <BorderRow width={1} color="grayLight" />
       <Wrapper direction="row" width="full" height={180}>
-        <FilterBody step={step} setStep={setStep} />
+        <FilterBody />
       </Wrapper>
     </Wrapper>
   );
 };
 
-const FilterBody = ({
-  step,
-  setStep,
-}: {
-  step: boolean[];
-  setStep: React.Dispatch<React.SetStateAction<boolean[]>>;
-}) => {
-  const onCheck = (idx: number) => (val: boolean) => {
-    const newStep = [...step];
-    newStep[idx] = val;
-    setStep(newStep);
-  };
+const FilterBody = () => {
+  const step = useSelector((state: RootState) => state.search.step);
+  const dispatch = useDispatch();
 
   return (
     <Wrapper direction="row" width="full" height="full" center={true} gap={40}>
       <Wrapper direction="column" center={true} gap={13}>
         {step.slice(0, 5).map((value, idx) => (
           <Wrapper direction="row" center={true} key={idx} gap={12}>
-            <CheckButton check={value} onCheck={onCheck(idx)} size={17} />
+            <CheckButton
+              check={value}
+              onCheck={() => dispatch(updateStep({ index: idx }))}
+              size={17}
+            />
             <Wrapper direction="row" width={105}>
               <RegularText size={13} color="gray">
                 {stepNames[idx]}
@@ -86,7 +76,11 @@ const FilterBody = ({
       <Wrapper direction="column" center={true} gap={13}>
         {step.slice(5).map((value, idx) => (
           <Wrapper direction="row" center={true} key={idx} gap={12}>
-            <CheckButton check={value} onCheck={onCheck(idx + 5)} size={17} />
+            <CheckButton
+              check={value}
+              onCheck={() => dispatch(updateStep({ index: idx + 5 }))}
+              size={17}
+            />
             <Wrapper direction="row" width={105}>
               <RegularText size={13} color="gray">
                 {stepNames[idx + 5]}
