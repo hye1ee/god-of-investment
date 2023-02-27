@@ -8,7 +8,7 @@ type AppColor = {
 
 export const appColor: AppColor = {
   'white': '#FFFFFF',
-  'black': '#000000',
+  'black': '#333333',
   'purple': '#6449F3',
   'purpleLight': '#EEEBFB',
   'purpleBright': '#FAF9FF',

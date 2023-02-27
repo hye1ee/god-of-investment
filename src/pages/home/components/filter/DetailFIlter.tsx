@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-
 import Button from "../../../components/Button";
 import { ImgWrapper, Wrapper } from "../../../components/Wrapper";
-import { appColor, height_size } from "../../../../utils/style";
 import { BorderRow } from "../../../components/Border";
 import { RegularText } from "../../../components/Text";
 import SelectButton from "../../../components/SelectButton";
 import UpArrow from "../../../../assets/upArrow.svg";
 import DownArrow from "../../../../assets/downArrow.svg";
+
+import { standardNames } from "../../../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../states/store";
+import {
+  updateDetail,
+  updateDetailType,
+  updatePriceAverageStandard,
+  updatePriceEstimateStandard,
+} from "../../../../states/searchSlice";
 
 type ProjectType = "재개발" | "재건축";
 
@@ -47,12 +53,13 @@ const defaultFilter: DetailFilterState = {
 };
 
 export default () => {
-  const [open, setOpen] = useState(false);
+  const detail = useSelector((state: RootState) => state.search.detail);
+  const dispatch = useDispatch();
 
   return (
     <Wrapper direction="column" width="full">
       <Wrapper
-        onClick={() => setOpen((val) => !val)}
+        onClick={() => dispatch(updateDetail({}))}
         direction="column"
         center={true}
         width="full"
@@ -69,7 +76,7 @@ export default () => {
             }}
           />
           <ImgWrapper
-            src={open ? UpArrow : DownArrow}
+            src={detail.active ? UpArrow : DownArrow}
             width={12}
             height={8}
             direction="row"
@@ -77,24 +84,12 @@ export default () => {
         </Wrapper>
         <BorderRow width={1} color="grayLight" />
       </Wrapper>
-      {open && <FilterBody />}
+      {detail.active && <FilterBody />}
     </Wrapper>
   );
 };
 
 const FilterBody = () => {
-  const [filter, setFilter] = useState({ ...defaultFilter });
-
-  const onType = (key: "redevelop" | "reconstruct") => () => {
-    console.log(key);
-    setFilter((prevFilter) => {
-      const newFilter = { ...prevFilter };
-      newFilter.type[key] = !newFilter.type[key];
-
-      return newFilter;
-    });
-  };
-
   return (
     <Wrapper
       direction="column"
@@ -105,44 +100,128 @@ const FilterBody = () => {
     >
       <Wrapper direction="column" width={327} height={54} gap={4}>
         <RegularText size={14}>{"사업 유형"}</RegularText>
-        <Wrapper direction="row" gap={13}>
-          <Button
-            textOption={{
-              text: "재개발 사업",
-              weight: "regular",
-              size: 14,
-              color: filter.type.redevelop ? "purple" : "gray",
-            }}
-            width={92}
-            height={30}
-            radius={15}
-            color={filter.type.redevelop ? "purpleLight" : "grayLight"}
-            onClick={onType("redevelop")}
-          />
-          <Button
-            textOption={{
-              text: "재건축 사업",
-              weight: "regular",
-              size: 14,
-              color: filter.type.reconstruct ? "purple" : "gray",
-            }}
-            width={92}
-            height={30}
-            radius={15}
-            color={filter.type.reconstruct ? "purpleLight" : "grayLight"}
-            onClick={onType("reconstruct")}
-          />
-        </Wrapper>
+        <TypeSelector />
       </Wrapper>
       <Wrapper direction="column" width={327} height={208} gap={12}>
         <RegularText size={14}>{"지역 내 아파트 평균 시세"}</RegularText>
+        <PriceAverageSelector />
       </Wrapper>
       <Wrapper direction="column" width={327} height={208} gap={12}>
         <RegularText size={14}>{"공사비 예정 금액"}</RegularText>
-        <Wrapper direction="row" width="full" height={16} gap={16}>
-          <Wrapper direction="row" height="full" gap={8}></Wrapper>
-        </Wrapper>
+        <PriceEstimateSelector />
       </Wrapper>
+    </Wrapper>
+  );
+};
+
+const TypeSelector = () => {
+  const type = useSelector((state: RootState) => state.search.detail.type);
+  const dispatch = useDispatch();
+
+  return (
+    <Wrapper direction="row" gap={13}>
+      <Button
+        textOption={{
+          text: "재개발 사업",
+          weight: "regular",
+          size: 14,
+          color: type.redevelop ? "purple" : "gray",
+        }}
+        width={92}
+        height={30}
+        radius={15}
+        color={type.redevelop ? "purpleLight" : "grayLight"}
+        onClick={() => dispatch(updateDetailType({ key: "redevelop" }))}
+      />
+      <Button
+        textOption={{
+          text: "재건축 사업",
+          weight: "regular",
+          size: 14,
+          color: type.reconstruct ? "purple" : "gray",
+        }}
+        width={92}
+        height={30}
+        radius={15}
+        color={type.reconstruct ? "purpleLight" : "grayLight"}
+        onClick={() => dispatch(updateDetailType({ key: "reconstruct" }))}
+      />
+    </Wrapper>
+  );
+};
+
+const PriceAverageSelector = () => {
+  const priceAverage = useSelector(
+    (state: RootState) => state.search.detail.priceAverage
+  );
+  const dispatch = useDispatch();
+
+  return (
+    <Wrapper direction="column" gap={11}>
+      <Wrapper direction="row" gap={15}>
+        {standardNames.map((name) => (
+          <Wrapper
+            direction="row"
+            center={true}
+            gap={8}
+            onClick={() =>
+              dispatch(updatePriceAverageStandard({ value: name }))
+            }
+          >
+            <SelectButton
+              check={priceAverage.standard === name}
+              onCheck={() => {}}
+              size={16}
+            />
+            <RegularText
+              size={13}
+              color={priceAverage.standard === name ? "black" : "gray"}
+            >
+              {name}
+            </RegularText>
+          </Wrapper>
+        ))}
+      </Wrapper>
+      <Wrapper direction="row"></Wrapper>
+      <Wrapper direction="row"></Wrapper>
+    </Wrapper>
+  );
+};
+
+const PriceEstimateSelector = () => {
+  const priceAverage = useSelector(
+    (state: RootState) => state.search.detail.priceEstimate
+  );
+  const dispatch = useDispatch();
+
+  return (
+    <Wrapper direction="column" gap={11}>
+      <Wrapper direction="row" gap={15}>
+        {standardNames.map((name) => (
+          <Wrapper
+            direction="row"
+            center={true}
+            gap={8}
+            onClick={() =>
+              dispatch(updatePriceEstimateStandard({ value: name }))
+            }
+          >
+            <SelectButton
+              check={priceAverage.standard === name}
+              onCheck={() => {}}
+              size={16}
+            />
+            <RegularText
+              size={13}
+              color={priceAverage.standard === name ? "black" : "gray"}
+            >
+              {name}
+            </RegularText>
+          </Wrapper>
+        ))}
+      </Wrapper>
+      <Wrapper direction="row"></Wrapper>
+      <Wrapper direction="row"></Wrapper>
     </Wrapper>
   );
 };

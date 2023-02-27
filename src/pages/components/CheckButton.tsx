@@ -18,7 +18,7 @@ const CheckButton = (props: CheckButtonProps) => {
       <ImgWrapper
         src={props.check ? CheckTrue : CheckFalse}
         width={props.size ?? 18}
-        height={props.size ?? 18}
+        height={18}
         direction="row"
       />
     </Wrapper>

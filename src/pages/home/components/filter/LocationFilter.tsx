@@ -1,12 +1,13 @@
-import { Wrapper } from "../../../components/Wrapper";
-import Button from "../../../components/Button";
-import { BorderColumn, BorderRow } from "../../../components/Border";
-import { locationNames } from "../../../../utils/constants";
-import { RegularText } from "../../../components/Text";
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../states/store";
 import { updateLocation } from "../../../../states/searchSlice";
+
+import { locationNames } from "../../../../utils/constants";
+
+import { Wrapper } from "../../../components/Wrapper";
+import Button from "../../../components/Button";
+import { BorderColumn, BorderRow } from "../../../components/Border";
+import { RegularText } from "../../../components/Text";
 
 export default () => {
   const onLocationFilter = () => {

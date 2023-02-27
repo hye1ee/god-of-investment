@@ -17,7 +17,7 @@ const SelectButton = (props: SelectButtonProps) => {
     >
       <ImgWrapper
         src={props.check ? SelectTrue : SelectFalse}
-        width={18}
+        width={props.size ?? 18}
         height={18}
         direction="row"
       />

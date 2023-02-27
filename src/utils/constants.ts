@@ -1,7 +1,7 @@
 
 type Location = {
-  [key: string]: string[],
-}
+  [key: string]: string[];
+};
 
 export const locationNames: Location = {
   '서울시': ['종로구', '중구', '용산구', '성동구', '광진구', '동대문구', '중랑구', '성북구', '강북구', '도봉구', '노원구', '은평구', '서대문구', '마포구', '양천구', '강서구', '구로구', '금천구', '영등포구', '동작구', '관악구', '서초구', '강남구', '송파구', '강동구'],
@@ -26,3 +26,6 @@ export const locationNames: Location = {
 export const stepNames: string[] = [
   '1. 기본 계획 수립', '2. 안전진단', '3. 정비구역 지정', '4. 추진위원회 승인', '5. 조합설립 인가', '6. 사업시행 인가', '7. 관리처분 인가', '8. 철거 신고', '9. 착공 및 분양', '10. 준공 및 청산',
 ]
+
+export const standardNames = ['매물 가격 기준', '국토교통부 실거래가 기준'] as const;
+export type StandardNames = typeof standardNames[number];
