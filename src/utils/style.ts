@@ -8,10 +8,14 @@ type AppColor = {
 
 export const appColor: AppColor = {
   'white': '#FFFFFF',
+  'whiteSmoky': '#FBFBFB',
   'black': '#333333',
   'purple': '#6449F3',
+  'purpleSoft': '#A497EC',
   'purpleLight': '#EEEBFB',
   'purpleBright': '#FAF9FF',
   'gray': '#888888',
   'grayLight': '#E2E0E0',
 };
+
+export const transitionStyle = 'transition: all 0.3s;';
