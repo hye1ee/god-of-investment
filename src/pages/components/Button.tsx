@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-import { width_size, height_size, appColor } from "../../utils/style";
+import {
+  width_size,
+  height_size,
+  appColor,
+  transitionStyle,
+} from "../../utils/style";
 import { BoldText, FontWeight, MixedText } from "./Text";
 import { ImgWrapper } from "./Wrapper";
 
@@ -24,6 +29,9 @@ interface ButtonProps {
   };
   borderOption?: {
     width: number;
+    color: string;
+  };
+  hoverOption?: {
     color: string;
   };
   gap?: number;
@@ -72,6 +80,14 @@ const ButtonWrapper = styled.div<ButtonProps>`
     };`}
 
   cursor: pointer;
+
+  ${(props) =>
+    props.hoverOption &&
+    `&:hover{
+      background-color: ${appColor[props.hoverOption.color]}
+    };
+    ${transitionStyle}
+    `}
 `;
 
 export default Button;
