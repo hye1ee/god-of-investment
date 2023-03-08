@@ -1,8 +1,17 @@
 const { kakao } = window;
 
+import { AnyAction, Dispatch } from "@reduxjs/toolkit";
+import { updateTarget } from "../../../../states/targetSlice";
 
-const Marker = () => {
-  const position = new kakao.maps.LatLng(33.450701, 126.570667);
+interface MarkerProps {
+  lat: number;
+  lng: number;
+  name: string;
+  id: string;
+}
+
+const Marker = (props: MarkerProps, dispatch: Dispatch<AnyAction>) => {
+  const position = new kakao.maps.LatLng(props.lat, props.lng);
   const overlay = new kakao.maps.CustomOverlay({
     zIndex: 1,
     position: position,
@@ -24,34 +33,35 @@ const Marker = () => {
   markerTail.src = "/src/assets/blueTriangle.png";
 
 
-  const markerInfo = MarkerInfo();
+  const markerInfo = MarkerInfo({ name: props.name });
+  markerInfo.id = 'marker' + props.id
 
   marker.addEventListener('click', () => { // show and hide marker info modal
-    if (markerInfo.classList.contains('hide')) {
-
-      markerInfo.classList.remove('hide');
-    }
-    else {
-      markerInfo.classList.add('hide');
-    }
+    dispatch(updateTarget({ id: props.id, name: props.name }))
   })
   marker.append(markerBody, markerTail);
   markerWrapper.append(marker, markerInfo);
   overlay.setContent(markerWrapper);
 
-  return overlay;
+  return {
+    overlay,
+    markerInfo,
+  };
 };
 export default Marker;
 
+interface MarkerInfoProps {
+  name: string
+}
 
-const MarkerInfo = () => {
+const MarkerInfo = (props: MarkerInfoProps) => {
   // generate markerInfo
   const markerInfo = document.createElement('div');
-  markerInfo.className = 'markerInfo';
+  markerInfo.className = 'markerInfo hide';
 
   const infoName = document.createElement('div');
   infoName.className = 'infoName';
-  infoName.innerText = '청학 A동';
+  infoName.innerText = props.name;
 
   const infoWrapper = document.createElement('div');
   infoWrapper.className = 'infoWrapper';
