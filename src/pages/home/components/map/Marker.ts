@@ -10,7 +10,7 @@ interface MarkerProps {
   id: string;
 }
 
-const Marker = (props: MarkerProps, dispatch: Dispatch<AnyAction>) => {
+const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>) => {
   const position = new kakao.maps.LatLng(props.lat, props.lng);
   const overlay = new kakao.maps.CustomOverlay({
     zIndex: 1,
@@ -34,7 +34,8 @@ const Marker = (props: MarkerProps, dispatch: Dispatch<AnyAction>) => {
 
 
   const markerInfo = MarkerInfo({ name: props.name });
-  markerInfo.id = 'marker' + props.id
+  markerInfo.id = 'marker' + props.id;
+  if (hide) markerInfo.classList.add('hide');
 
   marker.addEventListener('click', () => { // show and hide marker info modal
     dispatch(updateTarget({ id: props.id, name: props.name }))
@@ -57,7 +58,7 @@ interface MarkerInfoProps {
 const MarkerInfo = (props: MarkerInfoProps) => {
   // generate markerInfo
   const markerInfo = document.createElement('div');
-  markerInfo.className = 'markerInfo hide';
+  markerInfo.className = 'markerInfo';
 
   const infoName = document.createElement('div');
   infoName.className = 'infoName';

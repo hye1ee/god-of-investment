@@ -5,20 +5,21 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { appColor, height_size, width_size } from "../../utils/style";
 import Button from "./Button";
 import MainIcon from "../../assets/main.svg";
-import { Wrapper } from "./Wrapper";
+import { AbsoluteWrapper, Wrapper } from "./Wrapper";
 import { BorderColumn } from "./Border";
 import { MediumText } from "./Text";
 import HeaderMenu from "./HeaderMenu";
+import { useSelector } from "react-redux";
+import { RootState } from "../../states/store";
 
 export default () => {
   const navigate = useNavigate();
 
   // TODO: should be manage by redux
-  const [target, setTarget] = useState<string | null>(null); //target real estate
+  const target = useSelector((state: RootState) => state.target);
 
   const testClick = () => {
     navigate("/home");
-    setTarget((prevTarget) => (prevTarget ? null : "청학아파트재건축정비사업"));
   };
 
   return (
@@ -36,12 +37,16 @@ export default () => {
           iconOption={{ icon: MainIcon, width: 27, height: 27 }}
         />
         <BorderColumn width={1} length={47} color="grayLight" />
-        <MediumText size={16} color={target ? "black" : "grayLight"}>
-          {target ?? "사업을 선택하세요"}
+        <MediumText size={16} color={target.name ? "black" : "grayLight"}>
+          {target.name ?? "사업을 선택하세요"}
         </MediumText>
       </Wrapper>
 
-      {target && <HeaderMenu />}
+      {target.name && (
+        <AbsoluteWrapper direction="row" left={750}>
+          <HeaderMenu />
+        </AbsoluteWrapper>
+      )}
 
       <Wrapper direction="row" width={135}>
         {"계정정보"}

@@ -5,6 +5,7 @@ import axios from "axios";
 import Marker from "./Marker";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../states/store";
+import { updateTarget } from "../../../../states/targetSlice";
 
 declare global {
   interface Window {
@@ -16,15 +17,6 @@ const Map = () => {
   const dispatch = useDispatch();
   const target = useSelector((state: RootState) => state.target);
   const [markerInfos, setMarkerInfos] = useState<HTMLDivElement[]>([]);
-
-  useEffect(() => {
-    // if target changes show only target marker info
-    markerInfos.forEach((markerInfo) => {
-      if ("marker" + target.id === markerInfo.id) {
-        markerInfo.classList.remove("hide");
-      } else markerInfo.classList.add("hide");
-    });
-  }, [target]);
 
   useEffect(() => {
     axios.get("http://143.248.90.184:443/constructions").then((res) => {
@@ -47,6 +39,7 @@ const Map = () => {
         name: "카이마루",
         id: "test1",
       },
+      target.id !== "test1",
       dispatch
     );
     const marker2 = Marker(
@@ -56,6 +49,7 @@ const Map = () => {
         name: "스포츠컴플렉스",
         id: "test2",
       },
+      target.id !== "test2",
       dispatch
     );
     marker1.overlay.setMap(map);
@@ -64,6 +58,16 @@ const Map = () => {
     const newmarkerInfos = [marker1.markerInfo, marker2.markerInfo];
     setMarkerInfos(newmarkerInfos);
   }, []);
+
+  useEffect(() => {
+    console.log("target updated");
+    // if target changes show only target marker info
+    markerInfos.forEach((markerInfo) => {
+      if ("marker" + target.id === markerInfo.id) {
+        markerInfo.classList.remove("hide");
+      } else markerInfo.classList.add("hide");
+    });
+  }, [target]);
 
   return (
     <Wrapper direction="row" id="map" height={"full"} width={1540}></Wrapper>

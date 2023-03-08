@@ -4,12 +4,12 @@
   align-items: center;
   justify-content: flex-start;
 
-  width: 356px;
-  height: 158px;
+  width: 18.54vw;
+  height: 14.63vh;
   gap: 10px;
 
   position: relative;
-  left: 145px;
+  left: 7.55vw;
 }
 
 .marker {
@@ -22,8 +22,8 @@
 }
 
 .markerBody {
-  width: 56px;
-  height: 30px;
+  width: 2.92vw;
+  height: 2.78vh;
   background-color: #4f75ff;
   border-radius: 6px;
 
@@ -35,12 +35,12 @@
 
   font-family: "Noto Sans KR", sans-serif;
   font-weight: medium;
-  font-size: 13px;
+  font-size: 1.2vh;
 }
 
 .markerInfo {
-  width: 280px;
-  height: 158px;
+  width: 14.58vw;
+  height: 14.63vh;
   box-sizing: border-box;
   padding: 25px 30px;
 
@@ -78,26 +78,26 @@
 .infoName {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1.48vh;
 }
 
 .infoPrice {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: medium;
-  font-size: 15px;
+  font-size: 1.39vh;
   color: #6449f3;
 }
 
 .infoType {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 1.2vh;
 }
 
 .infoDetail {
   font-family: "Noto Sans KR", sans-serif;
   font-weight: medium;
-  font-size: 13px;
+  font-size: 1.2vh;
 }
 
 .hide {
