@@ -9,24 +9,29 @@ import { AbsoluteWrapper, Wrapper } from "./Wrapper";
 import { BorderColumn } from "./Border";
 import { MediumText } from "./Text";
 import HeaderMenu from "./HeaderMenu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../states/store";
+import { updateTarget } from "../../states/targetSlice";
 
 export default () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
 
   // TODO: should be manage by redux
   const target = useSelector((state: RootState) => state.target);
 
-  const testClick = () => {
-    navigate("/home");
+  const onHome = () => {
+    if (location.pathname === "/home") {
+      dispatch(updateTarget({ id: null, name: null }));
+    } else navigate("/home");
   };
 
   return (
     <HeaderWrapper>
       <Wrapper direction="row" gap={28} center={true}>
         <Button
-          onClick={testClick}
+          onClick={onHome}
           transparent={true}
           textOption={{
             text: "",
@@ -48,9 +53,7 @@ export default () => {
         </AbsoluteWrapper>
       )}
 
-      <Wrapper direction="row" width={135}>
-        {"계정정보"}
-      </Wrapper>
+      <Wrapper direction="row" width={135}></Wrapper>
     </HeaderWrapper>
   );
 };

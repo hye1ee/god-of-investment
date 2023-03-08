@@ -13,7 +13,7 @@ export default () => {
         transparent={true}
         textOption={{
           text: "상세정보",
-          color: location.pathname === "/detail" ? "purple" : "black",
+          color: location.pathname === "/detail" ? "purple" : "gray",
           size: 15,
           weight: "medium",
         }}
@@ -23,7 +23,7 @@ export default () => {
         transparent={true}
         textOption={{
           text: "이슈 모니터링",
-          color: location.pathname === "/issues" ? "purple" : "black",
+          color: location.pathname === "/issues" ? "purple" : "gray",
           size: 15,
           weight: "medium",
         }}
@@ -33,7 +33,7 @@ export default () => {
         transparent={true}
         textOption={{
           text: "분담금 시뮬레이션",
-          color: location.pathname === "/simulation" ? "purple" : "black",
+          color: location.pathname === "/simulation" ? "purple" : "gray",
           size: 15,
           weight: "medium",
         }}
@@ -43,7 +43,7 @@ export default () => {
         transparent={true}
         textOption={{
           text: "유사도 검색",
-          color: location.pathname === "/search" ? "purple" : "black",
+          color: location.pathname === "/search" ? "purple" : "gray",
           size: 15,
           weight: "medium",
         }}
