@@ -15,15 +15,3 @@ export default () => {
     </Wrapper>
   );
 };
-
-const FilterWrapper = styled.div`
-  width: ${width_size(380)};
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-
-  overflow-y: scroll;
-`;
