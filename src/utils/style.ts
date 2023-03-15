@@ -16,6 +16,7 @@ export const appColor: AppColor = {
   'purpleBright': '#FAF9FF',
   'gray': '#888888',
   'grayLight': '#E2E0E0',
+  'blue': '#4F75FF',
 };
 
 export const transitionStyle = 'transition: all 0.3s;';

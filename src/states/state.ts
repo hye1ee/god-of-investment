@@ -1,4 +1,4 @@
-export const rootState = {
+export const rootState: RootState = {
   search: {
     location: {
       city: '서울시',
@@ -22,6 +22,40 @@ export const rootState = {
         max: Number.POSITIVE_INFINITY,
       },
     }
+  },
+  target: {
+    id: null,
+    name: null,
   }
 }
 
+export interface RootState {
+  search: {
+    location: {
+      city: string,
+      district: string,
+    },
+    step: boolean[],
+    detail: {
+      active: boolean,
+      type: {
+        redevelop: boolean,
+        reconstruct: boolean,
+      },
+      priceAverage: {
+        standard: string,
+        min: number,
+        max: number,
+      },
+      priceEstimate: {
+        standard: string,
+        min: number,
+        max: number,
+      },
+    }
+  },
+  target: {
+    id: null | string,
+    name: null | string,
+  }
+}
