@@ -21,7 +21,7 @@ export type FontWeight = "bold" | "medium" | "regular";
 
 export const BoldText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: bold;
+  font-weight: 700;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 
@@ -34,7 +34,7 @@ export const BoldText = styled.div<TextProps>`
 
 export const MediumText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: medium;
+  font-weight: 500;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 
@@ -47,7 +47,7 @@ export const MediumText = styled.div<TextProps>`
 
 export const RegularText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: regular;
+  font-weight: 300;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 
