@@ -109,3 +109,45 @@ const MixedTextWrapper = styled.div<{ gap: number }>`
 
   gap: ${(props) => width_size(props.gap)};
 `;
+
+interface TextBoxProps {
+  width: number;
+  height: number;
+  textOption: {
+    text: string;
+    weight: FontWeight;
+    color: string;
+    size: number;
+  };
+  color: string;
+  center?: boolean;
+}
+
+export const TextBox = (props: TextBoxProps) => {
+  const { text, weight, color, size } = props.textOption;
+
+  return (
+    <TextBoxWrapper {...props}>
+      <MixedText
+        text={[text]}
+        weight={[weight]}
+        size={[size]}
+        color={[color]}
+      ></MixedText>
+    </TextBoxWrapper>
+  );
+};
+const TextBoxWrapper = styled.div<TextBoxProps>`
+  width: ${(props) => width_size(props.width)};
+  height: ${(props) => height_size(props.height)};
+
+  box-sizing: border-box;
+  background-color: ${(props) => appColor[props.color]};
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => (props.center ? "center" : "flex-start")};
+  ${(props) =>
+    !props.center && `padding-left: ${width_size(props.width / 10)}}`}
+`;
