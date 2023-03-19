@@ -19,7 +19,6 @@ export default () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  // TODO: should be manage by redux
   const target = useSelector((state: RootState) => state.target);
 
   const onHome = () => {

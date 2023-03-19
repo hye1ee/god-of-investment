@@ -8,7 +8,9 @@ const Layout = () => {
   return (
     <LayoutWrapper>
       <Header />
-      <Outlet />
+      <OutletWrapper>
+        <Outlet />
+      </OutletWrapper>
     </LayoutWrapper>
   );
 };
@@ -16,5 +18,12 @@ export default Layout;
 
 const LayoutWrapper = styled.div`
   width: 100%;
+  height: ${height_size(1080)};
+`;
+
+const OutletWrapper = styled.div`
+  width: 100%;
   height: ${height_size(1000)};
+
+  overflow-y: scroll;
 `;
