@@ -13,7 +13,6 @@ export default () => {
         <Wrapper direction="column" width={800} gap={20}>
           <InfoBox />
           <LotBox />
-          <LotBox />
           <SheetBox />
           <StatBox />
         </Wrapper>
