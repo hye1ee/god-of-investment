@@ -5,6 +5,8 @@ import InfoBox from "./components/InfoBox";
 import LotBox from "./components/LotBox";
 import SheetBox from "./components/SheetBox";
 import StatBox from "./components/StatBox";
+import RelateBox from "./components/RelateBox";
+import IssueBox from "./components/IssueBox";
 
 export default () => {
   return (
@@ -15,6 +17,10 @@ export default () => {
           <LotBox />
           <SheetBox />
           <StatBox />
+          <Wrapper direction="row" width={800} gap={20}>
+            <RelateBox />
+            <IssueBox />
+          </Wrapper>
         </Wrapper>
         <Wrapper direction="column" width={380}>
           Memo

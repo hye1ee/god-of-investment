@@ -20,6 +20,7 @@ interface TagProps {
     width: number;
     color: string;
   };
+  onClick?: () => void;
 }
 
 const Tag = (props: TagProps) => {
@@ -47,4 +48,6 @@ const TagWrapper = styled.div<TagProps>`
     )}`};
   background-color: ${(props) => appColor[props.color]};
   border-radius: ${(props) => height_size(props.radius)};
+
+  ${(props) => props.onClick && `cursor: pointer;`}
 `;

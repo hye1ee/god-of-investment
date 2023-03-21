@@ -43,6 +43,9 @@ const LotImg = styled.img`
 `;
 
 const LotButtons = () => {
+  const testUrl1 = "https://www.kaist.ac.kr";
+  const testUrl2 = "https://klms.kaist.ac.kr/login/ssologin.php"
+
   return (
     <Wrapper direction="row" gap={10}>
       <Button
@@ -56,6 +59,7 @@ const LotButtons = () => {
           size: 11,
           color: "black",
         }}
+        onClick={()=>window.open(testUrl1)}
       />
       <Button
         width={172}
@@ -68,6 +72,7 @@ const LotButtons = () => {
           size: 11,
           color: "black",
         }}
+        onClick={()=>window.open(testUrl2)}
       />
     </Wrapper>
   );
