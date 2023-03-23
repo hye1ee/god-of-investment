@@ -19,44 +19,43 @@ const Map = () => {
   const [markerInfos, setMarkerInfos] = useState<HTMLDivElement[]>([]);
 
   useEffect(() => {
-    axios.get("http://143.248.90.184:443/constructions").then((res) => {
-      console.log(res, res.data);
-    });
-
     const { kakao } = window;
     //generate map
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(36.37385958703074, 127.35933031057667),
+      center: new kakao.maps.LatLng(37.529, 127),
       level: 2,
     };
     const map = new kakao.maps.Map(container, options);
 
-    const marker1 = Marker(
-      {
-        lat: 36.3739,
-        lng: 127.3593,
-        name: "카이마루",
-        id: "test1",
-      },
-      target.id !== "test1",
-      dispatch
-    );
-    const marker2 = Marker(
-      {
-        lat: 36.3724,
-        lng: 127.3614,
-        name: "스포츠컴플렉스",
-        id: "test2",
-      },
-      target.id !== "test2",
-      dispatch
-    );
-    marker1.overlay.setMap(map);
-    marker2.overlay.setMap(map);
+    axios.get("http://143.248.90.184:443/constructions").then((res) => {
+      res.data.forEach((data: any) => {
+        //[TODO] type
+        console.log(data);
+        const {
+          ZONE_NM: name,
+          reprsnt_coord_lat: lat,
+          reprsnt_coord_lng: lng,
+          id,
+        } = data;
 
-    const newmarkerInfos = [marker1.markerInfo, marker2.markerInfo];
-    setMarkerInfos(newmarkerInfos);
+        const marker = Marker(
+          {
+            lat,
+            lng,
+            name,
+            id,
+          },
+          target.id !== id,
+          dispatch
+        );
+        marker.overlay.setMap(map);
+        setMarkerInfos((prevMarkerInfos) => [
+          ...prevMarkerInfos,
+          marker.markerInfo,
+        ]);
+      });
+    });
   }, []);
 
   useEffect(() => {
