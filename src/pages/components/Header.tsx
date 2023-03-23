@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -18,7 +19,6 @@ export default () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  // TODO: should be manage by redux
   const target = useSelector((state: RootState) => state.target);
 
   const onHome = () => {
