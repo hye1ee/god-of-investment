@@ -121,6 +121,7 @@ interface TextBoxProps {
   };
   color: string;
   center?: boolean;
+  radius?: number;
 }
 
 export const TextBox = (props: TextBoxProps) => {
@@ -149,5 +150,7 @@ const TextBoxWrapper = styled.div<TextBoxProps>`
   align-items: center;
   justify-content: ${(props) => (props.center ? "center" : "flex-start")};
   ${(props) =>
-    !props.center && `padding-left: ${width_size(props.width / 10)}}`}
+    !props.center && `padding-left: ${font_size(props.textOption.size * 1.6)}}`}
+
+  border-radius: ${(props) => height_size(props.radius ?? 0)};
 `;

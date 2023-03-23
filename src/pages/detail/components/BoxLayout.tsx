@@ -6,14 +6,14 @@ import { appColor, height_size, width_size } from "../../../utils/style";
 interface BoxLayoutProps {
   width: number;
   color: string;
-  title: string;
+  title?: string;
   children: ReactNode;
 }
 
 const BoxLayout = (props: BoxLayoutProps) => {
   return (
     <BoxLayoutWrapper {...props}>
-      <MediumText size={15}>{props.title}</MediumText>
+      {props.title && <MediumText size={15}>{props.title}</MediumText>}
       {props.children}
     </BoxLayoutWrapper>
   );
