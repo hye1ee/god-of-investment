@@ -15,11 +15,11 @@ export default () => {
   const dispatch = useDispatch();
 
   return (
-    <Wrapper direction="column" width="full" height={250}>
+    <Wrapper direction="column" width="full" height={245}>
       <Wrapper
         direction="row"
         width="full"
-        height={55}
+        height={50}
         color="purpleBright"
         center={true}
       >

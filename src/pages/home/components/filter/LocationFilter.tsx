@@ -34,6 +34,7 @@ export default () => {
           width={320}
           height={40}
           radius={10}
+          hoverOption={{ color: "purpleSoft" }}
         />
       </Wrapper>
       <BorderRow width={1} color="grayLight" />
