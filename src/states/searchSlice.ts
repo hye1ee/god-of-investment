@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { StandardNames, locationNames } from "../utils/constants";
+import { locationNames } from "../utils/constants";
 import { rootState } from "./state";
 
 const search = createSlice({
@@ -18,6 +18,10 @@ const search = createSlice({
         state.location.district = locationNames[name][0];
       }
     },
+    updateFilter: (state, action: { type: string, payload: { value: boolean } }) => {
+      state.location.filter = action.payload.value;
+    },
+
     // step filter
     updateStep: (state, action: { type: string, payload: { index: number } }) => {
       const { index } = action.payload;
@@ -56,6 +60,7 @@ const search = createSlice({
 
 export const {
   updateLocation,
+  updateFilter,
   updateStep,
   initStep,
   updateType,

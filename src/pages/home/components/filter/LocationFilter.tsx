@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../states/store";
-import { updateLocation } from "../../../../states/searchSlice";
+import { updateFilter, updateLocation } from "../../../../states/searchSlice";
 
 import { locationNames } from "../../../../utils/constants";
 
@@ -10,9 +10,7 @@ import { BorderColumn, BorderRow } from "../../../components/Border";
 import { RegularText } from "../../../components/Text";
 
 export default () => {
-  const onLocationFilter = () => {
-    console.log("onLocationFilter button clicked");
-  };
+  const dispatch = useDispatch();
 
   return (
     <Wrapper direction="column" width="full">
@@ -23,7 +21,7 @@ export default () => {
 
       <Wrapper direction="row" width="full" height={75} center={true}>
         <Button
-          onClick={onLocationFilter}
+          onClick={() => dispatch(updateFilter({ value: true }))}
           textOption={{
             text: "해당 조건으로 검색하기",
             weight: "regular",

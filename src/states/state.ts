@@ -3,6 +3,7 @@ export const rootState: RootState = {
     location: {
       city: '서울시',
       district: '종로구',
+      filter: false,
     },
     step: new Array(10).fill(false),
     type: {
@@ -21,6 +22,7 @@ export interface RootState {
     location: {
       city: string,
       district: string,
+      filter: boolean,
     },
     step: boolean[],
     type: {

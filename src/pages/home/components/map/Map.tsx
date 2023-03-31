@@ -6,6 +6,9 @@ import Marker from "./Marker";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../states/store";
 import { updateTarget } from "../../../../states/targetSlice";
+import { getConstructions } from "../../utils";
+import { districtInfo } from "../../../../utils/constants";
+import { updateFilter } from "../../../../states/searchSlice";
 
 declare global {
   interface Window {
@@ -16,48 +19,68 @@ declare global {
 const Map = () => {
   const dispatch = useDispatch();
   const target = useSelector((state: RootState) => state.target);
+  const search = useSelector((state: RootState) => state.search);
+  const [map, setMap] = useState();
+  const [cons, setCons] = useState([]);
   const [markerInfos, setMarkerInfos] = useState<HTMLDivElement[]>([]);
 
-  useEffect(() => {
+  const setConstructions = async () => {
     const { kakao } = window;
     //generate map
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(37.529, 127),
-      level: 2,
+      center: new kakao.maps.LatLng(
+        districtInfo[search.location.district].LAT,
+        districtInfo[search.location.district].LON
+      ),
+      level: 6,
     };
     const map = new kakao.maps.Map(container, options);
+    setMap(map);
+    setCons(await getConstructions(search.location.district));
+  };
 
-    axios.get("http://143.248.90.184:443/constructions").then((res) => {
-      console.log("hi", res.data);
-      res.data.forEach((data: any) => {
-        //[TODO] type
-        console.log(data);
-        const {
-          ZONE_NM: name,
-          reprsnt_coord_lat: lat,
-          reprsnt_coord_lng: lng,
-          id,
-        } = data;
-
-        const marker = Marker(
-          {
-            lat,
-            lng,
-            name,
-            id,
-          },
-          target.id !== id,
-          dispatch
-        );
-        marker.overlay.setMap(map);
-        setMarkerInfos((prevMarkerInfos) => [
-          ...prevMarkerInfos,
-          marker.markerInfo,
-        ]);
-      });
-    });
+  useEffect(() => {
+    // update construction for first rendering
+    setConstructions();
   }, []);
+
+  useEffect(() => {
+    // update construction by every location search
+    if (search.location.filter) {
+      setConstructions();
+      dispatch(updateFilter({ value: false }));
+    }
+  }, [search.location.filter]);
+
+  useEffect(() => {
+    // draw map marker for every changes
+    cons.forEach((data: any) => {
+      //[TODO] type
+      const {
+        ZONE_NM: name,
+        reprsnt_coord_lat: lat,
+        reprsnt_coord_lng: lng,
+        id,
+      } = data;
+
+      const marker = Marker(
+        {
+          lat,
+          lng,
+          name,
+          id,
+        },
+        target.id !== id,
+        dispatch
+      );
+      marker.overlay.setMap(map);
+      setMarkerInfos((prevMarkerInfos) => [
+        ...prevMarkerInfos,
+        marker.markerInfo,
+      ]);
+    });
+  }, [cons]);
 
   useEffect(() => {
     console.log("target updated");
