@@ -58,14 +58,7 @@ export default () => {
 
   return (
     <Wrapper direction="column" width="full">
-      <Wrapper
-        onClick={() => dispatch(updateDetail({}))}
-        direction="column"
-        center={true}
-        width="full"
-        height={60}
-      >
-        <BorderRow width={1} color="grayLight" />
+      <Wrapper direction="column" center={true} width="full" height={59}>
         <Wrapper direction="row" height={58} center={true} gap={5}>
           <Button
             textOption={{

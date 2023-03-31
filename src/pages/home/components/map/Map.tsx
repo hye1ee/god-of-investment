@@ -29,6 +29,7 @@ const Map = () => {
     const map = new kakao.maps.Map(container, options);
 
     axios.get("http://143.248.90.184:443/constructions").then((res) => {
+      console.log("hi", res.data);
       res.data.forEach((data: any) => {
         //[TODO] type
         console.log(data);

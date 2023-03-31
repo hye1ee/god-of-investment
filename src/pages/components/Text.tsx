@@ -34,7 +34,7 @@ export const BoldText = styled.div<TextProps>`
 
 export const MediumText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 

@@ -85,7 +85,9 @@ const LocationSelector = () => {
             <LocationName
               active={name === location.city}
               name={name}
-              onClick={() => dispatch(updateLocation({ key: "city", name }))}
+              onClick={() =>
+                dispatch(updateLocation({ key: "city", name: "서울시" }))
+              }
             />
           ))}
       </Wrapper>
@@ -97,10 +99,9 @@ const LocationSelector = () => {
             <LocationName
               active={name === location.city}
               name={name}
-              onClick={() => {
-                console.log(updateLocation({ key: "city", name }));
-                dispatch(updateLocation({ key: "city", name }));
-              }}
+              onClick={() =>
+                dispatch(updateLocation({ key: "city", name: "서울시" }))
+              }
             />
           ))}
       </Wrapper>

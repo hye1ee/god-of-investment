@@ -4,7 +4,7 @@ import { RootState } from "../../../../states/store";
 
 import { stepNames } from "../../../../utils/constants";
 
-import { RegularText } from "../../../components/Text";
+import { MediumText, RegularText } from "../../../components/Text";
 import CheckButton from "../../../components/CheckButton";
 import { AbsoluteWrapper, Wrapper } from "../../../components/Wrapper";
 import { BorderRow } from "../../../components/Border";
@@ -15,18 +15,18 @@ export default () => {
   const dispatch = useDispatch();
 
   return (
-    <Wrapper direction="column" width="full">
+    <Wrapper direction="column" width="full" height={250}>
       <Wrapper
         direction="row"
         width="full"
-        height={59}
+        height={55}
         color="purpleBright"
         center={true}
       >
-        <RegularText size={14} absolute={true} left={38}>
+        <RegularText size={14} absolute={true} left={30}>
           사업 진행 단계
         </RegularText>
-        <AbsoluteWrapper direction="row" right={26}>
+        <AbsoluteWrapper direction="row" right={30}>
           <Button
             iconOption={{ icon: ReturnIcon, width: 11, height: 11 }}
             textOption={{
@@ -44,10 +44,10 @@ export default () => {
           />
         </AbsoluteWrapper>
       </Wrapper>
-      <BorderRow width={1} color="grayLight" />
-      <Wrapper direction="row" width="full" height={180}>
+      <Wrapper direction="row" width="full" height={194}>
         <FilterBody />
       </Wrapper>
+      <BorderRow width={1} color="grayLight" />
     </Wrapper>
   );
 };
