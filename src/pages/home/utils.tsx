@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
 import axios from "axios";
-import { districtInfo } from "../../utils/constants";
+import { districtInfo, stepNames } from "../../utils/constants";
 
 declare global {
   interface Window {
@@ -44,4 +44,25 @@ export const getLatLon = (districtName: string) => {
     lat: districtInfo[districtName].LAT,
     lon: districtInfo[districtName].LON,
   };
+};
+
+interface isConFilterProps {
+  con: any;
+  step: boolean[];
+  type: {
+    redevelop: boolean;
+    reconstruct: boolean;
+  };
+}
+
+export const isConFilter = (props: isConFilterProps) => {
+  // const type = props.con.BTYP_NM;
+  // if (props.type.redevelop && typeNames.redevelop.name == type) return true;
+  // else if (props.type.reconstruct && typeNames.reconstruct.name == type)
+  //   return true;
+  const step = props.con.PROGRS_STTUS;
+  if (props.step[stepNames.findIndex((name) => name == step)]) return true;
+  else return false;
+
+  return true;
 };

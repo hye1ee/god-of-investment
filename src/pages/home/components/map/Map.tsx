@@ -4,7 +4,12 @@ import { RootState } from "../../../../states/store";
 import { updateFilter } from "../../../../states/searchSlice";
 
 import { Wrapper } from "../../../components/Wrapper";
-import { getConstructions, getKakaoMap, getLatLon } from "../../utils";
+import {
+  getConstructions,
+  getKakaoMap,
+  getLatLon,
+  isConFilter,
+} from "../../utils";
 import Marker from "./Marker";
 import "./marker.css";
 
@@ -27,7 +32,16 @@ const Map = () => {
 
   const filterConstructions = () => {
     // const and markers have same index
-    console.log("filter cons");
+    const index = new Set();
+    cons.forEach((con: any, idx: number) => {
+      if (isConFilter({ con, step: search.step, type: search.type }))
+        index.add(idx);
+    });
+
+    markers.forEach((marker, idx) => {
+      if (index.has(idx)) marker.overlay.setMap(map);
+      else marker.overlay.setMap(null);
+    });
   };
 
   // first rendering -> map changed -> cons changed -> markers changed
