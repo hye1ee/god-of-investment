@@ -4,12 +4,10 @@
   align-items: center;
   justify-content: flex-start;
 
-  width: 18.54vw;
-  height: 14.63vh;
-  gap: 10px;
+  width: 2.92vw;
+  height: 2.78vh;
 
   position: relative;
-  left: 7.55vw;
 }
 
 .marker {
@@ -39,7 +37,7 @@
 }
 
 .markerInfo {
-  width: 14.58vw;
+  width: fit-content;
   height: 14.63vh;
   box-sizing: border-box;
   padding: 25px 30px;
@@ -52,6 +50,10 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+
+  position: absolute;
+  left: 3.5vw;
+  z-index: 99;
 }
 
 .infoWrapper {

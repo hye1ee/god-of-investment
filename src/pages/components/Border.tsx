@@ -8,6 +8,7 @@ interface BorderProps {
 }
 
 export const BorderRow = styled.div<BorderProps>`
+  flex: 0 0 auto;
   width: ${(props) => (props.length ? width_size(props.length) : "100%")};
   height: ${(props) => height_size(props.width)};
 
