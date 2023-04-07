@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { AbsoluteWrapper } from "../../../components/Wrapper";
 import SearchImg from "../../../../assets/search.svg";
 import {
   appColor,
@@ -19,14 +18,7 @@ export default () => {
   };
 
   return (
-    <AbsoluteWrapper
-      direction="row"
-      width={500}
-      height={50}
-      top={38}
-      left={520}
-      style={{ zIndex: 99 }}
-    >
+    <SearchBarWrapper>
       <SearchIcon src={SearchImg} />
       <SearchInput
         placeholder="사업장명으로 검색하기"
@@ -35,9 +27,21 @@ export default () => {
         onChange={(e) => setInput(e.target.value)}
         spellCheck={false}
       />
-    </AbsoluteWrapper>
+    </SearchBarWrapper>
   );
 };
+
+const SearchBarWrapper = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  position: absolute;
+  left: 50%;
+  top: ${height_size(35)};
+  transform: translate(-50%, 0);
+
+  z-index: 99;
+`;
 
 const SearchInput = styled.input`
   width: ${width_size(500)};
