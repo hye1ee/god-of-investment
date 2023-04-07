@@ -41,11 +41,15 @@ const Map = () => {
   };
 
   useEffect(() => {
+    console.log("first Effect");
+
     // update construction for first rendering
     setConstructions();
   }, []);
 
   useEffect(() => {
+    console.log("filter Effect");
+
     // update construction by every location search
     if (search.location.filter) {
       setConstructions();
@@ -54,6 +58,7 @@ const Map = () => {
   }, [search.location.filter]);
 
   useEffect(() => {
+    console.log("con Effect");
     // draw map marker for every changes
     cons.forEach((data: any) => {
       //[TODO] type
