@@ -12,6 +12,8 @@ import {
 } from "../../utils";
 import Marker from "./Marker";
 import "./marker.css";
+import SearchBar from "../search/SearchBar";
+import SearchModal from "../search/SearchModal";
 
 const Map = () => {
   const dispatch = useDispatch();
@@ -22,11 +24,15 @@ const Map = () => {
   const [cons, setCons] = useState<any>([]);
   const [markers, setMarkers] = useState<ReturnType<typeof Marker>[]>([]);
 
+  const [modal, setModal] = useState<number | null>(null);
+
   const setConstructions = async () => {
     if (map != null) {
       const { lat, lon } = getLatLon(search.location.district);
       map.setCenter(new kakao.maps.LatLng(lat, lon));
-      setCons(await getConstructions(search.location.district));
+      const newCons = await getConstructions(search.location.district);
+      setCons(newCons);
+      setModal(newCons.length);
     }
   };
 
@@ -42,6 +48,7 @@ const Map = () => {
       if (index.has(idx)) marker.overlay.setMap(map);
       else marker.overlay.setMap(null);
     });
+    setModal(index.size);
   };
 
   // first rendering -> map changed -> cons changed -> markers changed
@@ -60,6 +67,7 @@ const Map = () => {
 
   useEffect(() => {
     // update construction by every location search
+    let modal = 0;
     if (search.location.filter) {
       if (cons.length > 0 && cons[0].GU_NM === search.location.district) {
         filterConstructions();
@@ -70,6 +78,15 @@ const Map = () => {
       dispatch(updateFilter({ value: false }));
     }
   }, [search.location.filter]);
+
+  useEffect(() => {
+    console.log(modal);
+    if (modal !== null) {
+      setTimeout(() => {
+        setModal(null);
+      }, 1500);
+    }
+  }, [modal]);
 
   useEffect(() => {
     // draw map marker for every changes
@@ -114,7 +131,11 @@ const Map = () => {
   }, [target]);
 
   return (
-    <Wrapper direction="row" id="map" height={"full"} width={1540}></Wrapper>
+    <Wrapper direction="row" height={"full"} width={1540}>
+      <Wrapper direction="row" id="map" height={"full"} width={1540} />
+      <SearchBar />
+      {modal != null && <SearchModal num={modal} />}
+    </Wrapper>
   );
 };
 export default Map;
