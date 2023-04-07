@@ -28,7 +28,7 @@ const search = createSlice({
       state.step[index] = !state.step[index];
     },
     initStep: (state, action) => {
-      state.step = new Array(10).fill(false)
+      state.step = new Array(14).fill(false)
     },
 
     updateType: (state, action: { type: string, payload: { type: 'redevelop' | 'reconstruct' } }) => {

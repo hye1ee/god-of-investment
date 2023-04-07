@@ -1,29 +1,13 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
 import axios from "axios";
+import { districtInfo } from "../../utils/constants";
 
-export const stepNames: { [key: string]: { display: string; name: string } } = {
-  1: {
-    display: "1. ",
-    name: "",
-  },
-  2: {
-    display: "1. ",
-    name: "",
-  },
-  3: {
-    display: "1. ",
-    name: "",
-  },
-  4: {
-    display: "1. ",
-    name: "",
-  },
-  5: {
-    display: "1. ",
-    name: "",
-  },
-};
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 export const typeNames = {
   redevelop: { display: "재개발 사업", name: "재개발" },
@@ -35,18 +19,29 @@ export const getConstructions = async (districtName: string) => {
   await axios.get("http://143.248.90.184:443/constructions").then((res) => {
     result = res.data.filter((data: any) => data.GU_NM === districtName);
   });
-  console.log(result);
   return result.sort(
     (a: any, b: any) => b.reprsnt_coord_lng - a.reprsnt_coord_lng
   );
 };
 
-export const filterConstructions = (data: any) => {
-  const search = useSelector((state: RootState) => state.search);
+interface getKakaoMapProps {
+  id: string;
+  lat: number;
+  lon: number;
+}
+export const getKakaoMap = (props: getKakaoMapProps) => {
+  const { kakao } = window;
+  const container = document.getElementById(props.id);
+  const options = {
+    center: new kakao.maps.LatLng(props.lat, props.lon),
+    level: 6,
+  };
+  return new kakao.maps.Map(container, options);
+};
 
-  const districtName = search.location.district;
-  const selectStepName = [];
-  search.step.forEach((active, idx) => {
-    if (active) selectStepName.push(stepNames[idx].name);
-  });
+export const getLatLon = (districtName: string) => {
+  return {
+    lat: districtInfo[districtName].LAT,
+    lon: districtInfo[districtName].LON,
+  };
 };

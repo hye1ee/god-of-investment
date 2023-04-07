@@ -1,6 +1,3 @@
-import styled from "styled-components";
-import { width_size, height_size } from "../../../../utils/style";
-
 import LocationFilter from "./LocationFilter";
 import StepFilter from "./StepFilter";
 import DetailFIlter from "./DetailFIlter";

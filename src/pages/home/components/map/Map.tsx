@@ -1,99 +1,101 @@
 import { useEffect, useState } from "react";
-import { Wrapper } from "../../../components/Wrapper";
-import "./marker.css";
-import axios from "axios";
-import Marker from "./Marker";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../states/store";
-import { updateTarget } from "../../../../states/targetSlice";
-import { getConstructions } from "../../utils";
-import { districtInfo } from "../../../../utils/constants";
 import { updateFilter } from "../../../../states/searchSlice";
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
+import { Wrapper } from "../../../components/Wrapper";
+import { getConstructions, getKakaoMap, getLatLon } from "../../utils";
+import Marker from "./Marker";
+import "./marker.css";
 
 const Map = () => {
   const dispatch = useDispatch();
   const target = useSelector((state: RootState) => state.target);
   const search = useSelector((state: RootState) => state.search);
-  const [map, setMap] = useState();
-  const [cons, setCons] = useState([]);
-  const [markerInfos, setMarkerInfos] = useState<HTMLDivElement[]>([]);
+
+  const [map, setMap] = useState<any>(null); // kakaomap obj
+  const [cons, setCons] = useState<any>([]);
+  const [markers, setMarkers] = useState<ReturnType<typeof Marker>[]>([]);
 
   const setConstructions = async () => {
-    const { kakao } = window;
-    //generate map
-    const container = document.getElementById("map");
-    const options = {
-      center: new kakao.maps.LatLng(
-        districtInfo[search.location.district].LAT,
-        districtInfo[search.location.district].LON
-      ),
-      level: 6,
-    };
-    const map = new kakao.maps.Map(container, options);
-    setMap(map);
-    setCons(await getConstructions(search.location.district));
+    if (map != null) {
+      const { lat, lon } = getLatLon(search.location.district);
+      map.setCenter(new kakao.maps.LatLng(lat, lon));
+      setCons(await getConstructions(search.location.district));
+    }
   };
 
-  useEffect(() => {
-    console.log("first Effect");
+  const filterConstructions = () => {
+    // const and markers have same index
+    console.log("filter cons");
+  };
 
-    // update construction for first rendering
-    setConstructions();
+  // first rendering -> map changed -> cons changed -> markers changed
+  useEffect(() => {
+    setMap(
+      getKakaoMap({
+        id: "map",
+        ...getLatLon(search.location.district),
+      })
+    );
   }, []);
 
   useEffect(() => {
-    console.log("filter Effect");
+    setConstructions();
+  }, [map]);
 
+  useEffect(() => {
     // update construction by every location search
     if (search.location.filter) {
-      setConstructions();
+      if (cons.length > 0 && cons[0].GU_NM === search.location.district) {
+        filterConstructions();
+      } else {
+        // if cons are empty or location changed
+        setConstructions();
+      }
       dispatch(updateFilter({ value: false }));
     }
   }, [search.location.filter]);
 
   useEffect(() => {
-    console.log("con Effect");
     // draw map marker for every changes
-    cons.forEach((data: any) => {
-      //[TODO] type
-      const {
-        ZONE_NM: name,
-        reprsnt_coord_lat: lat,
-        reprsnt_coord_lng: lng,
-        id,
-      } = data;
+    // [1] cut reference with map for old markers
+    markers.forEach((marker: ReturnType<typeof Marker>) =>
+      marker.overlay.setMap(null)
+    );
 
-      const marker = Marker(
-        {
-          lat,
-          lng,
-          name,
+    // [2] draw new markers
+    setMarkers(
+      cons.map((data: any) => {
+        const {
+          ZONE_NM: name,
+          reprsnt_coord_lat: lat,
+          reprsnt_coord_lng: lng,
           id,
-        },
-        target.id !== id,
-        dispatch
-      );
-      marker.overlay.setMap(map);
-      setMarkerInfos((prevMarkerInfos) => [
-        ...prevMarkerInfos,
-        marker.markerInfo,
-      ]);
-    });
+        } = data;
+
+        const marker = Marker(
+          {
+            lat,
+            lng,
+            name,
+            id,
+          },
+          target.id !== id,
+          dispatch
+        );
+        marker.overlay.setMap(map);
+        return marker;
+      })
+    );
   }, [cons]);
 
   useEffect(() => {
-    console.log("target updated");
     // if target changes show only target marker info
-    markerInfos.forEach((markerInfo) => {
-      if ("marker" + target.id === markerInfo.id) {
-        markerInfo.classList.remove("hide");
-      } else markerInfo.classList.add("hide");
+    markers.forEach((marker) => {
+      if ("marker" + target.id === marker.markerInfo.id) {
+        marker.markerInfo.classList.remove("hide");
+      } else marker.markerInfo.classList.add("hide");
     });
   }, [target]);
 
