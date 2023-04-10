@@ -3,25 +3,13 @@ export const rootState: RootState = {
     location: {
       city: '서울시',
       district: '종로구',
+      filter: false,
     },
-    step: new Array(10).fill(false),
-    detail: {
-      active: false,
-      type: {
-        redevelop: true,
-        reconstruct: true,
-      },
-      priceAverage: {
-        standard: "매물 가격 기준",
-        min: Number.NEGATIVE_INFINITY,
-        max: Number.POSITIVE_INFINITY,
-      },
-      priceEstimate: {
-        standard: "매물 가격 기준",
-        min: Number.NEGATIVE_INFINITY,
-        max: Number.POSITIVE_INFINITY,
-      },
-    }
+    step: new Array(14).fill(true),
+    type: {
+      redevelop: true,
+      reconstruct: true,
+    },
   },
   target: {
     id: null,
@@ -34,25 +22,14 @@ export interface RootState {
     location: {
       city: string,
       district: string,
+      filter: boolean,
     },
     step: boolean[],
-    detail: {
-      active: boolean,
-      type: {
-        redevelop: boolean,
-        reconstruct: boolean,
-      },
-      priceAverage: {
-        standard: string,
-        min: number,
-        max: number,
-      },
-      priceEstimate: {
-        standard: string,
-        min: number,
-        max: number,
-      },
-    }
+    type: {
+      redevelop: boolean,
+      reconstruct: boolean,
+    },
+
   },
   target: {
     id: null | string,
