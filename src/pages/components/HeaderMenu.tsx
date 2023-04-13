@@ -38,7 +38,7 @@ export default () => {
           weight: "medium",
         }}
       />
-      <Button
+      {/* {      <Button
         onClick={() => navigate("/search")}
         transparent={true}
         textOption={{
@@ -47,7 +47,7 @@ export default () => {
           size: 15,
           weight: "medium",
         }}
-      />
+      />} */}
     </Wrapper>
   );
 };

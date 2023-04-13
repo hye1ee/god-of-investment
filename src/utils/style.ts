@@ -14,6 +14,7 @@ export const appColor: AppColor = {
   'purpleSoft': '#A497EC',
   'purpleLight': '#EEEBFB',
   'purpleBright': '#FAF9FF',
+  'purpleGrayBright': '#F7F8FC',
   'gray': '#888888',
   'grayLight': '#E2E0E0',
   'blue': '#4F75FF',
@@ -23,3 +24,4 @@ export const appColor: AppColor = {
 };
 
 export const transitionStyle = 'transition: all 0.3s;';
+export const shadowStyle = 'box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.04);';
