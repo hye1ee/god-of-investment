@@ -47,7 +47,7 @@ export default () => {
       </Wrapper>
 
       {target.name && (
-        <AbsoluteWrapper direction="row" left={750}>
+        <AbsoluteWrapper direction="row" left={850}>
           <HeaderMenu />
         </AbsoluteWrapper>
       )}

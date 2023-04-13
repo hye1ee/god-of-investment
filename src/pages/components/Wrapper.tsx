@@ -9,6 +9,8 @@ interface WrapperProps {
   height?: number | "full";
   wrap?: boolean;
   color?: string;
+  stretch?: boolean;
+  scroll?: boolean;
   onClick?: () => void;
 }
 interface AbsoluteWrapperProps extends WrapperProps {
@@ -36,19 +38,22 @@ export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   align-items: ${(props) => (props.center === true ? "center" : "flex-start")};
   justify-content: ${(props) =>
-    props.center === true ? "center" : "flex-start"};
+    props.center === true
+      ? "center"
+      : props.stretch === true
+      ? "space-between"
+      : "flex-start"};
 
   ${(props) =>
     props.direction === "row" &&
-    `flex-direction: row; gap: ${width_size(props.gap ?? 0)}`};
+    `flex-direction: row; gap: ${width_size(props.gap ?? 0)};`}
   ${(props) =>
     props.direction === "column" &&
-    `flex-direction: column; gap: ${height_size(props.gap ?? 0)}`};
-  ${(props) => props.wrap === true && `flex-wrap: wrap`};
-  ${(props) => props.color && `background-color: ${appColor[props.color]}`};
-  ${(props) => props.onClick && `cursor: pointer`};
-
-  overflow: auto;
+    `flex-direction: column; gap: ${height_size(props.gap ?? 0)};`}
+  ${(props) => props.wrap === true && `flex-wrap: wrap;`}
+  ${(props) => props.color && `background-color: ${appColor[props.color]};`}
+  ${(props) => props.onClick && `cursor: pointer;`}
+  ${(props) => props.scroll === true && `overflow: scroll;`}
 `;
 
 export const AbsoluteWrapper = styled.div<AbsoluteWrapperProps>`
@@ -87,7 +92,6 @@ export const AbsoluteWrapper = styled.div<AbsoluteWrapperProps>`
   ${(props) => props.color && `background-color: ${appColor[props.color]}`};
 
   ${(props) => props.onClick && `cursor: pointer`};
-  overflow: auto;
 `;
 
 export const ImgWrapper = styled.img<WrapperProps>`
