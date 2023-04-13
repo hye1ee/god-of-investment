@@ -77,7 +77,7 @@ const LocationSelector = () => {
 
   return (
     <Wrapper direction="row" width="full" height={288}>
-      <Wrapper direction="column" width={94.25} height="full">
+      <Wrapper direction="column" width={94.25} height="full" scroll={true}>
         {Object.keys(locationNames)
           .slice(0, 9)
           .map((name) => (
@@ -91,7 +91,7 @@ const LocationSelector = () => {
           ))}
       </Wrapper>
       <BorderColumn width={1} color="grayLight" />
-      <Wrapper direction="column" width={94.25} height="full">
+      <Wrapper direction="column" width={94.25} height="full" scroll={true}>
         {Object.keys(locationNames)
           .slice(9)
           .map((name) => (
@@ -105,7 +105,7 @@ const LocationSelector = () => {
           ))}
       </Wrapper>
       <BorderColumn width={1} color="grayLight" />
-      <Wrapper direction="column" width={94.25} height="full">
+      <Wrapper direction="column" width={94.25} height="full" scroll={true}>
         {locationNames[location.city].slice(0, 9).map((name) => (
           <LocationName
             active={name === location.district}
@@ -115,7 +115,7 @@ const LocationSelector = () => {
         ))}
       </Wrapper>
       <BorderColumn width={1} color="grayLight" />
-      <Wrapper direction="column" width={94.25} height="full">
+      <Wrapper direction="column" width={94.25} height="full" scroll={true}>
         {locationNames[location.city].slice(9).map((name) => (
           <LocationName
             active={name === location.district}
