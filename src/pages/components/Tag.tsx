@@ -49,5 +49,10 @@ const TagWrapper = styled.div<TagProps>`
   background-color: ${(props) => appColor[props.color]};
   border-radius: ${(props) => height_size(props.radius)};
 
+  ${(props) =>
+    props.borderOption &&
+    `border: ${props.borderOption.width}px solid ${
+      appColor[props.borderOption.color]
+    };`}
   ${(props) => props.onClick && `cursor: pointer;`}
 `;
