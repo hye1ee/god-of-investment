@@ -7,6 +7,7 @@ import SheetBox from "./components/SheetBox";
 import StatBox from "./components/StatBox";
 import RelateBox from "./components/RelateBox";
 import IssueBox from "./components/IssueBox";
+import MemoBox from "./components/MemoBox";
 
 export default () => {
   return (
@@ -23,7 +24,7 @@ export default () => {
           </Wrapper>
         </Wrapper>
         <Wrapper direction="column" width={380}>
-          Memo
+          <MemoBox />
         </Wrapper>
       </Wrapper>
     </BodyLayout>
