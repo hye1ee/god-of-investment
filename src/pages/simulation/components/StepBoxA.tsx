@@ -21,13 +21,14 @@ const StepBoxA = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
       title={{
         text: [
           "현재 보유 중인 아파트의 정보",
-          "와 ",
+          "와",
+          " ",
           "희망하는 아파트의 정보",
           "를 입력해주세요!",
         ],
         weight: "medium",
         size: 17,
-        color: ["purple", "black", "purple", "black"],
+        color: ["purple", "black", "black", "purple", "black"],
       }}
     >
       <Wrapper direction="row" gap={20}>

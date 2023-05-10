@@ -2,9 +2,9 @@ import { useState } from "react";
 import BodyLayout from "../components/BodyLayout";
 import { Wrapper } from "../components/Wrapper";
 import StepBoxA from "./components/StepBoxA";
-import StepBoxLayout from "./components/StepBoxLayout";
 import { Step } from "./utils";
 import StepBoxB from "./components/StepBoxB";
+import StepBoxC from "./components/StepBoxC";
 
 export default () => {
   const [step, setStep] = useState<Step>("A");
@@ -18,6 +18,7 @@ export default () => {
       <Wrapper direction="column" width="full">
         <StepBoxA step={step} setStep={setStep} />
         <StepBoxB step={step} setStep={setStep} />
+        <StepBoxC step={step} setStep={setStep} />
       </Wrapper>
     </BodyLayout>
   );
