@@ -6,19 +6,20 @@ import { BoldText, MediumText } from "../../components/Text";
 interface PriceBoxProps {
   title: string;
   price: number;
+  active: boolean;
 }
 
 const PriceBox = (props: PriceBoxProps) => {
   return (
-    <PriceBoxWrapper>
-      <MediumText size={16} color="white">
+    <PriceBoxWrapper {...props}>
+      <MediumText size={16} color={props.active ? "white" : "grayLight"}>
         {props.title}
       </MediumText>
       <PriceWrapper>
-        <BoldText size={30} color="white">
-          {props.price.toLocaleString()}
+        <BoldText size={30} color={props.active ? "white" : "grayLight"}>
+          {props.active ? props.price.toLocaleString() : "-"}
         </BoldText>
-        <BoldText size={20} color="purpleLight">
+        <BoldText size={20} color={props.active ? "purpleLight" : "grayLight"}>
           만원
         </BoldText>
       </PriceWrapper>
@@ -27,7 +28,7 @@ const PriceBox = (props: PriceBoxProps) => {
 };
 export default PriceBox;
 
-const PriceBoxWrapper = styled.div`
+const PriceBoxWrapper = styled.div<PriceBoxProps>`
   width: ${width_size(420)};
   height: fit-content;
   min-height: ${height_size(221)};
@@ -39,8 +40,11 @@ const PriceBoxWrapper = styled.div`
   position: relative;
   padding: ${height_size(15)} ${width_size(20)};
 
-  background-color: ${appColor.purple};
+  background-color: ${(props) =>
+    props.active ? appColor.purple : appColor.purpleBright};
   border-radius: ${width_size(10)};
+  ${(props) =>
+    !props.active && `border: ${width_size(1)} solid ${appColor.grayLight};`}
 `;
 
 const PriceWrapper = styled.div`

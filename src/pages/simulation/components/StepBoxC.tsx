@@ -1,120 +1,132 @@
-import styled from "styled-components";
-import { height_size, width_size } from "../../../utils/style";
-import { BoldText, MediumText } from "../../components/Text";
+import { RegularText } from "../../components/Text";
 import { Wrapper } from "../../components/Wrapper";
+import {
+  PostpriceInfo,
+  PrepriceInfo,
+  getPostpriceInfo,
+  getPrepriceInfo,
+} from "../utils";
 import StepBoxLayout from "./StepBoxLayout";
 import { useEffect, useState } from "react";
-import RetryImg from "../../../assets/retry.svg";
-import TestImgA from "../../../assets/test1.png";
-import TestImgB from "../../../assets/test2.png";
-import { SubBoxLongWrapper, SubBoxShortWrapper, SubBoxWrapper } from "./SubBox";
-import ValueTag from "./ValueTag";
+import PriceBox from "./PriceBox";
+import ListTable from "./ListTable";
 import { useDispatch } from "react-redux";
 import { updateStep } from "../../../states/simulationSlice";
+import DataTable from "./DataTable";
 
 const StepBoxC = ({ id, step }: { id: string; step: string }) => {
   const dispatch = useDispatch();
+  const [active, setActive] = useState<boolean>(step == "C");
+  const [preprice, setPreprice] = useState<PrepriceInfo | null>(null);
+  const [postprice, setPostprice] = useState<PostpriceInfo | null>(null);
 
-  const [active, setActive] = useState<boolean>(step === "B");
-  const [price, setPrice] = useState(180000);
+  const asyncWrapper = async () => {
+    setPreprice(await getPrepriceInfo());
+    setPostprice(await getPostpriceInfo(id));
+  };
 
   useEffect(() => {
+    asyncWrapper();
     setActive(step == "C");
   }, [step]);
 
   return (
     <Wrapper direction="column">
-      <StepBoxLayout
-        step={3}
-        active={active}
-        onClick={() => dispatch(updateStep({ step: "C" }))}
-        title={{
-          text: ["예상 분담금", "을 계산해보세요!"],
-          weight: "medium",
-          size: 17,
-          color: ["purple", "black"],
-        }}
-      >
-        <Wrapper direction="row" gap={20}>
-          <Wrapper direction="column" gap={15}></Wrapper>
-          <SubBoxLongWrapper active={active}>
-            <Wrapper direction="row" center={true} gap={5}>
-              <MediumText size={16} color={active ? "white" : "grayLight"}>
-                {"예상 분담금"}
-              </MediumText>
-              <RetryIcon
-                src={RetryImg}
-                onClick={() => setPrice(Math.round(Math.random() * 1000000))}
-              />
-            </Wrapper>
-            <Wrapper direction="row" width="full" center={true} gap={5}>
-              <BoldText color={active ? "white" : "grayLight"} size={30}>
-                {active ? price : "-"}
-              </BoldText>
-              <BoldText color={active ? "white" : "grayLight"} size={20}>
-                만원
-              </BoldText>
-            </Wrapper>
-          </SubBoxLongWrapper>
-        </Wrapper>
-      </StepBoxLayout>
-      {active && (
+      {preprice !== null && postprice !== null && (
         <>
           <StepBoxLayout
-            step={0}
+            step={3}
             active={active}
             onClick={() => dispatch(updateStep({ step: "C" }))}
             title={{
-              text: ["감정평가액", "의 AI 예측 상세보기"],
+              text: ["AI 예상 감정평가액", "을 확인해보세요!"],
               weight: "medium",
               size: 17,
               color: ["purple", "black"],
             }}
           >
-            <TestBox src={TestImgA} />
+            <Wrapper direction="row" gap={20}>
+              <PriceBox
+                title="AI 예상 감정평가액"
+                price={preprice.price}
+                active={active}
+              />
+              {active && (
+                <ListTable
+                  title="보유 아파트와 유사 부동산 목록"
+                  prices={preprice.list.prices}
+                  years={preprice.list.years}
+                />
+              )}
+            </Wrapper>
           </StepBoxLayout>
-          <StepBoxLayout
-            step={0}
-            active={active}
-            onClick={() => dispatch(updateStep({ step: "C" }))}
-            title={{
-              text: ["예상 비례율", "의 AI 예측 상세보기"],
-              weight: "medium",
-              size: 17,
-              color: ["purple", "black"],
-            }}
-            short={true}
-          >
-            <SubBoxShortWrapper>
-              <MediumText size={16}>{"예상 비례율"}</MediumText>
-              <ValueTag value="140%" />
-            </SubBoxShortWrapper>
-          </StepBoxLayout>
-          <StepBoxLayout
-            step={0}
-            active={active}
-            onClick={() => dispatch(updateStep({ step: "C" }))}
-            title={{
-              text: ["준공 후 예상시세", "의 AI 예측 상세보기"],
-              weight: "medium",
-              size: 17,
-              color: ["purple", "black"],
-            }}
-          >
-            <TestBox src={TestImgB} />
-          </StepBoxLayout>
+          {active && (
+            <>
+              <StepBoxLayout
+                step={0}
+                active={active}
+                onClick={() => dispatch(updateStep({ step: "C" }))}
+                title={{
+                  text: ["감정평가액", "의 AI 예측 기간별 변화"],
+                  weight: "medium",
+                  size: 17,
+                  color: ["purple", "black"],
+                }}
+              >
+                <DataTable
+                  title="분석 기간별 예측 감정평가액 변화"
+                  data={preprice.change.data}
+                  labels={preprice.change.labels}
+                />
+              </StepBoxLayout>
+              <StepBoxLayout
+                step={0}
+                active={active}
+                onClick={() => dispatch(updateStep({ step: "C" }))}
+                title={{
+                  text: ["AI 예상 준공 후 예상시세", "을 확인해보세요!"],
+                  weight: "medium",
+                  size: 17,
+                  color: ["purple", "black"],
+                }}
+              >
+                <Wrapper direction="row" gap={20}>
+                  <PriceBox
+                    title="AI 예상 준공 후 예상시세"
+                    price={postprice.price}
+                    active={active}
+                  ></PriceBox>
+                  {active && (
+                    <ListTable
+                      title="희망 아파트와 유사 부동산 목록"
+                      prices={postprice.list.prices}
+                      years={postprice.list.years}
+                    />
+                  )}
+                </Wrapper>
+              </StepBoxLayout>
+              <StepBoxLayout
+                step={0}
+                active={active}
+                onClick={() => dispatch(updateStep({ step: "C" }))}
+                title={{
+                  text: ["준공 후 예상시세", "의 AI 예측 상세보기"],
+                  weight: "medium",
+                  size: 17,
+                  color: ["purple", "black"],
+                }}
+              >
+                <DataTable
+                  title="향후 준공 후 예상시세 예측"
+                  data={postprice.change.data2.slice(-5) as number[]}
+                  labels={postprice.change.labels.slice(-5)}
+                />
+              </StepBoxLayout>
+            </>
+          )}
         </>
       )}
     </Wrapper>
   );
 };
 export default StepBoxC;
-
-const RetryIcon = styled.img`
-  width: ${height_size(18)};
-  cursor: pointer;
-`;
-
-const TestBox = styled.img`
-  width: ${width_size(860)};
-`;

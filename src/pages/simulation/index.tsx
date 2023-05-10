@@ -5,7 +5,6 @@ import StepBoxB from "./components/StepBoxB";
 import StepBoxC from "./components/StepBoxC";
 import { useSelector } from "react-redux";
 import { RootState } from "../../states/store";
-import { getLastSimulationDate } from "./utils";
 
 export default () => {
   const id = useSelector((state: RootState) => state.target.id);
@@ -21,7 +20,7 @@ export default () => {
       <Wrapper direction="column" width="full">
         {id !== null && (
           <>
-            <StepBoxA id={id} name={name} step={step} />
+            <StepBoxA id={id} step={step} />
             <StepBoxB id={id} step={step} />
             <StepBoxC id={id} step={step} />
           </>

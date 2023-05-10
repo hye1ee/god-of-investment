@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Wrapper } from "../../components/Wrapper";
 import { MediumText } from "../../components/Text";
 import StepBoxLayout from "./StepBoxLayout";
-import { SubBoxShortWrapper, SubBoxWrapper } from "./SubBox";
+import { SubBoxShortWrapper } from "./SubBox";
 import DropDown from "./DropDown";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,24 +12,14 @@ import {
   updateSize,
   updateStep,
 } from "../../../states/simulationSlice";
-import { getDongHo, getLastSimulationDate, getSize } from "../utils";
+import { getDongHo, getSize } from "../../../apis/simulation";
 import { RootState } from "../../../states/store";
 
-const StepBoxA = ({
-  id,
-  name,
-  step,
-}: {
-  id: string;
-  name: string;
-  step: string;
-}) => {
+const StepBoxA = ({ id, step }: { id: string; step: string }) => {
   const dispatch = useDispatch();
 
   const asyncWrapper = async () => {
-    const date = await getLastSimulationDate(name);
-    if (date == null) return;
-    const newDongHoList = await getDongHo(id, date);
+    const newDongHoList = await getDongHo();
     const newSizeList = await getSize(id);
     setDongList(newDongHoList.dong);
     dispatch(updateDong({ dong: newDongHoList.dong[0] }));
