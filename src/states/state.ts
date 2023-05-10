@@ -14,6 +14,16 @@ export const rootState: RootState = {
   target: {
     id: null,
     name: null,
+  },
+  simulation: {
+    step: 'A',
+    dong: null,
+    ho: null,
+    size: null,
+    price: {
+      build: null,
+      contribute: null,
+    }
   }
 }
 
@@ -34,5 +44,15 @@ export interface RootState {
   target: {
     id: null | string,
     name: null | string,
+  },
+  simulation: {
+    step: string,
+    dong: null | string,
+    ho: null | string,
+    size: null | number,
+    price: {
+      build: null | number,
+      contribute: null | number,
+    }
   }
 }
