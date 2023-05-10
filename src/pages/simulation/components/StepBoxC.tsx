@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { height_size, width_size } from "../../../utils/style";
 import { BoldText, MediumText } from "../../components/Text";
 import { Wrapper } from "../../components/Wrapper";
-import { SetStep, Step } from "../utils";
 import StepBoxLayout from "./StepBoxLayout";
 import { useEffect, useState } from "react";
 import RetryImg from "../../../assets/retry.svg";
@@ -10,8 +9,12 @@ import TestImgA from "../../../assets/test1.png";
 import TestImgB from "../../../assets/test2.png";
 import { SubBoxLongWrapper, SubBoxShortWrapper, SubBoxWrapper } from "./SubBox";
 import ValueTag from "./ValueTag";
+import { useDispatch } from "react-redux";
+import { updateStep } from "../../../states/simulationSlice";
 
-const StepBoxC = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
+const StepBoxC = ({ id, step }: { id: string; step: string }) => {
+  const dispatch = useDispatch();
+
   const [active, setActive] = useState<boolean>(step === "B");
   const [price, setPrice] = useState(180000);
 
@@ -24,20 +27,16 @@ const StepBoxC = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
       <StepBoxLayout
         step={3}
         active={active}
-        onClick={() => setStep("C")}
+        onClick={() => dispatch(updateStep({ step: "C" }))}
         title={{
-          text: [
-            "예상 분담금",
-            "을 계산해보세요!",
-          ],
+          text: ["예상 분담금", "을 계산해보세요!"],
           weight: "medium",
           size: 17,
           color: ["purple", "black"],
         }}
       >
         <Wrapper direction="row" gap={20}>
-          <Wrapper direction="column" gap={15}>
-          </Wrapper>
+          <Wrapper direction="column" gap={15}></Wrapper>
           <SubBoxLongWrapper active={active}>
             <Wrapper direction="row" center={true} gap={5}>
               <MediumText size={16} color={active ? "white" : "grayLight"}>
@@ -64,7 +63,7 @@ const StepBoxC = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
           <StepBoxLayout
             step={0}
             active={active}
-            onClick={() => setStep("B")}
+            onClick={() => dispatch(updateStep({ step: "C" }))}
             title={{
               text: ["감정평가액", "의 AI 예측 상세보기"],
               weight: "medium",
@@ -77,7 +76,7 @@ const StepBoxC = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
           <StepBoxLayout
             step={0}
             active={active}
-            onClick={() => setStep("B")}
+            onClick={() => dispatch(updateStep({ step: "C" }))}
             title={{
               text: ["예상 비례율", "의 AI 예측 상세보기"],
               weight: "medium",
@@ -94,7 +93,7 @@ const StepBoxC = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
           <StepBoxLayout
             step={0}
             active={active}
-            onClick={() => setStep("B")}
+            onClick={() => dispatch(updateStep({ step: "C" }))}
             title={{
               text: ["준공 후 예상시세", "의 AI 예측 상세보기"],
               weight: "medium",

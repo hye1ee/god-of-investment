@@ -37,6 +37,7 @@ const ListTable = (props: ListTableProps) => {
               name={name}
               price={props.prices[idx]}
               year={props.years[idx]}
+              key={idx}
             />
             {idx !== nameList.length && (
               <BorderRow width={1} color="grayLight" />

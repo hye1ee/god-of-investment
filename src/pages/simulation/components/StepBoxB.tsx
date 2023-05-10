@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { height_size, width_size } from "../../../utils/style";
 import { BoldText, MediumText, RegularText } from "../../components/Text";
 import { Wrapper } from "../../components/Wrapper";
-import { SetStep, Step, StepBoxBText } from "../utils";
+import { StepBoxBText } from "../utils";
 import StepBoxLayout from "./StepBoxLayout";
 import { useEffect, useState } from "react";
 import RetryImg from "../../../assets/retry.svg";
@@ -10,8 +10,11 @@ import TestImgA from "../../../assets/test1.png";
 import TestImgB from "../../../assets/test2.png";
 import PriceBox from "./PriceBox";
 import ListTable from "./ListTable";
+import { useDispatch } from "react-redux";
+import { updateStep } from "../../../states/simulationSlice";
 
-const StepBoxB = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
+const StepBoxB = ({ id, step }: { id: string; step: string }) => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState<boolean>(step === "B");
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const StepBoxB = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
       <StepBoxLayout
         step={2}
         active={active}
-        onClick={() => setStep("B")}
+        onClick={() => dispatch(updateStep({ step: "B" }))}
         title={{
           text: ["AI 예상 감정평가액", "을 확인해보세요!"],
           weight: "medium",
@@ -46,7 +49,7 @@ const StepBoxB = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
       <StepBoxLayout
         step={0}
         active={active}
-        onClick={() => setStep("B")}
+        onClick={() => dispatch(updateStep({ step: "B" }))}
         title={{
           text: ["감정평가액", "의 AI 예측 기간별 변화"],
           weight: "medium",
@@ -59,7 +62,7 @@ const StepBoxB = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
       <StepBoxLayout
         step={0}
         active={active}
-        onClick={() => setStep("B")}
+        onClick={() => dispatch(updateStep({ step: "B" }))}
         title={{
           text: ["AI 예상 준공 후 예상시세", "을 확인해보세요!"],
           weight: "medium",
@@ -77,7 +80,7 @@ const StepBoxB = ({ step, setStep }: { step: Step; setStep: SetStep }) => {
       <StepBoxLayout
         step={0}
         active={active}
-        onClick={() => setStep("B")}
+        onClick={() => dispatch(updateStep({ step: "B" }))}
         title={{
           text: ["준공 후 예상시세", "의 AI 예측 상세보기"],
           weight: "medium",
