@@ -20,6 +20,10 @@ export const rootState: RootState = {
     dong: null,
     ho: null,
     size: null,
+    price: {
+      build: null,
+      contribute: null,
+    }
   }
 }
 
@@ -46,5 +50,9 @@ export interface RootState {
     dong: null | string,
     ho: null | string,
     size: null | number,
+    price: {
+      build: null | number,
+      contribute: null | number,
+    }
   }
 }

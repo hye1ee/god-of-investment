@@ -91,3 +91,20 @@ export const getModelFeature = async (id: string): Promise<{ data: number[], lab
       return { data, labels };
     });
 }
+
+// StepBox C
+export const getContactland = async (): Promise<number> => {
+  return await axios
+    .get(host + "/price_simulation/contactland")
+    .then((res) => {
+      return res.data as number; // number
+    });
+};
+
+export const getMyland = async (): Promise<number> => {
+  return await axios
+    .get(host + "/price_simulation/myland")
+    .then((res) => {
+      return res.data as number; // number
+    });
+};
