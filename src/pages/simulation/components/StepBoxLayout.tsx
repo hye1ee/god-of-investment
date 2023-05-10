@@ -87,12 +87,16 @@ const StepBoxContentWrapper = styled.div<{ short: boolean }>`
   height: fit-content;
 
   box-sizing: border-box;
-  padding: ${height_size(15)} ${width_size(20)};
+  padding: ${height_size(20)} ${width_size(20)};
   margin-top: ${height_size(15)};
   margin-bottom: ${height_size(30)};
 
   background-color: ${appColor.white};
   border-radius: ${height_size(10)};
+
+  display: flex;
+  flex-direction: column;
+  gap: ${height_size(15)};
 
   ${shadowStyle}
 `;
