@@ -8,25 +8,23 @@ import { RegularText } from "../../../components/Text";
 import CheckButton from "../../../components/CheckButton";
 import { AbsoluteWrapper, Wrapper } from "../../../components/Wrapper";
 import { BorderRow } from "../../../components/Border";
-import Button from "../../../components/Button";
-import ReturnIcon from "../../../../assets/return.svg";
 
 export default () => {
-  const dispatch = useDispatch();
+  const step = useSelector((state: RootState) => state.search.step);
 
   return (
-    <Wrapper direction="column" width="full">
+    <Wrapper direction="column" width="full" height={311}>
       <Wrapper
         direction="row"
         width="full"
-        height={59}
+        height={50}
         color="purpleBright"
         center={true}
       >
-        <RegularText size={14} absolute={true} left={38}>
+        <RegularText size={14} absolute={true} left={30}>
           사업 진행 단계
         </RegularText>
-        <AbsoluteWrapper direction="row" right={26}>
+        {/* {<AbsoluteWrapper direction="row" right={30}>
           <Button
             iconOption={{ icon: ReturnIcon, width: 11, height: 11 }}
             textOption={{
@@ -42,24 +40,30 @@ export default () => {
             radius={12}
             onClick={() => dispatch(initStep({}))}
           />
-        </AbsoluteWrapper>
+        </AbsoluteWrapper>} */}
+        {step.filter((val) => val).length == 0 && (
+          <AbsoluteWrapper direction="row" right={26}>
+            <RegularText size={10} color="gray">
+              한가지 이상의 사업 단계를 선택하세요
+            </RegularText>
+          </AbsoluteWrapper>
+        )}
+      </Wrapper>
+      <Wrapper direction="row" width="full" height={260}>
+        <FilterBody step={step} />
       </Wrapper>
       <BorderRow width={1} color="grayLight" />
-      <Wrapper direction="row" width="full" height={180}>
-        <FilterBody />
-      </Wrapper>
     </Wrapper>
   );
 };
 
-const FilterBody = () => {
-  const step = useSelector((state: RootState) => state.search.step);
+const FilterBody = ({ step }: { step: boolean[] }) => {
   const dispatch = useDispatch();
 
   return (
-    <Wrapper direction="row" width="full" height="full" center={true} gap={40}>
+    <Wrapper direction="row" width="full" height="full" center={true} gap={15}>
       <Wrapper direction="column" center={true} gap={13}>
-        {step.slice(0, 5).map((value, idx) => (
+        {step.slice(0, 7).map((value, idx) => (
           <Wrapper
             direction="row"
             center={true}
@@ -68,27 +72,27 @@ const FilterBody = () => {
             onClick={() => dispatch(updateStep({ index: idx }))}
           >
             <CheckButton check={value} onCheck={() => {}} size={17} />
-            <Wrapper direction="row" width={105}>
+            <Wrapper direction="row" width={145}>
               <RegularText size={13} color="gray">
-                {stepNames[idx]}
+                {`${idx + 1}. ${stepNames[idx]}`}
               </RegularText>
             </Wrapper>
           </Wrapper>
         ))}
       </Wrapper>
       <Wrapper direction="column" center={true} gap={13}>
-        {step.slice(5).map((value, idx) => (
+        {step.slice(7).map((value, idx) => (
           <Wrapper
             direction="row"
             center={true}
             key={idx}
             gap={12}
-            onClick={() => dispatch(updateStep({ index: idx + 5 }))}
+            onClick={() => dispatch(updateStep({ index: idx + 7 }))}
           >
             <CheckButton check={value} onCheck={() => {}} size={17} />
-            <Wrapper direction="row" width={105}>
+            <Wrapper direction="row" width={100}>
               <RegularText size={13} color="gray">
-                {stepNames[idx + 5]}
+                {`${idx + 8}. ${stepNames[idx + 7]}`}
               </RegularText>
             </Wrapper>
           </Wrapper>

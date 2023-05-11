@@ -20,7 +20,6 @@ export default () => {
   const dispatch = useDispatch();
 
   const target = useSelector((state: RootState) => state.target);
-
   const onHome = () => {
     if (location.pathname === "/home") {
       dispatch(updateTarget({ id: null, name: null }));
@@ -48,7 +47,7 @@ export default () => {
       </Wrapper>
 
       {target.name && (
-        <AbsoluteWrapper direction="row" left={750}>
+        <AbsoluteWrapper direction="row" left={850}>
           <HeaderMenu />
         </AbsoluteWrapper>
       )}
