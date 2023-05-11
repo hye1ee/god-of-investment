@@ -4,7 +4,7 @@ import BoxLayout from "../../detail/components/BoxLayout";
 
 const RelateBox = () => {
   return (
-    <BoxLayout width={418} color="white" title="연관 사업">
+    <BoxLayout width={362} color="white" title="연관 사업">
       <Wrapper direction="column" gap={10}>
         <RelateTag title="성수동아 재건축" />
         <RelateTag title="성수동아 재건축" />
@@ -20,7 +20,7 @@ export default RelateBox;
 const RelateTag = ({ title }: { title: string }) => {
   return (
     <TextBox
-      width={378}
+      width={322}
       height={34}
       textOption={{
         text: title,
@@ -28,7 +28,7 @@ const RelateTag = ({ title }: { title: string }) => {
         color: "black",
         size: 13,
       }}
-      color="purpleLight"
+      color="redLight"
       radius={17}
     />
   );

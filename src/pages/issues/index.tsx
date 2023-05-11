@@ -6,7 +6,7 @@ import RelateBox from "./components/RelateBox";
 
 export default () => {
   return (
-    <BodyLayout title="연관 이슈 모니터링" padding={360} color="purpleBright">
+    <BodyLayout title="연관 이슈 모니터링" padding={360} color="white">
       <Wrapper direction="row" gap={22}>
         <IssueBox />
         <Wrapper direction="column" gap={22}>
