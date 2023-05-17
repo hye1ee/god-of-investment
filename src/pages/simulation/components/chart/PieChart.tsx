@@ -42,7 +42,7 @@ const DoughnutContainerWrapper = styled.div`
   border: ${width_size(1)} solid ${appColor.grayLight};
 `;
 
-const DoughnutChart = ({
+export const DoughnutChart = ({
   labels,
   data,
 }: {
@@ -63,7 +63,6 @@ const DoughnutChart = ({
     labels,
     datasets: [
       {
-        label: "AI 모델 변수 가중치",
         data,
         backgroundColor: [
           hexToRgb(appColor.purple),
