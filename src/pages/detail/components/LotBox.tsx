@@ -2,7 +2,6 @@ import styled from "styled-components";
 import BoxLayout from "./BoxLayout";
 import { Wrapper } from "../../components/Wrapper";
 import { height_size, width_size } from "../../../utils/style";
-import Lot from "../../../assets/lot.png";
 import Button from "../../components/Button";
 import IconPair from "./IconPair";
 import { useEffect, useState } from "react";
