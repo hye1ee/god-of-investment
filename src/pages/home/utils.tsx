@@ -20,7 +20,7 @@ export const getConstructions = async (districtName: string) => {
     result = res.data.filter((data: any) => data.GU_NM === districtName);
   });
   return result.sort(
-    (a: any, b: any) => b.reprsnt_coord_lng - a.reprsnt_coord_lng
+    (a: any, b: any) => parseFloat(b.reprsnt_coord.split(' ')[1].split('(')[0]) - parseFloat(a.reprsnt_coord.split(' ')[1].split('(')[0])
   );
 };
 

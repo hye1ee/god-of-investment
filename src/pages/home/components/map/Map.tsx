@@ -99,17 +99,32 @@ const Map = () => {
     setMarkers(
       cons.map((data: any) => {
         const {
-          ZONE_NM: name,
-          reprsnt_coord_lat: lat,
-          reprsnt_coord_lng: lng,
+          ZONE_NM,
+          CAFE_NM,
+          GU_NM: gu,
+          BJDON_NM: dong,
+          REPRSNT_JIBUN: jibun,
+          BTYP_NM: type,
+          PROGRS_STTUS: step,
+          reprsnt_coord: coord,
           id,
         } = data;
+
+        const lat = parseFloat(coord.split(' ')[1].split('(')[0]);
+        const lng = parseFloat(coord.split('(')[1].split(' ')[0]);
 
         const marker = Marker(
           {
             lat,
             lng,
-            name,
+            info: {
+              name: ZONE_NM ?? CAFE_NM,
+              gu,
+              dong,
+              jibun,
+              type,
+              step,
+            },
             id,
           },
           target.id !== id,
