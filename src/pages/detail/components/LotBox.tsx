@@ -5,10 +5,22 @@ import { height_size, width_size } from "../../../utils/style";
 import Lot from "../../../assets/lot.png";
 import Button from "../../components/Button";
 import IconPair from "./IconPair";
+import Iframe from "react-iframe";
 
 const LotBox = () => {
   return (
     <BoxLayout width={800} color="white" title="필지 탐색">
+      <Iframe
+        url="https://www.eum.go.kr/web/mp/mpMapDet.jsp#none"
+        position="relative"
+        id="frame"
+        styles={{
+          width: "full",
+          height: height_size(300),
+          border: "none",
+          borderRadius: width_size(10),
+        }}
+      />
       <Wrapper direction="row" width={"full"} gap={25}>
         <LotImg src={Lot} />
         <Wrapper direction="column" width={525} gap={20}>
@@ -44,7 +56,7 @@ const LotImg = styled.img`
 
 const LotButtons = () => {
   const testUrl1 = "https://www.kaist.ac.kr";
-  const testUrl2 = "https://klms.kaist.ac.kr/login/ssologin.php"
+  const testUrl2 = "https://klms.kaist.ac.kr/login/ssologin.php";
 
   return (
     <Wrapper direction="row" gap={10}>
@@ -59,7 +71,7 @@ const LotButtons = () => {
           size: 11,
           color: "black",
         }}
-        onClick={()=>window.open(testUrl1)}
+        onClick={() => window.open(testUrl1)}
       />
       <Button
         width={172}
@@ -72,7 +84,7 @@ const LotButtons = () => {
           size: 11,
           color: "black",
         }}
-        onClick={()=>window.open(testUrl2)}
+        onClick={() => window.open(testUrl2)}
       />
     </Wrapper>
   );
