@@ -8,3 +8,11 @@ export const getConstructionInfo = async (consId: string): Promise<any> => {
       return res.data;
     });
 };
+
+export const getConstructionStat = async (consId: string): Promise<any> => {
+  return await axios
+    .get(host + "/construction_stat/" + consId)
+    .then((res) => {
+      return res.data;
+    });
+};
