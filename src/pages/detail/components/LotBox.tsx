@@ -6,8 +6,16 @@ import Lot from "../../../assets/lot.png";
 import Button from "../../components/Button";
 import IconPair from "./IconPair";
 import Iframe from "react-iframe";
+import { useEffect } from "react";
 
 const LotBox = () => {
+  useEffect(() => {
+    const frame: any = document.getElementById("frame");
+    // frame.contentWindow.choiceGisAddr(
+    //   '$.fn.choiceGisAddr("", "1168010300101870000", true, false, null)'
+    // );
+  }, []);
+
   return (
     <BoxLayout width={800} color="white" title="필지 탐색">
       <Iframe
