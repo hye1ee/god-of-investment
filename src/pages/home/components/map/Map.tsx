@@ -26,29 +26,37 @@ const Map = () => {
 
   const [modal, setModal] = useState<number | null>(null);
 
-  const setConstructions = async () => {
+  const setConstructions = async () => { // init map
     if (map != null) {
       const { lat, lon } = getLatLon(search.location.district);
       map.setCenter(new kakao.maps.LatLng(lat, lon));
-      const newCons = await getConstructions(search.location.district);
+      const newCons = await getConstructions();
       setCons(newCons);
-      setModal(newCons.length);
     }
   };
+
+  const moveCenter = () => {
+    if (map != null) {
+      const { lat, lon } = getLatLon(search.location.district);
+      map.setCenter(new kakao.maps.LatLng(lat, lon));
+    }
+  }
 
   const filterConstructions = () => {
     // const and markers have same index
     const index = new Set();
+    const num = new Set();
     cons.forEach((con: any, idx: number) => {
       if (isConFilter({ con, step: search.step, type: search.type }))
         index.add(idx);
+        if(con.GU_NM == search.location.district) num.add(idx);
     });
 
     markers.forEach((marker, idx) => {
       if (index.has(idx)) marker.overlay.setMap(map);
       else marker.overlay.setMap(null);
     });
-    setModal(index.size);
+    setModal(num.size);
   };
 
   // first rendering -> map changed -> cons changed -> markers changed
@@ -65,15 +73,18 @@ const Map = () => {
     setConstructions();
   }, [map]);
 
+  useEffect(()=> {
+    filterConstructions();
+  }, [cons]);
+
   useEffect(() => {
     // update construction by every location search
-    let modal = 0;
     if (search.location.filter) {
       if (cons.length > 0 && cons[0].GU_NM === search.location.district) {
         filterConstructions();
-      } else {
-        // if cons are empty or location changed
-        setConstructions();
+      } else { // if cons are empty or location changed
+        filterConstructions();
+        moveCenter();
       }
       dispatch(updateFilter({ value: false }));
     }
