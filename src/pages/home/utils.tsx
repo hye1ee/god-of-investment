@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../states/store";
 import axios from "axios";
 import { districtInfo, stepNames } from "../../utils/constants";
 
@@ -14,13 +12,13 @@ export const typeNames = {
   reconstruct: { display: "재건축 사업", name: "재건축" },
 };
 
-export const getConstructions = async (districtName: string) => {
+export const getConstructions = async () => {
   let result: any;
   await axios.get("http://143.248.90.184:443/constructions").then((res) => {
-    result = res.data.filter((data: any) => data.GU_NM === districtName);
+    result = res.data;
   });
   return result.sort(
-    (a: any, b: any) => b.reprsnt_coord_lng - a.reprsnt_coord_lng
+    (a: any, b: any) => parseFloat(b.reprsnt_coord.split(' ')[1].split('(')[0]) - parseFloat(a.reprsnt_coord.split(' ')[1].split('(')[0])
   );
 };
 
@@ -60,8 +58,9 @@ export const isConFilter = (props: isConFilterProps) => {
   // if (props.type.redevelop && typeNames.redevelop.name == type) return true;
   // else if (props.type.reconstruct && typeNames.reconstruct.name == type)
   //   return true;
+
   const step = props.con.PROGRS_STTUS;
-  if (props.step[stepNames.findIndex((name) => name == step)]) return true;
+  if (props.step[stepNames.findIndex((name) => name == step)])return true;
   else return false;
 
   return true;
