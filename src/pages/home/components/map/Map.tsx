@@ -80,6 +80,10 @@ const Map = () => {
   }, [cons]);
 
   useEffect(() => {
+    filterConstructions();
+  }, [cons]);
+
+  useEffect(() => {
     // update construction by every location search
     if (search.location.filter) {
       if (cons.length > 0 && cons[0].GU_NM === search.location.district) {
