@@ -27,10 +27,11 @@ const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>
 
   const markerBody = document.createElement("div");
   markerBody.className = "markerBody";
-  markerBody.innerText = "재건축";
+  markerBody.innerText = props.info.type.includes("재건축") ? "재건축" : "재개발";
+  if (markerBody.innerText == '재개발') markerBody.classList.add('red');
 
   const markerTail = document.createElement("img");
-  markerTail.src = "/src/assets/blueTriangle.png";
+  markerTail.src = markerBody.innerText == "재건축" ? "/src/assets/blueTriangle.png" : "/src/assets/redTriangle.png";
 
 
   const markerInfo = MarkerInfo(props.info);

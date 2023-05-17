@@ -26,7 +26,8 @@ const Map = () => {
 
   const [modal, setModal] = useState<number | null>(null);
 
-  const setConstructions = async () => { // init map
+  const setConstructions = async () => {
+    // init map
     if (map != null) {
       const { lat, lon } = getLatLon(search.location.district);
       map.setCenter(new kakao.maps.LatLng(lat, lon));
@@ -40,16 +41,17 @@ const Map = () => {
       const { lat, lon } = getLatLon(search.location.district);
       map.setCenter(new kakao.maps.LatLng(lat, lon));
     }
-  }
+  };
 
   const filterConstructions = () => {
     // const and markers have same index
     const index = new Set();
     const num = new Set();
     cons.forEach((con: any, idx: number) => {
-      if (isConFilter({ con, step: search.step, type: search.type }))
+      if (isConFilter({ con, step: search.step, type: search.type })) {
         index.add(idx);
-        if(con.GU_NM == search.location.district) num.add(idx);
+        if (con.GU_NM == search.location.district) num.add(idx);
+      }
     });
 
     markers.forEach((marker, idx) => {
@@ -73,7 +75,7 @@ const Map = () => {
     setConstructions();
   }, [map]);
 
-  useEffect(()=> {
+  useEffect(() => {
     filterConstructions();
   }, [cons]);
 
@@ -82,7 +84,8 @@ const Map = () => {
     if (search.location.filter) {
       if (cons.length > 0 && cons[0].GU_NM === search.location.district) {
         filterConstructions();
-      } else { // if cons are empty or location changed
+      } else {
+        // if cons are empty or location changed
         filterConstructions();
         moveCenter();
       }
@@ -91,7 +94,6 @@ const Map = () => {
   }, [search.location.filter]);
 
   useEffect(() => {
-    console.log(modal);
     if (modal !== null) {
       setTimeout(() => {
         setModal(null);
@@ -121,8 +123,8 @@ const Map = () => {
           id,
         } = data;
 
-        const lat = parseFloat(coord.split(' ')[1].split('(')[0]);
-        const lng = parseFloat(coord.split('(')[1].split(' ')[0]);
+        const lat = parseFloat(coord.split(" ")[1].split("(")[0]);
+        const lng = parseFloat(coord.split("(")[1].split(" ")[0]);
 
         const marker = Marker(
           {
