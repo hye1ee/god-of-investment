@@ -18,7 +18,7 @@ export const getConstructions = async () => {
     result = res.data;
   });
   return result.sort(
-    (a: any, b: any) => parseFloat(b.reprsnt_coord.split(' ')[1].split('(')[0]) - parseFloat(a.reprsnt_coord.split(' ')[1].split('(')[0])
+    (a: any, b: any) => b.reprsnt_coord_lng - a.reprsnt_coord_lng
   );
 };
 
@@ -58,9 +58,8 @@ export const isConFilter = (props: isConFilterProps) => {
   // if (props.type.redevelop && typeNames.redevelop.name == type) return true;
   // else if (props.type.reconstruct && typeNames.reconstruct.name == type)
   //   return true;
-
   const step = props.con.PROGRS_STTUS;
-  if (props.step[stepNames.findIndex((name) => name == step)])return true;
+  if (props.step[stepNames.findIndex((name) => name == step)]) return true;
   else return false;
 
   return true;
