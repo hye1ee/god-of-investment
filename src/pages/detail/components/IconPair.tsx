@@ -58,7 +58,7 @@ const PairWrapper = styled.div`
   height: fit-content;
 
   min-width: ${width_size(70)};
-  max-width: ${width_size(470)};
+  max-width: ${width_size(430)};
 
   display: flex;
   flex-direction: column;

@@ -21,6 +21,6 @@ export const getConstructionKeywords = async (consId: string): Promise<string[]>
   return await axios
     .get(host + "/construction/" + consId + '/similar')
     .then((res) => {
-      return res.data.map((cons: any) => cons.ZONE_NM);
+      return res.data.map((cons: any) => cons.ZONE_NM).filter((val: string) => val.length > 0);
     });
 };

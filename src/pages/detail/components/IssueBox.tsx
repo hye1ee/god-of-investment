@@ -14,7 +14,11 @@ const IssueBox = () => {
     if (consId == null) return;
     const newKeywords: string[] = [];
     const names = await getConstructionKeywords(consId);
-    names.forEach((name) => newKeywords.push(...name.split(" ")));
+    names.forEach((name) => {
+      const words = name.split(" ");
+      if (words.length == 0) newKeywords.push(name);
+      else newKeywords.push(...words);
+    });
     setKeywords(newKeywords.sort(() => Math.random() - 0.5));
   };
   useEffect(() => {
