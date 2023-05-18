@@ -21,6 +21,14 @@ export const getConstructionKeywords = async (consId: string): Promise<string[]>
   return await axios
     .get(host + "/construction/" + consId + '/similar')
     .then((res) => {
-      return res.data.map((cons: any) => cons.ZONE_NM).filter((val: string) => val.length > 0);
+      return res.data.map((cons: any) => cons.ZONE_NM).filter((val: string) => val && val.length > 0);
+    });
+};
+
+export const getConstructionLots = async (consId: string): Promise<any> => {
+  return await axios
+    .get(host + "/construction/" + consId + '/neighborlots')
+    .then((res) => {
+      return res.data;
     });
 };
