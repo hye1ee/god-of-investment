@@ -17,6 +17,7 @@ const LotBox = () => {
   const [lots, setLots] = useState<any>(null);
   const [polys, setPolys] = useState<any>(null);
   const [targetPoly, setTargetPoly] = useState<(string | null)[]>([null, null]); // pnu
+
   const consId = useSelector((state: RootState) => state.target.id);
   const [map, setMap] = useState<any>(null); // kakaomap obj
 
@@ -109,7 +110,6 @@ const LotBox = () => {
   return (
     <BoxLayout width={800} color="white" title="필지 탐색">
       <Wrapper direction="row" id="lotmap" width="full" height={300} />
-
       {targetPoly[1] !== null && (
         <Wrapper direction="row" width={"full"} wrap={true} gap={15}>
           <IconPair
