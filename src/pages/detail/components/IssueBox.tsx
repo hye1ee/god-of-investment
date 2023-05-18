@@ -17,7 +17,7 @@ const IssueBox = () => {
     names.forEach((name) => {
       const words = name.split(" ");
       if (words.length == 0) newKeywords.push(name);
-      else newKeywords.push(...words);
+      else newKeywords.push(...words.filter((word) => word.length > 0));
     });
     setKeywords(newKeywords.sort(() => Math.random() - 0.5));
   };

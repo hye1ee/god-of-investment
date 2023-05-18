@@ -22,7 +22,7 @@ export default () => {
   const target = useSelector((state: RootState) => state.target);
   const onHome = () => {
     if (location.pathname === "/home") {
-      dispatch(updateTarget({ id: null, name: null }));
+      dispatch(updateTarget({ id: null, name: null, location: null }));
     } else navigate("/home");
   };
 

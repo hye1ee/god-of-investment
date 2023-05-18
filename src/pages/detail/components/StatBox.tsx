@@ -45,28 +45,50 @@ const StatBox = () => {
     }
   };
 
+  const getChartTitle = (type: "doughnut" | "line") => {
+    if (statOption == "기본정보") {
+      if (type == "doughnut") return "공시지가 별 필지수";
+      else return "토지면적 별 필지수";
+    } else if (statOption == "토지특성") {
+      if (type == "doughnut") return "토지형상 별 필지수";
+      else return "도로접면 별 필지수";
+    } else if (statOption == "이용용도") {
+      if (type == "doughnut") return "지구지정 별 필지수";
+      else return "이용상황 별 필지수";
+    } else if (statOption == "지가변동") {
+      if (type == "doughnut") return null;
+      else return null;
+    } else {
+      if (type == "doughnut") return null;
+      else return null;
+    }
+  };
   return (
     <BoxLayout width={800} color="white" title="구역 통계 조회">
       <StatOption statOption={statOption} setStatOption={setStatOption} />
       {statInfo !== null && (
         <Wrapper direction="row" gap={20}>
           <StatWrapper>
-            <MediumText size={13}>{`${statOption} 별 필지 수`}</MediumText>
-            <Wrapper direction="row" width={320}>
+            <MediumText size={13}>
+              {getChartTitle("doughnut") ?? `${statOption} 별 필지 수`}
+            </MediumText>
+            <ChartContainer>
               <DoughnutChart
                 labels={Object.keys(getChartData("doughnut") ?? {})}
                 data={Object.values(getChartData("doughnut") ?? {})}
               />
-            </Wrapper>
+            </ChartContainer>
           </StatWrapper>
           <StatWrapper>
-            <MediumText size={13}>{`연도별 ${statOption} 변동`}</MediumText>
-            <Wrapper direction="row" width={320}>
-              <LineChart
+            <MediumText size={13}>
+              {getChartTitle("line") ?? `연도별 ${statOption} 변동`}
+            </MediumText>
+            <ChartContainer>
+              <DoughnutChart
                 labels={Object.keys(getChartData("line") ?? {})}
                 data={Object.values(getChartData("line") ?? {})}
               />
-            </Wrapper>
+            </ChartContainer>
           </StatWrapper>
         </Wrapper>
       )}
@@ -151,4 +173,8 @@ const StatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${height_size(10)};
+`;
+
+const ChartContainer = styled.div`
+  width: ${width_size(320)};
 `;

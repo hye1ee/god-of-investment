@@ -10,7 +10,7 @@ const IconName: { [index: string]: string } = {
   도로: "road",
   형상: "shape",
   지세: "gradient",
-  "공시지가(㎡)": "price",
+  "공시지가(원/㎡)": "price",
   토지이용계획: "plan",
 };
 

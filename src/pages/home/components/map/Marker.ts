@@ -39,7 +39,7 @@ const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>
   if (hide) markerInfo.classList.add('hide');
 
   marker.addEventListener('click', () => { // show and hide marker info modal
-    dispatch(updateTarget({ id: props.id, name: props.info.name }))
+    dispatch(updateTarget({ id: props.id, name: props.info.name, location: ['서울시', props.info.gu, props.info.dong].join(' ') }))
   })
   marker.append(markerBody, markerTail);
   markerWrapper.append(marker, markerInfo);
