@@ -10,7 +10,7 @@ const IconName: { [index: string]: string } = {
   도로: "road",
   형상: "shape",
   지세: "gradient",
-  "공시지가(㎡)": "price",
+  "공시지가(원/㎡)": "price",
   토지이용계획: "plan",
 };
 
@@ -58,7 +58,7 @@ const PairWrapper = styled.div`
   height: fit-content;
 
   min-width: ${width_size(70)};
-  max-width: ${width_size(470)};
+  max-width: ${width_size(430)};
 
   display: flex;
   flex-direction: column;

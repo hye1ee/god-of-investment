@@ -24,11 +24,11 @@ const BoxLayoutWrapper = styled.div<BoxLayoutProps>`
   width: ${(props) => width_size(props.width)};
   height: fit-content;
 
-  padding: ${width_size(19)};
+  padding: ${width_size(20)};
   box-sizing: border-box;
 
   background-color: ${(props) => appColor[props.color]};
-  border: 1px solid ${(props) => appColor.grayLight};
+  border: ${width_size(1)} solid ${appColor.grayLight};
   border-radius: 10px;
 
   display: flex;

@@ -1,4 +1,10 @@
 export const rootState: RootState = {
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    depart: null,
+  },
   search: {
     location: {
       city: '서울시',
@@ -14,6 +20,7 @@ export const rootState: RootState = {
   target: {
     id: null,
     name: null,
+    location: null,
   },
   simulation: {
     step: 'A',
@@ -28,6 +35,12 @@ export const rootState: RootState = {
 }
 
 export interface RootState {
+  user: {
+    id: string,
+    name: string,
+    email: string,
+    depart: number | null,
+  },
   search: {
     location: {
       city: string,
@@ -44,6 +57,7 @@ export interface RootState {
   target: {
     id: null | string,
     name: null | string,
+    location: null | string,
   },
   simulation: {
     step: string,
