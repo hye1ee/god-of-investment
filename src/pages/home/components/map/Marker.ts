@@ -6,8 +6,8 @@ import { updateTarget } from "../../../../states/targetSlice";
 interface MarkerProps {
   lat: number;
   lng: number;
-  name: string;
   id: string;
+  info: MarkerInfoProps;
 }
 
 const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>) => {
@@ -27,18 +27,19 @@ const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>
 
   const markerBody = document.createElement("div");
   markerBody.className = "markerBody";
-  markerBody.innerText = "재건축";
+  markerBody.innerText = props.info.type.includes("재건축") ? "재건축" : "재개발";
+  if (markerBody.innerText == '재개발') markerBody.classList.add('red');
 
   const markerTail = document.createElement("img");
-  markerTail.src = "/src/assets/blueTriangle.png";
+  markerTail.src = markerBody.innerText == "재건축" ? "/src/assets/blueTriangle.png" : "/src/assets/redTriangle.png";
 
 
-  const markerInfo = MarkerInfo({ name: props.name });
+  const markerInfo = MarkerInfo(props.info);
   markerInfo.id = 'marker' + props.id;
   if (hide) markerInfo.classList.add('hide');
 
   marker.addEventListener('click', () => { // show and hide marker info modal
-    dispatch(updateTarget({ id: props.id, name: props.name }))
+    dispatch(updateTarget({ id: props.id, name: props.info.name, location: ['서울시', props.info.gu, props.info.dong].join(' ') }))
   })
   marker.append(markerBody, markerTail);
   markerWrapper.append(marker, markerInfo);
@@ -52,7 +53,12 @@ const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>
 export default Marker;
 
 interface MarkerInfoProps {
-  name: string
+  name: string;
+  gu: string;
+  dong: string;
+  jibun: string;
+  type: string;
+  step: string;
 }
 
 const MarkerInfo = (props: MarkerInfoProps) => {
@@ -69,7 +75,7 @@ const MarkerInfo = (props: MarkerInfoProps) => {
   //---
   const infoPrice = document.createElement('div');
   infoPrice.className = 'infoPrice';
-  infoPrice.innerText = '매매 17억 5,000만 원';
+  infoPrice.innerText = ['서울시', props.gu, props.dong, props.jibun].join(' ');
 
   const infoSubWrapper = document.createElement('div');
   infoSubWrapper.className = 'infoSubWrapper';
@@ -80,18 +86,14 @@ const MarkerInfo = (props: MarkerInfoProps) => {
 
   const infoType = document.createElement('div');
   infoType.className = 'infoType';
-  infoType.innerText = '재건축';
-
-  const infoSize = document.createElement('div');
-  infoSize.className = 'infoDetail';
-  infoSize.innerText = '59A/55㎡, 8/12층, 남향';
+  infoType.innerText = props.type;
 
   //---
   const infoDetail = document.createElement('div');
   infoDetail.className = 'infoDetail';
-  infoDetail.innerText = '조합설립인가, 조합원승계가능';
+  infoDetail.innerText = props.step;
 
-  infoRowWrapper.append(infoType, infoSize);
+  infoRowWrapper.append(infoType);
   infoSubWrapper.append(infoRowWrapper, infoDetail);
   infoWrapper.append(infoPrice, infoSubWrapper);
   markerInfo.append(infoName, infoWrapper);

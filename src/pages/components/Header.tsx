@@ -13,6 +13,7 @@ import HeaderMenu from "./HeaderMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../states/store";
 import { updateTarget } from "../../states/targetSlice";
+import { HeaderProfile } from "./HeaderProfile";
 
 export default () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default () => {
   const target = useSelector((state: RootState) => state.target);
   const onHome = () => {
     if (location.pathname === "/home") {
-      dispatch(updateTarget({ id: null, name: null }));
+      dispatch(updateTarget({ id: null, name: null, location: null }));
     } else navigate("/home");
   };
 
@@ -52,7 +53,9 @@ export default () => {
         </AbsoluteWrapper>
       )}
 
-      <Wrapper direction="row" width={135}></Wrapper>
+      <Wrapper direction="row">
+        <HeaderProfile />
+      </Wrapper>
     </HeaderWrapper>
   );
 };

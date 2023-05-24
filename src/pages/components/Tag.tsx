@@ -43,7 +43,9 @@ const TagWrapper = styled.div<TagProps>`
 
   box-sizing: border-box;
   padding: ${(props) =>
-    `${height_size(props.paddingOption.height)} ${width_size(
+    `${height_size(props.paddingOption.height - 1)} ${width_size(
+      props.paddingOption.width
+    )} ${height_size(props.paddingOption.height + 1)} ${width_size(
       props.paddingOption.width
     )}`};
   background-color: ${(props) => appColor[props.color]};

@@ -4,36 +4,48 @@ import { appColor, width_size } from "../../../utils/style";
 import { Wrapper } from "../../components/Wrapper";
 import { TextBox } from "../../components/Text";
 import { BorderColumn, BorderRow } from "../../components/Border";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../states/store";
+import { getConstructionInfo } from "../../../apis/detail";
 
 const InfoBox = () => {
+  const [info, setInfo] = useState<any>(null);
+  const consId = useSelector((state: RootState) => state.target.id);
+
+  const asyncWrapper = async () => {
+    if (consId == null) return;
+    setInfo(await getConstructionInfo(consId));
+  };
+  useEffect(() => {
+    asyncWrapper();
+  }, []);
+
   return (
     <BoxLayout width={800} color="purpleBright" title="사업 기본 개요">
-      <InfoTable>
-        <InfoRow
-          keys={["정비구역 명칭", "사업유형"]}
-          values={["논현청학아파트재건축정비사업", "일반"]}
-        />
-        <BorderRow width={1} color="grayLight" />
-        <InfoRow
-          keys={["사업구분", "추진위수행 여부"]}
-          values={["재건축", "미수행"]}
-        />
-        <BorderRow width={1} color="grayLight" />
-        <InfoRow
-          keys={["정비구역 위치", "공공지원 대상여부"]}
-          values={["강남구논현동 62-3 일대", "대상"]}
-        />
-        <BorderRow width={1} color="grayLight" />
-        <InfoRow
-          keys={["정비구역 면적(㎡)", "조합원 수"]}
-          values={["-", "70명"]}
-        />
-        <BorderRow width={1} color="grayLight" />
-        <InfoRow
-          keys={["토지등 소유자 수", "세입자 수"]}
-          values={["70명", "0명"]}
-        />
-      </InfoTable>
+      {info && (
+        <InfoTable>
+          <InfoRow
+            keys={["정비구역 명칭", "운영구분"]}
+            values={[info.ZONE_NM ?? info.CAFE_NM, info.STEP_SE_NM]}
+          />
+          <BorderRow width={1} color="grayLight" />
+          <InfoRow
+            keys={["사업구분", "진행단계"]}
+            values={[info.BTYP_NM, info.PROGRS_STTUS]}
+          />
+          <BorderRow width={1} color="grayLight" />
+          <InfoRow
+            keys={["정비구역 위치", "진행상태"]}
+            values={[info.ZONE_ADRES, info.CAFE_STTUS]}
+          />
+          <BorderRow width={1} color="grayLight" />
+          <InfoRow
+            keys={["정비구역 면적(㎡)", "건축연면적(㎡)"]}
+            values={[info.ZONE_AR, info.TOTAR]}
+          />
+        </InfoTable>
+      )}
     </BoxLayout>
   );
 };

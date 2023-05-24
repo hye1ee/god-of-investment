@@ -1,30 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { AbsoluteWrapper, ImgWrapper, Wrapper } from "./Wrapper";
+import { AbsoluteWrapper, ImgWrapper, Wrapper } from "../../components/Wrapper";
 import {
   appColor,
   font_size,
   height_size,
   width_size,
-} from "../../utils/style";
+} from "../../../utils/style";
 import { ChangeEvent } from "react";
-import { RegularText } from "./Text";
-import { BorderRow } from "./Border";
+import { RegularText } from "../../components/Text";
+import { BorderRow } from "../../components/Border";
 
 interface InputProps {
   type?: string;
-  width?: number;
-  height?: number;
-  color?: string;
-  radiusOption?: {
-    radius: number;
-  };
   onChange: (evt: ChangeEvent<HTMLInputElement>) => void;
   value: string;
   placeholder?: string;
-
-  padding?: number;
-  gap?: number;
   iconOption?: {
     icon: string;
     width: number;
@@ -34,18 +25,21 @@ interface InputProps {
     width: number;
     color: string;
   };
-  fontOption: {
-    size: number;
-    weight: "bold" | "medium";
-    color: string;
-  };
+  active?: boolean;
+  onClick?: () => void;
 }
 
-const Input = (props: InputProps) => {
+const SignupInput = (props: InputProps) => {
   return (
-    <Wrapper direction="column" center={true}>
+    <Wrapper
+      direction="column"
+      center={true}
+      width={440}
+      height={50}
+      onClick={props.onClick}
+    >
       {props.iconOption && (
-        <AbsoluteWrapper direction="row" left={props.padding ?? 0}>
+        <AbsoluteWrapper direction="row" left={20}>
           <ImgWrapper
             direction="row"
             src={props.iconOption.icon}
@@ -59,24 +53,27 @@ const Input = (props: InputProps) => {
         onChange={props.onChange}
         placeholder={props.placeholder ?? ""}
         value={props.value}
-        onClick={(e) => e.stopPropagation()}
+        disabled={props?.active == false ? true : false}
       />
       {props.highlightOption && (
-        <AbsoluteWrapper direction="row" right={props.padding ?? 0}>
+        <AbsoluteWrapper direction="row" right={20}>
           <RegularText size={16} color={props.highlightOption.color}>
             {"*"}
           </RegularText>
         </AbsoluteWrapper>
       )}
-      <BorderRow width={1} color="grayLight" />
+      <BorderRow
+        width={2}
+        color={props.value.length == 0 ? "purpleLight" : "grayLight"}
+      />
     </Wrapper>
   );
 };
-export default Input;
+export default SignupInput;
 
 const InputContainer = styled.input<InputProps>`
-  width: ${(props) => width_size(props.width ?? 440)};
-  height: ${(props) => height_size(props.height ?? 50)};
+  width: ${width_size(440)};
+  height: ${height_size(50)};
 
   box-sizing: border-box;
   display: flex;
@@ -84,22 +81,19 @@ const InputContainer = styled.input<InputProps>`
   align-items: center;
   justify-content: flex-start;
 
-  padding-right: ${(props) => width_size(props.padding ?? 20)};
+  padding-right: ${width_size(20)};
   padding-left: ${(props) =>
-    width_size(
-      (props.padding ?? 20) + (props.gap ?? 0) + (props.iconOption?.width ?? 0)
-    )};
+    width_size(20 + 15 + (props.iconOption?.width ?? 0))};
 
-  background-color: ${(props) => appColor[props.color ?? "white"]};
-  border: none;
-  ${(props) => `border-radius: ${props.radiusOption?.radius ?? 0};`}
+  background-color: ${appColor.whiteSmoky};
 
   &:focus {
     outline: none;
   }
+  border: none;
 
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: ${(props) => props.fontOption.weight};
-  font-size: ${(props) => font_size(props.fontOption.size)};
-  color: ${(props) => appColor[props.fontOption.color]};
+  font-weight: medium;
+  font-size: ${font_size(16)};
+  color: ${appColor.black};
 `;
