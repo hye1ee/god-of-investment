@@ -14,7 +14,6 @@ interface IssueContainerProps {
 export const IssueContainer = (props: IssueContainerProps) => {
   return (
     <IssueContainerWrapper onClick={() => window.open(props.url)}>
-      <IssueImg src={props.img} />
       <Wrapper direction="column" width="full" gap={3}>
         <IssueInfo date={props.date} src={props.src} />
         <MediumText size={15}>{props.title}</MediumText>
@@ -24,7 +23,7 @@ export const IssueContainer = (props: IssueContainerProps) => {
 };
 
 const IssueContainerWrapper = styled.div`
-  width: ${width_size(250)};
+  width: ${width_size(322)};
   height: fit-content;
 
   display: flex;

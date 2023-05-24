@@ -1,3 +1,4 @@
+import React from "react";
 import Input from "../../components/Input";
 import { Wrapper } from "../../components/Wrapper";
 
@@ -13,16 +14,15 @@ interface SigninBodyProps {
 
 export default (props: SigninBodyProps) => {
   return (
-    <Wrapper direction="column" center={true}>
+    <Wrapper direction="column" center={true} gap={15}>
       <Input
         width={440}
         height={50}
         color="whiteSmoky"
-        radiusOption={{ radius: 15, position: "top" }}
+        radiusOption={{ radius: 15 }}
         onChange={(e) => props.setEmail(e.target.value)}
         value={props.email}
         placeholder="이메일"
-        borderOption={{ width: 1, color: "grayLight" }}
         padding={20}
         gap={15}
         iconOption={{ icon: EmailIcon, width: 20, height: 16 }}
@@ -33,11 +33,10 @@ export default (props: SigninBodyProps) => {
         width={440}
         height={50}
         color="whiteSmoky"
-        radiusOption={{ radius: 15, position: "bottom" }}
+        radiusOption={{ radius: 15 }}
         onChange={(e) => props.setPassword(e.target.value)}
         value={props.password}
         placeholder="비밀번호"
-        borderOption={{ width: 1, color: "grayLight" }}
         padding={20}
         gap={15}
         iconOption={{ icon: PassWordIcon, width: 18, height: 23 }}
