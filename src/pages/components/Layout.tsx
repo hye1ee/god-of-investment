@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { height_size } from "../../utils/style";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
+import { Overlay } from "./Overlay";
 
 const Layout = () => {
   return (

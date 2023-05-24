@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useState } from "react";
 import BodyLayout from "../components/BodyLayout";
 import { Wrapper } from "../components/Wrapper";
 import InfoBox from "./components/InfoBox";
@@ -8,6 +8,7 @@ import StatBox from "./components/StatBox";
 import RelateBox from "./components/RelateBox";
 import IssueBox from "./components/IssueBox";
 import MemoBox from "./components/MemoBox";
+import TagBox from "./components/TagBox";
 
 export default () => {
   return (
@@ -23,7 +24,7 @@ export default () => {
             <IssueBox />
           </Wrapper>
         </Wrapper>
-        <Wrapper direction="column" width={380}>
+        <Wrapper direction="column" width={380} gap={20}>
           <MemoBox />
         </Wrapper>
       </Wrapper>

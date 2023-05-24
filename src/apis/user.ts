@@ -26,6 +26,13 @@ export const getUsers = async (): Promise<any> => {
     });
 };
 
+export const getUser = async (id: string): Promise<any> => {
+  return await axios.get(host + "/user/" + id)
+    .then((res) => {
+      return res.data;
+    });
+};
+
 export const createUser = async (signupInfo: SignupInfoProps): Promise<boolean> => {
   const departments = await getDeparts();
   if (!departments[signupInfo.depart]) return false;
