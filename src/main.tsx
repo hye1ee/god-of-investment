@@ -13,6 +13,7 @@ import Simulation from "./pages/simulation/index";
 
 import { Provider } from "react-redux";
 import { store } from "./states/store";
+import Signup from "./pages/signup";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <Provider store={store}>
         <Routes>
           <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
 
           <Route element={<Layout />}>
             <Route path="/home" element={<Home />} />

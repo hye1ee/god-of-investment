@@ -1,4 +1,10 @@
 export const rootState: RootState = {
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    depart: null,
+  },
   search: {
     location: {
       city: '서울시',
@@ -29,6 +35,12 @@ export const rootState: RootState = {
 }
 
 export interface RootState {
+  user: {
+    id: string,
+    name: string,
+    email: string,
+    depart: number | null,
+  },
   search: {
     location: {
       city: string,
