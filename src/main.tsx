@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import "./index.css";
-import Header from "./pages/components/Header";
 import Layout from "./pages/components/Layout";
 import Signin from "./pages/signin/index";
 import Home from "./pages/home/index";
@@ -26,8 +25,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
             <Route path="/home" element={<Home />} />
             <Route path="/detail" element={<Detail />} />
             <Route path="/issues" element={<Issues />} />
-            <Route path="/search" element={<Search />} />
             <Route path="/simulation" element={<Simulation />} />
+
+            <Route path="/search" element={<Search />} />
           </Route>
 
           <Route path="/*" element={<Navigate replace to="/signin" />} />

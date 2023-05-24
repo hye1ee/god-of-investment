@@ -21,7 +21,7 @@ export type FontWeight = "bold" | "medium" | "regular";
 
 export const BoldText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: bold;
+  font-weight: 700;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 
@@ -34,7 +34,7 @@ export const BoldText = styled.div<TextProps>`
 
 export const MediumText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: medium;
+  font-weight: 400;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 
@@ -47,7 +47,7 @@ export const MediumText = styled.div<TextProps>`
 
 export const RegularText = styled.div<TextProps>`
   font-family: "Noto Sans KR", sans-serif;
-  font-weight: regular;
+  font-weight: 300;
   font-size: ${(props) => (props.size ? font_size(props.size) : font_size(15))};
   color: ${(props) => (props.color ? appColor[props.color] : appColor.black)};
 
@@ -108,4 +108,49 @@ const MixedTextWrapper = styled.div<{ gap: number }>`
   justify-content: flex-start;
 
   gap: ${(props) => width_size(props.gap)};
+`;
+
+interface TextBoxProps {
+  width: number;
+  height: number;
+  textOption: {
+    text: string;
+    weight: FontWeight;
+    color: string;
+    size: number;
+  };
+  color: string;
+  center?: boolean;
+  radius?: number;
+}
+
+export const TextBox = (props: TextBoxProps) => {
+  const { text, weight, color, size } = props.textOption;
+
+  return (
+    <TextBoxWrapper {...props}>
+      <MixedText
+        text={[text]}
+        weight={[weight]}
+        size={[size]}
+        color={[color]}
+      ></MixedText>
+    </TextBoxWrapper>
+  );
+};
+const TextBoxWrapper = styled.div<TextBoxProps>`
+  width: ${(props) => width_size(props.width)};
+  height: ${(props) => height_size(props.height)};
+
+  box-sizing: border-box;
+  background-color: ${(props) => appColor[props.color]};
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: ${(props) => (props.center ? "center" : "flex-start")};
+  ${(props) =>
+    !props.center && `padding-left: ${font_size(props.textOption.size * 1.6)}}`}
+
+  border-radius: ${(props) => height_size(props.radius ?? 0)};
 `;

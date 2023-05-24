@@ -1,0 +1,115 @@
+.markerWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  width: 2.92vw;
+  height: 2.78vh;
+
+  position: relative;
+}
+
+.marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.markerBody {
+  width: 2.92vw;
+  height: 2.78vh;
+  background-color: #4f75ff;
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: medium;
+  font-size: 1.2vh;
+}
+
+.red {
+  background-color: #ff5353;
+}
+
+.green {
+  background-color: #3b8132;
+}
+
+.markerInfo {
+  width: fit-content;
+  height: 14.63vh;
+  box-sizing: border-box;
+  padding: 25px 30px;
+
+  background-color: white;
+  border: 1px solid #e2e0e0;
+  border-radius: 13px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  position: absolute;
+  left: 3.5vw;
+  z-index: 99;
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+}
+.infoSubWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.infoRowWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.infoName {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 1.48vh;
+}
+
+.infoPrice {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: medium;
+  font-size: 1.39vh;
+  color: #6449f3;
+}
+
+.infoType {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: bold;
+  font-size: 1.2vh;
+}
+
+.infoDetail {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: medium;
+  font-size: 1.2vh;
+}
+
+.hide {
+  display: none;
+}
