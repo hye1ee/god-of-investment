@@ -14,9 +14,12 @@ import Marker from "./Marker";
 import "./marker.css";
 import SearchBar from "../search/SearchBar";
 import SearchModal from "../search/SearchModal";
+import { useNavigate } from "react-router-dom";
 
 const Map = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const target = useSelector((state: RootState) => state.target);
   const search = useSelector((state: RootState) => state.search);
 
@@ -145,7 +148,8 @@ const Map = () => {
             id,
           },
           target.id !== id,
-          dispatch
+          dispatch,
+          navigate
         );
         marker.overlay.setMap(map);
         return marker;
