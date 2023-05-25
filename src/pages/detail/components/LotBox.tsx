@@ -49,7 +49,7 @@ const LotBox = () => {
     if (targetPoly[0] !== null)
       polys[getPolyIndex(targetPoly[0])].setOptions({
         fillColor: "#A2FF99", // 채우기 색깔입니다
-        fillOpacity: 0.3, // 채우기 불투명도 입니다
+        fillOpacity: 0.1, // 채우기 불투명도 입니다
       });
     if (targetPoly[1] !== null)
       polys[getPolyIndex(targetPoly[1])].setOptions({
@@ -93,7 +93,7 @@ const LotBox = () => {
         strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
         strokeStyle: "solid", // 선의 스타일입니다
         fillColor: "#A2FF99", // 채우기 색깔입니다
-        fillOpacity: 0.3, // 채우기 불투명도 입니다
+        fillOpacity: 0.1, // 채우기 불투명도 입니다
       });
       polygon.setMap(map);
       newPolys.push(polygon);
@@ -169,7 +169,7 @@ const LotImg = styled.img`
 `;
 
 const LotButtons = ({ pnu }: { pnu: string }) => {
-  const testUrl1 = `http://www.eum.go.kr/web/ar/lu/luLandDet.jsp?pnu=${pnu}&mode=search&[…]bn=umd&selSido=&selSgg=&selUmd=&selRi=&landGbn=187&bobn=&bubn=`;
+  const testUrl1 = `http://www.eum.go.kr/web/ar/lu/luLandDet.jsp?pnu=${pnu}&mode=search&selGbn=umd&fullAddress=&isNoScr=script&selSido=&selSgg=&selUmd=&selRi=&landGbn=&bobn=&bubn=#actcon0`;
   const testUrl2 = `http://www.eum.go.kr/web/cp/cv/cvUpisDet.jsp?pnu=${pnu}&mode=search&i[…]=script&selGbn=umd&selSido=&selSgg=&selUmd=&selRi=&landGbn=187`;
 
   return (

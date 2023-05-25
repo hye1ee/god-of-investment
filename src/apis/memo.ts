@@ -9,9 +9,19 @@ export const getMemos = async (): Promise<any> => {
     });
 };
 
-export const createMemo = async ({ id, consId, text }: { id: number, consId: number, text: string }): Promise<boolean> => {
+
+export const deleteMemo = async ({ id, memoId }: { id: string, memoId: string }): Promise<any> => {
   return await axios
-    .post(host + "/construction_stat/", {
+    .delete(host + "/memo/" + memoId, { params: { memo_id: memoId, user_id: id } })
+    .then(() => {
+      return true;
+    }).catch(() => { return false; });
+};
+
+
+export const createMemo = async ({ id, consId, text }: { id: string, consId: string, text: string }): Promise<boolean> => {
+  return await axios
+    .post(host + "/memo", {
       "user_id": id,
       "construction_id": consId,
       "memo_text": text,
