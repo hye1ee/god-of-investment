@@ -169,7 +169,7 @@ const LotImg = styled.img`
 `;
 
 const LotButtons = ({ pnu }: { pnu: string }) => {
-  const testUrl1 = `http://www.eum.go.kr/web/ar/lu/luLandDet.jsp?pnu=${pnu}&mode=search&[…]bn=umd&selSido=&selSgg=&selUmd=&selRi=&landGbn=187&bobn=&bubn=`;
+  const testUrl1 = `http://www.eum.go.kr/web/ar/lu/luLandDet.jsp?pnu=${pnu}&mode=search&selGbn=umd&fullAddress=&isNoScr=script&selSido=&selSgg=&selUmd=&selRi=&landGbn=&bobn=&bubn=#actcon0`;
   const testUrl2 = `http://www.eum.go.kr/web/cp/cv/cvUpisDet.jsp?pnu=${pnu}&mode=search&i[…]=script&selGbn=umd&selSido=&selSgg=&selUmd=&selRi=&landGbn=187`;
 
   return (
