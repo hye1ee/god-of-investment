@@ -7,22 +7,27 @@ interface IssueContainerProps {
   title: string;
   date: string;
   src: string;
-  img: string;
   url: string;
+  active: boolean;
+  onClick: () => void;
 }
 
 export const IssueContainer = (props: IssueContainerProps) => {
   return (
-    <IssueContainerWrapper onClick={() => window.open(props.url)}>
+    <IssueContainerWrapper {...props}>
       <Wrapper direction="column" width="full" gap={3}>
-        <IssueInfo date={props.date} src={props.src} />
+        <IssueInfo
+          date={props.date}
+          src={props.src}
+          onClick={() => window.open(props.url)}
+        />
         <MediumText size={15}>{props.title}</MediumText>
       </Wrapper>
     </IssueContainerWrapper>
   );
 };
 
-const IssueContainerWrapper = styled.div`
+const IssueContainerWrapper = styled.div<IssueContainerProps>`
   width: ${width_size(322)};
   height: fit-content;
 
@@ -33,24 +38,25 @@ const IssueContainerWrapper = styled.div`
   box-sizing: border-box;
   padding: ${height_size(15)} ${width_size(15)};
 
-  background-color: ${appColor.white};
+  background-color: ${(props) =>
+    props.active ? appColor.blueBright : appColor.white};
   border: ${width_size(1)} solid ${appColor.grayLight};
   border-radius: ${width_size(10)};
 
   cursor: pointer;
 `;
 
-const IssueImg = styled.img`
-  width: ${width_size(220)};
-  min-height: ${height_size(180)};
-  object-fit: cover;
-
-  border-radius: ${width_size(6)};
-`;
-
-const IssueInfo = ({ date, src }: { date: string; src: string }) => {
+const IssueInfo = ({
+  date,
+  src,
+  onClick,
+}: {
+  date: string;
+  src: string;
+  onClick: () => void;
+}) => {
   return (
-    <IssueInfoWrapper>
+    <IssueInfoWrapper onClick={onClick}>
       <RegularText color="gray" size={12}>
         {date}
       </RegularText>

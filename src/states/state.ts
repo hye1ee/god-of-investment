@@ -31,6 +31,10 @@ export const rootState: RootState = {
       build: null,
       contribute: null,
     }
+  },
+  issue: {
+    id: null,
+    summary: null,
   }
 }
 
@@ -68,5 +72,9 @@ export interface RootState {
       build: null | number,
       contribute: null | number,
     }
+  },
+  issue: {
+    id: null | number,
+    summary: null | string,
   }
 }

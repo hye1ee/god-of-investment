@@ -9,6 +9,7 @@ export const getMemos = async (): Promise<any> => {
     });
 };
 
+
 export const deleteMemo = async ({ id, memoId }: { id: string, memoId: string }): Promise<any> => {
   return await axios
     .delete(host + "/memo/" + memoId, { params: { memo_id: memoId, user_id: id } })
