@@ -11,7 +11,7 @@ import { MediumText } from "../../components/Text";
 import { DoughnutChart } from "../../simulation/components/chart/PieChart";
 import { LineChart } from "../../simulation/components/chart/LineChart";
 
-type StatOption = "기본정보" | "토지특성" | "이용용도" | "지가변동" | "조합원";
+type StatOption = "기본정보" | "지가변동" | "토지특성" | "이용용도" | "조합원";
 
 const StatBox = () => {
   const [statOption, setStatOption] = useState<StatOption>("기본정보");
@@ -27,6 +27,7 @@ const StatBox = () => {
   }, []);
 
   const getChartData = (type: "doughnut" | "line") => {
+    console.log("stat", statInfo);
     if (statOption == "기본정보") {
       if (type == "doughnut") return statInfo.price_ranges;
       else return statInfo.area_ranges;
