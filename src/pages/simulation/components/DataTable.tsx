@@ -30,7 +30,10 @@ const DataTable = (props: DataTableProps) => {
         </AbsoluteWrapper>
       </Wrapper>
       <BorderRow width={1} color="grayLight" />
-      <DataTableRow value={props.labels} color={true} />
+      <DataTableRow
+        value={props.labels.slice(-1 * props.data.length)}
+        color={true}
+      />
       <DataTableRow value={props.data} color={false} />
     </DataTableWrapper>
   );

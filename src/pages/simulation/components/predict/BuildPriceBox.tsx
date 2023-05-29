@@ -11,31 +11,23 @@ import { OperationIcon } from "./OperationIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBuildPrice } from "../../../../states/simulationSlice";
 import { RootState } from "../../../../states/store";
-import { getContactland } from "../../../../apis/simulation";
 
 export const BuildPriceBox = () => {
   const dispatch = useDispatch();
-  const [inputs, setInputs] = useState<string[]>(new Array(2).fill("0"));
-  const [contactland, setContactland] = useState<number>(NaN);
-
-  const asyncWrapper = async () => {
-    setContactland(await getContactland());
-  };
+  const [inputs, setInputs] = useState<string[]>(new Array(3).fill("0"));
 
   const updatePrice = () => {
     dispatch(
       updateBuildPrice({
         price: Math.floor(
-          parseFloat(inputs[0]) * contactland +
-            parseFloat(inputs[0]) * contactland * parseFloat(inputs[1])
+          parseFloat(inputs[0]) * parseFloat(inputs[1]) +
+            parseFloat(inputs[0]) *
+              parseFloat(inputs[1]) *
+              parseFloat(inputs[2])
         ),
       })
     );
   };
-
-  useEffect(() => {
-    asyncWrapper();
-  }, []);
 
   useEffect(() => {
     updatePrice();
@@ -73,9 +65,9 @@ export const BuildPriceBox = () => {
               <OperationIcon operation="multiply" />
             </Wrapper>
             <PriceInput
-              value={contactland.toString()}
-              onChange={(val) => {}}
-              active={false}
+              value={inputs[1]}
+              onChange={(val) => onChange(val, 1)}
+              active={true}
               unit="m²"
               title="계약면적"
               width={181}
@@ -84,7 +76,7 @@ export const BuildPriceBox = () => {
               <OperationIcon operation="equal" />
             </Wrapper>
             <PriceInput
-              value={(parseFloat(inputs[0]) * contactland).toFixed(2)}
+              value={(parseFloat(inputs[0]) * parseFloat(inputs[1])).toFixed(2)}
               onChange={(val) => {}}
               active={false}
               unit="만 원"
@@ -96,7 +88,7 @@ export const BuildPriceBox = () => {
           <BorderRow width={1} color="purpleLight" />
           <PriceInputWrapper>
             <PriceInput
-              value={(parseFloat(inputs[0]) * contactland).toFixed(2)}
+              value={(parseFloat(inputs[0]) * parseFloat(inputs[1])).toFixed(2)}
               onChange={(val) => {}}
               active={false}
               unit="만 원"
@@ -107,8 +99,8 @@ export const BuildPriceBox = () => {
               <OperationIcon operation="multiply" />
             </Wrapper>
             <PriceInput
-              value={inputs[1]}
-              onChange={(val) => onChange(val, 1)}
+              value={inputs[2]}
+              onChange={(val) => onChange(val, 2)}
               active={false}
               unit="%"
               title="비율"
@@ -120,8 +112,8 @@ export const BuildPriceBox = () => {
             <PriceInput
               value={(
                 parseFloat(inputs[0]) *
-                contactland *
-                parseFloat(inputs[1])
+                parseFloat(inputs[1]) *
+                parseFloat(inputs[2])
               ).toFixed(2)}
               onChange={(val) => {}}
               active={false}

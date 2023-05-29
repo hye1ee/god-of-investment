@@ -1,22 +1,22 @@
 import { MediumText, RegularText } from "../../components/Text";
 import { AbsoluteWrapper, Wrapper } from "../../components/Wrapper";
-import {
-  PostpriceInfo,
-  PrepriceInfo,
-  StepBoxBText,
-  getPostpriceInfo,
-  getPrepriceInfo,
-} from "../utils";
+import { PostpriceInfo, PrepriceInfo, StepBoxBText } from "../utils";
 import StepBoxLayout from "./StepBoxLayout";
 import { useEffect, useState } from "react";
 import PriceBox from "./PriceBox";
 import ListTable from "./ListTable";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateStep } from "../../../states/simulationSlice";
 import DataTable from "./DataTable";
 import { DoughnutContainer } from "./chart/PieChart";
 import { LineChart } from "./chart/LineChart";
 import { DoubleLineChart } from "./chart/DoubleLineChart";
+import {
+  getLastDate,
+  getPostprice,
+  getPreprice,
+} from "../../../apis/simulation";
+import { RootState } from "../../../states/store";
 
 const StepBoxB = ({ id, step }: { id: string; step: string }) => {
   const dispatch = useDispatch();
@@ -25,16 +25,23 @@ const StepBoxB = ({ id, step }: { id: string; step: string }) => {
   const [preprice, setPreprice] = useState<PrepriceInfo | null>(null);
   const [postprice, setPostprice] = useState<PostpriceInfo | null>(null);
 
+  const dong = useSelector((state: RootState) => state.simulation.dong);
+  const ho = useSelector((state: RootState) => state.simulation.ho);
+  const size = useSelector((state: RootState) => state.simulation.size);
+
   const asyncWrapper = async () => {
-    setPreprice(await getPrepriceInfo());
-    setPostprice(await getPostpriceInfo(id));
+    if (dong == null || ho == null || size == null) return;
+
+    const lastDate = await getLastDate(id);
+    setPreprice(await getPreprice(id, dong, ho, lastDate));
+    setPostprice(await getPostprice(id, size, lastDate));
   };
 
   useEffect(() => {
     asyncWrapper();
     setActive(step == "B");
     setShow(step !== "A");
-  }, [step]);
+  }, [step, dong]);
 
   return (
     <Wrapper direction="column">
@@ -61,7 +68,7 @@ const StepBoxB = ({ id, step }: { id: string; step: string }) => {
                 <ListTable
                   title="보유 아파트와 유사 부동산 목록"
                   prices={preprice.list.prices}
-                  years={preprice.list.years}
+                  areas={preprice.list.areas}
                 />
               )}
             </Wrapper>
@@ -118,7 +125,7 @@ const StepBoxB = ({ id, step }: { id: string; step: string }) => {
                     <ListTable
                       title="희망 아파트와 유사 부동산 목록"
                       prices={postprice.list.prices}
-                      years={postprice.list.years}
+                      areas={postprice.list.areas}
                     />
                   )}
                 </Wrapper>
@@ -139,26 +146,19 @@ const StepBoxB = ({ id, step }: { id: string; step: string }) => {
               >
                 <Wrapper direction="row" width={860} height={250}>
                   <DoubleLineChart
-                    data1={postprice.change.data1}
-                    data2={postprice.change.data2}
+                    data1={preprice.change.data.slice(-4)}
+                    data2={postprice.change.data}
                     labels={postprice.change.labels}
                   />
                 </Wrapper>
                 <DataTable
                   title="향후 준공 후 예상시세 예측"
                   data={
-                    postprice.change.data2.filter(
+                    postprice.change.data.filter(
                       (val) => val !== null
                     ) as number[]
                   }
-                  labels={postprice.change.labels.slice(
-                    postprice.change.data2.filter((val) => val !== null)
-                      .length * -1
-                  )}
-                />
-                <DoughnutContainer
-                  labels={postprice.model.labels}
-                  data={postprice.model.data}
+                  labels={postprice.change.labels}
                 />
               </StepBoxLayout>
             </>

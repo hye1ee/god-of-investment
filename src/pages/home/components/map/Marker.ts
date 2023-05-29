@@ -2,6 +2,7 @@ const { kakao } = window;
 
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { updateTarget } from "../../../../states/targetSlice";
+import { NavigateFunction } from "react-router-dom";
 
 interface MarkerProps {
   lat: number;
@@ -9,8 +10,7 @@ interface MarkerProps {
   id: string;
   info: MarkerInfoProps;
 }
-
-const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>) => {
+const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>, navigate: NavigateFunction) => {
   const position = new kakao.maps.LatLng(props.lat, props.lng);
   const overlay = new kakao.maps.CustomOverlay({
     zIndex: 1,
@@ -37,6 +37,9 @@ const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>
   const markerInfo = MarkerInfo(props.info);
   markerInfo.id = 'marker' + props.id;
   if (hide) markerInfo.classList.add('hide');
+  markerInfo.addEventListener('click', () => {
+    navigate('/detail');
+  })
 
   marker.addEventListener('click', () => { // show and hide marker info modal
     dispatch(updateTarget({ id: props.id, name: props.info.name, location: ['서울시', props.info.gu, props.info.dong].join(' ') }))

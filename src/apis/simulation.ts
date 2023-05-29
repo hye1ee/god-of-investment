@@ -1,109 +1,104 @@
 import axios from "axios";
 import { host } from ".";
+import { PostpriceInfo, PrepriceInfo, dateToqstring } from "../pages/simulation/utils";
 
-//[TODO] should be change to real api not dummy
+export const getLastDate = async (id: string): Promise<number> => {
+  return await axios
+    .get(host + "/construction/" + id + "/last_simul_date")
+    .then((res) => {
+      const date = res.data as number; // array of dong string
+      console.log(date);
+      return date;
+    })
+};
 
 // StepBoxA
-export const getDongHo = async (): Promise<{ dong: string[], ho: string[] }> => {
+export const getDongHo = async (id: string): Promise<Record<string, string[]> | null> => {
   return await axios
-    .get(host + "/price_simulation/dong_ho")
+    .get(host + "/construction/" + id + "/aprt_info/dong_ho_list")
     .then((res) => {
-      const dong = res.data[0] as string[]; // array of dong string
-      const ho = res.data[1] as string[]; // array of ho string
-      return { dong, ho };
+      const dongho = res.data as Record<string, string[]>; // array of dong string
+      console.log(dongho);
+      return dongho;
+    })
+    .catch(() => {
+      return null; // simulation feature is not supported
     });
 };
 
-export const getSize = async (id: string): Promise<number[]> => {
+export const getSize = async (id: string, lastDate: number): Promise<number[] | null> => {
   return await axios
-    .get(host + "/sale_information/" + id + "/types")
+    .get(host + "/construction/" + id + "/apart_info/exclusive_area_list", { params: { last_simul_date: lastDate } })
     .then((res) => {
       const result = res.data as number[]; // array of size number
       return result;
+    })
+    .catch(() => {
+      return null; // simulation feature is not supported
     });
 };
 
 // StepBoxB
-export const getPreprice = async (): Promise<number> => {
-  return await axios
-    .get(host + "/price_simulation/preprice")
+
+export const getPreprice = async (id: string, dong: string, ho: string, lastDate: number): Promise<PrepriceInfo> => {
+  const area = await axios
+    .get(host + "/construction/" + id + "/apart_info/" + dong + "/" + ho + "/exclusive_area")
+    .then((res) => res.data as string);
+
+  const price = await axios
+    .get(host + "/ai_result/" + id + "/" + area + "/price/pre/" + lastDate)
+    .then((res) => res.data as number);
+
+  const weight = await axios
+    .get(host + "/construction/" + id + "/apart_info/" + dong + "/" + ho + "/weight")
+    .then((res) => res.data as number);
+
+  const info = await axios
+    .get(host + "/ai_result/" + id + "/" + area + "/pseudo_self_list/pre/" + lastDate)
+    .then((res) => res.data as any);
+
+  const stat = await axios
+    .get(host + "/ai_result/" + id + "/" + area + "/prices/pre")
+    .then((res) => res.data as any);
+
+  return {
+    price: Math.round(price * weight) as number,
+    list: {
+      areas: Object.values(info.Area) as number[],
+      prices: Object.values(info.Price) as number[]
+    },
+    change: {
+      data: stat.Data as number[],
+      labels: dateToqstring(stat.Labels as number[]),
+    }
+  } as PrepriceInfo;
+};
+
+export const getPostprice = async (id: string, size: number, lastDate: number): Promise<PostpriceInfo> => {
+  const price = await axios
+    .get(host + "/ai_result/" + id + "/" + size + "/price/post/" + lastDate)
     .then((res) => {
       return res.data as number; // number
     });
-};
 
-export const getPresim = async (): Promise<{ prices: number[], years: number[] }> => {
-  return await axios
-    .get(host + "/price_simulation/pre_sim_property")
-    .then((res) => {
-      const prices = res.data[0] as number[]; // array of price number
-      const years = res.data[1] as number[]; // array of year number
-      return { prices, years };
-    });
-};
+  const info = await axios
+    .get(host + "/ai_result/" + id + "/" + size + "/pseudo_self_list/post/" + lastDate)
+    .then((res) => res.data as any);
 
-export const getPrepriceList = async (): Promise<{ data: number[], labels: string[] }> => {
-  return await axios
-    .get(host + "/price_simulation/preprice_list")
-    .then((res) => {
-      const data = res.data[0] as number[]; // array of data number
-      const labels = res.data[1] as string[]; // array of label string
-      return { data, labels };
-    });
-};
+  const stat = await axios
+    .get(host + "/ai_result/" + id + "/" + size + "/prices/post")
+    .then((res) => res.data as any);
 
-export const getPostprice = async (): Promise<number> => {
-  return await axios
-    .get(host + "/price_simulation/postprice")
-    .then((res) => {
-      return res.data as number; // number
-    });
-};
+  return {
+    price,
+    list: {
+      areas: Object.values(info.Area) as number[],
+      prices: Object.values(info.Price) as number[]
+    },
+    change: {
+      data: stat.Data.map((val: any) => (val === 'null' ? null : val)) as (number | null)[],
+      labels: dateToqstring(stat.Labels as number[]),
+    }
+  } as PostpriceInfo;
 
-export const getPostsim = async (): Promise<{ prices: number[], years: number[] }> => {
-  return await axios
-    .get(host + "/price_simulation/post_sim_property")
-    .then((res) => {
-      const prices = res.data[0] as number[]; // array of price number
-      const years = res.data[1] as number[]; // array of year number
-      return { prices, years };
-    });
-};
-
-export const getPostpriceList = async (): Promise<{ data1: (number | null)[], data2: (number | null)[], labels: string[] }> => {
-  return await axios
-    .get(host + "/price_simulation/postprice_list")
-    .then((res) => {
-      const labels = res.data[0] as string[]; // array of label string
-      const data1 = res.data[1][0] as (number | null)[]; // array of data number
-      const data2 = res.data[2] as (number | null)[]; // array of data number
-      return { data1, data2, labels };
-    });
-};
-
-export const getModelFeature = async (id: string): Promise<{ data: number[], labels: string[] }> => {
-  return await axios
-    .get(host + "/construction/" + id + "/feature_importance")
-    .then((res) => {
-      const data = res.data.Data as number[]; // array of label string
-      const labels = res.data.Labels as string[]; // array of data number
-      return { data, labels };
-    });
-}
-
-// StepBox C
-export const getContactland = async (): Promise<number> => {
-  return await axios
-    .get(host + "/price_simulation/contactland")
-    .then((res) => {
-      return res.data as number; // number
-    });
-};
-
-export const getMyland = async (): Promise<number> => {
-  return await axios
-    .get(host + "/price_simulation/myland")
-    .then((res) => {
-      return res.data as number; // number
-    });
 };
