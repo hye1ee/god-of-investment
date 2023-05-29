@@ -3,23 +3,39 @@ import { host } from ".";
 
 //[TODO] should be change to real api not dummy
 
-// StepBoxA
-export const getDongHo = async (): Promise<{ dong: string[], ho: string[] }> => {
+export const getLastDate = async (id: string): Promise<number> => {
   return await axios
-    .get(host + "/price_simulation/dong_ho")
+    .get(host + "/construction/" + id + "/last_simul_date")
     .then((res) => {
-      const dong = res.data[0] as string[]; // array of dong string
-      const ho = res.data[1] as string[]; // array of ho string
-      return { dong, ho };
+      const date = res.data as number; // array of dong string
+      console.log(date);
+      return date;
+    })
+};
+
+// StepBoxA
+export const getDongHo = async (id: string): Promise<Record<string, string[]> | null> => {
+  return await axios
+    .get(host + "/construction/" + id + "/aprt_info/dong_ho_list")
+    .then((res) => {
+      const dongho = res.data as Record<string, string[]>; // array of dong string
+      console.log(dongho);
+      return dongho;
+    })
+    .catch(() => {
+      return null; // simulation feature is not supported
     });
 };
 
-export const getSize = async (id: string): Promise<number[]> => {
+export const getSize = async (id: string, lastDate: number): Promise<number[] | null> => {
   return await axios
-    .get(host + "/sale_information/" + id + "/types")
+    .get(host + "/construction/" + id + "/apart_info/exclusive_area_list", { params: { last_simul_date: lastDate } })
     .then((res) => {
       const result = res.data as number[]; // array of size number
       return result;
+    })
+    .catch(() => {
+      return null; // simulation feature is not supported
     });
 };
 
