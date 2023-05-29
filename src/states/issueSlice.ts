@@ -6,12 +6,14 @@ const issue = createSlice({
   initialState: rootState.issue,
   reducers: {
 
-    updateIssue: (state, action: PayloadAction<{ id: number | null, summary: string | null }>
+    updateIssue: (state, action: PayloadAction<{ id: number | null, summary: string | null, score: string | null }>
     ) => {
-      const { id, summary } = action.payload;
+      const { id, summary, score } = action.payload;
       state.id = id;
       state.summary = summary;
+      state.score = score;
     }
+
   }
 })
 

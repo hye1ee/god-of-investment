@@ -15,7 +15,7 @@ const IssueBox = () => {
   const dispatch = useDispatch();
 
   const asyncWrapper = async () => {
-    dispatch(updateIssue({ id: null, summary: null }));
+    dispatch(updateIssue({ id: null, summary: null, score: null }));
 
     if (!consId) return;
     let newIssues = await getIssues(consId);
@@ -29,7 +29,13 @@ const IssueBox = () => {
 
   const setIssue = (id: number) => {
     const targetIssue = issues.find((issue) => issue.id == id);
-    dispatch(updateIssue({ id, summary: targetIssue.gpt_summary }));
+    dispatch(
+      updateIssue({
+        id,
+        summary: targetIssue.gpt_summary,
+        score: targetIssue.gpt_score,
+      })
+    );
   };
 
   useEffect(() => {
@@ -59,6 +65,7 @@ const IssueBox = () => {
             ].join("-")}
             active={issueId == issue.id}
             onClick={() => setIssue(issue.id)}
+            score={issue.gpt_score}
           />
         ))}
       </Wrapper>
