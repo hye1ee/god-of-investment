@@ -11,31 +11,23 @@ import { OperationIcon } from "./OperationIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { updateContributePrice } from "../../../../states/simulationSlice";
 import { RootState } from "../../../../states/store";
-import { getMyland } from "../../../../apis/simulation";
 
 export const ContributePriceBox = () => {
   const dispatch = useDispatch();
-  const [inputs, setInputs] = useState<string[]>(new Array(4).fill("0"));
-  const [myland, setMyland] = useState<number>(NaN);
-
-  const asyncWrapper = async () => {
-    setMyland(await getMyland());
-  };
+  const [inputs, setInputs] = useState<string[]>(new Array(5).fill("0"));
 
   const updatePrice = () => {
     dispatch(
       updateContributePrice({
         price: Math.floor(
           (parseFloat(inputs[0]) / parseFloat(inputs[1])) *
-            (myland - parseFloat(inputs[2]) - parseFloat(inputs[3]))
+            (parseFloat(inputs[2]) -
+              parseFloat(inputs[3]) -
+              parseFloat(inputs[4]))
         ),
       })
     );
   };
-
-  useEffect(() => {
-    asyncWrapper();
-  }, []);
 
   useEffect(() => {
     updatePrice();
@@ -97,9 +89,9 @@ export const ContributePriceBox = () => {
           <BorderRow width={1} color="purpleLight" />
           <PriceInputWrapper>
             <PriceInput
-              value={myland.toString()}
-              onChange={(val) => {}}
-              active={false}
+              value={inputs[2]}
+              onChange={(val) => onChange(val, 2)}
+              active={true}
               unit="m²"
               title="보유대지지분"
               width={97}
@@ -108,8 +100,8 @@ export const ContributePriceBox = () => {
               <OperationIcon operation="subtract" />
             </Wrapper>
             <PriceInput
-              value={inputs[2]}
-              onChange={(val) => onChange(val, 2)}
+              value={inputs[3]}
+              onChange={(val) => onChange(val, 3)}
               active={false}
               unit="m²"
               title="조합원 분양 필요대지지분"
@@ -119,8 +111,8 @@ export const ContributePriceBox = () => {
               <OperationIcon operation="subtract" />
             </Wrapper>
             <PriceInput
-              value={inputs[3]}
-              onChange={(val) => onChange(val, 3)}
+              value={inputs[4]}
+              onChange={(val) => onChange(val, 4)}
               active={false}
               unit="m²"
               title="기부채납 면적"
@@ -131,9 +123,9 @@ export const ContributePriceBox = () => {
             </Wrapper>
             <PriceInput
               value={(
-                myland -
                 parseFloat(inputs[2]) -
-                parseFloat(inputs[3])
+                parseFloat(inputs[3]) -
+                parseFloat(inputs[4])
               ).toFixed(2)}
               onChange={(val) => {}}
               active={false}

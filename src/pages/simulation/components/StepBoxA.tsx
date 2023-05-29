@@ -12,20 +12,22 @@ import {
   updateSize,
   updateStep,
 } from "../../../states/simulationSlice";
-import { getDongHo, getSize } from "../../../apis/simulation";
+import { getDongHo, getLastDate, getSize } from "../../../apis/simulation";
 import { RootState } from "../../../states/store";
 
 const StepBoxA = ({ id, step }: { id: string; step: string }) => {
   const dispatch = useDispatch();
 
   const asyncWrapper = async () => {
-    const newDongHoList = await getDongHo();
-    const newSizeList = await getSize(id);
-    setDongList(newDongHoList.dong);
-    dispatch(updateDong({ dong: newDongHoList.dong[0] }));
-
-    setHoList(newDongHoList.ho);
-    dispatch(updateHo({ ho: newDongHoList.ho[0] }));
+    const lastDate = await getLastDate(id);
+    const newDongHoList = await getDongHo(id);
+    const newSizeList = await getSize(id, lastDate);
+    if (newDongHoList == null || newSizeList == null) {
+      return;
+    }
+    setDonghoList(newDongHoList);
+    dispatch(updateDong({ dong: Object.keys(newDongHoList)[0] }));
+    dispatch(updateHo({ ho: Object.values(newDongHoList)[0][0] }));
 
     setSizeList(newSizeList);
     dispatch(updateSize({ size: newSizeList[0] }));
@@ -35,8 +37,9 @@ const StepBoxA = ({ id, step }: { id: string; step: string }) => {
     asyncWrapper();
   }, []);
 
-  const [dongList, setDongList] = useState<string[]>([]);
-  const [hoList, setHoList] = useState<string[]>([]);
+  const [donghoList, setDonghoList] = useState<null | Record<string, string[]>>(
+    null
+  );
   const [sizeList, setSizeList] = useState<number[]>([]);
 
   const dong = useSelector((state: RootState) => state.simulation.dong);
@@ -61,20 +64,23 @@ const StepBoxA = ({ id, step }: { id: string; step: string }) => {
         color: ["purple", "black", "black", "purple", "black"],
       }}
     >
-      {dong !== null && ho !== null && size !== null && (
+      {dong !== null && ho !== null && size !== null && donghoList !== null && (
         <Wrapper direction="row" gap={20}>
           <SubBoxShortWrapper>
             <MediumText size={16}>{"현재 보유 아파트 정보"}</MediumText>
             <Wrapper direction="row" gap={15}>
               <DropDown
                 value={dong}
-                list={dongList}
-                onSelect={(val) => dispatch(updateDong({ dong: val }))}
+                list={Object.keys(donghoList)}
+                onSelect={(val) => {
+                  dispatch(updateDong({ dong: val }));
+                  dispatch(updateHo({ ho: donghoList[dong][0] }));
+                }}
                 active={step == "A"}
               />
               <DropDown
                 value={ho}
-                list={hoList}
+                list={donghoList[dong]}
                 onSelect={(val) => dispatch(updateHo({ ho: val }))}
                 active={step == "A"}
               />

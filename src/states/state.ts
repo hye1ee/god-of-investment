@@ -35,6 +35,7 @@ export const rootState: RootState = {
   issue: {
     id: null,
     summary: null,
+
   }
 }
 

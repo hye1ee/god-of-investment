@@ -8,10 +8,10 @@ export const DoubleLineChart = ({
   data2,
 }: {
   labels: string[];
-  data1: (number | null)[];
+  data1: number[];
   data2: (number | null)[];
 }) => {
-  const currentLable = data1.filter((val) => val == null).length - 1;
+  const currentLable = 3;
   const dataMin = Math.min(
     Math.min(...(data1.filter((val) => val !== null) as number[])),
     Math.min(...(data2.filter((val) => val !== null) as number[]))
