@@ -7,10 +7,11 @@ import { height_size, width_size } from "../../../utils/style";
 import Button from "../../components/Button";
 import IconPair from "./IconPair";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../states/store";
 import { getConstructionInfo, getConstructionLots } from "../../../apis/detail";
 import { getLatLon, getKakaoMap, getMarker } from "../utils";
+import { updateTarget } from "../../../states/detailSlice";
 
 const LotBox = () => {
   const [info, setInfo] = useState<any>(null);
@@ -20,6 +21,8 @@ const LotBox = () => {
 
   const consId = useSelector((state: RootState) => state.target.id);
   const [map, setMap] = useState<any>(null); // kakaomap obj
+
+  const dispatch = useDispatch();
 
   const asyncWrapper = async () => {
     if (consId == null) return;
@@ -44,6 +47,10 @@ const LotBox = () => {
     // draw pin
     getMarker(getLatLon(info?.reprsnt_coord)).setMap(map);
   }, [map]);
+
+  useEffect(() => {
+    dispatch(updateTarget({ pnu: targetPoly[1] }));
+  }, [targetPoly]);
 
   useEffect(() => {
     if (targetPoly[0] !== null)
