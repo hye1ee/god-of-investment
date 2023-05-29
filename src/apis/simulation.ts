@@ -74,7 +74,6 @@ export const getPostpriceList = async (): Promise<{ data1: (number | null)[], da
   return await axios
     .get(host + "/price_simulation/postprice_list")
     .then((res) => {
-      console.log(res.data);
       const labels = res.data[0] as string[]; // array of label string
       const data1 = res.data[1][0] as (number | null)[]; // array of data number
       const data2 = res.data[2] as (number | null)[]; // array of data number

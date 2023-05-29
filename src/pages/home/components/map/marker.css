@@ -36,6 +36,14 @@
   font-size: 1.2vh;
 }
 
+.red {
+  background-color: #ff5353;
+}
+
+.green {
+  background-color: #3b8132;
+}
+
 .markerInfo {
   width: fit-content;
   height: 14.63vh;

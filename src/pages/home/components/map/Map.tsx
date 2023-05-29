@@ -14,9 +14,12 @@ import Marker from "./Marker";
 import "./marker.css";
 import SearchBar from "../search/SearchBar";
 import SearchModal from "../search/SearchModal";
+import { useNavigate } from "react-router-dom";
 
 const Map = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const target = useSelector((state: RootState) => state.target);
   const search = useSelector((state: RootState) => state.search);
 
@@ -27,28 +30,38 @@ const Map = () => {
   const [modal, setModal] = useState<number | null>(null);
 
   const setConstructions = async () => {
+    // init map
     if (map != null) {
       const { lat, lon } = getLatLon(search.location.district);
       map.setCenter(new kakao.maps.LatLng(lat, lon));
-      const newCons = await getConstructions(search.location.district);
+      const newCons = await getConstructions();
       setCons(newCons);
-      setModal(newCons.length);
+    }
+  };
+
+  const moveCenter = () => {
+    if (map != null) {
+      const { lat, lon } = getLatLon(search.location.district);
+      map.setCenter(new kakao.maps.LatLng(lat, lon));
     }
   };
 
   const filterConstructions = () => {
     // const and markers have same index
     const index = new Set();
+    const num = new Set();
     cons.forEach((con: any, idx: number) => {
-      if (isConFilter({ con, step: search.step, type: search.type }))
+      if (isConFilter({ con, step: search.step, type: search.type })) {
         index.add(idx);
+        if (con.GU_NM == search.location.district) num.add(idx);
+      }
     });
 
     markers.forEach((marker, idx) => {
       if (index.has(idx)) marker.overlay.setMap(map);
       else marker.overlay.setMap(null);
     });
-    setModal(index.size);
+    setModal(num.size);
   };
 
   // first rendering -> map changed -> cons changed -> markers changed
@@ -66,21 +79,28 @@ const Map = () => {
   }, [map]);
 
   useEffect(() => {
+    filterConstructions();
+  }, [cons]);
+
+  useEffect(() => {
+    filterConstructions();
+  }, [cons]);
+
+  useEffect(() => {
     // update construction by every location search
-    let modal = 0;
     if (search.location.filter) {
       if (cons.length > 0 && cons[0].GU_NM === search.location.district) {
         filterConstructions();
       } else {
         // if cons are empty or location changed
-        setConstructions();
+        filterConstructions();
+        moveCenter();
       }
       dispatch(updateFilter({ value: false }));
     }
   }, [search.location.filter]);
 
   useEffect(() => {
-    console.log(modal);
     if (modal !== null) {
       setTimeout(() => {
         setModal(null);
@@ -99,21 +119,37 @@ const Map = () => {
     setMarkers(
       cons.map((data: any) => {
         const {
-          ZONE_NM: name,
-          reprsnt_coord_lat: lat,
-          reprsnt_coord_lng: lng,
+          ZONE_NM,
+          CAFE_NM,
+          GU_NM: gu,
+          BJDON_NM: dong,
+          REPRSNT_JIBUN: jibun,
+          BTYP_NM: type,
+          PROGRS_STTUS: step,
+          reprsnt_coord: coord,
           id,
         } = data;
+
+        const lat = parseFloat(coord.split(" ")[1].split("(")[0]);
+        const lng = parseFloat(coord.split("(")[1].split(" ")[0]);
 
         const marker = Marker(
           {
             lat,
             lng,
-            name,
+            info: {
+              name: ZONE_NM ?? CAFE_NM,
+              gu,
+              dong,
+              jibun,
+              type,
+              step,
+            },
             id,
           },
           target.id !== id,
-          dispatch
+          dispatch,
+          navigate
         );
         marker.overlay.setMap(map);
         return marker;
