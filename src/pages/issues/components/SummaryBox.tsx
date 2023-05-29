@@ -7,6 +7,7 @@ import { Wrapper } from "../../components/Wrapper";
 import { RegularText } from "../../components/Text";
 import Tag from "../../components/Tag";
 import { scoreColor } from "../utils";
+import { LineChart } from "../../simulation/components/chart/LineChart";
 
 const SummaryBox = () => {
   const [stat, setStat] = useState([]);
@@ -17,6 +18,7 @@ const SummaryBox = () => {
   const asyncWrapper = async () => {
     if (!consId) return;
     console.log(await getIssueStat(consId));
+    //[TODO] 여기서 console에 찍히는 값은 변수 stat에 저장됩니다. 각각 data와 label분리하여 아래 line component부분에 넣어주세요!
     setStat(await getIssueStat(consId));
   };
 
@@ -46,8 +48,15 @@ const SummaryBox = () => {
           </Wrapper>
         )}
       </BoxLayout>{" "}
-      <BoxLayout width={820} color="purpleBright" title="사업 연관 이슈 통계">
-        {" "}
+      <BoxLayout width={820} color="purpleBright" title="사업 전망 예측">
+        <Wrapper direction="row" width={780}>
+          <LineChart labels={["1", "2"]} data={[5, 10]} />
+        </Wrapper>
+      </BoxLayout>
+      <BoxLayout width={820} color="purpleBright" title="사업 관심도">
+        <Wrapper direction="row" width={780}>
+          <LineChart labels={["1", "2"]} data={[5, 10]} />
+        </Wrapper>
       </BoxLayout>
     </Wrapper>
   );
