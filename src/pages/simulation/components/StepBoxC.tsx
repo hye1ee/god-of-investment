@@ -1,11 +1,6 @@
 import { RegularText } from "../../components/Text";
 import { Wrapper } from "../../components/Wrapper";
-import {
-  PostpriceInfo,
-  PrepriceInfo,
-  getPostpriceInfo,
-  getPrepriceInfo,
-} from "../utils";
+import { PostpriceInfo, PrepriceInfo } from "../utils";
 import StepBoxLayout from "./StepBoxLayout";
 import { useEffect, useState } from "react";
 
@@ -21,10 +16,7 @@ const StepBoxC = ({ id, step }: { id: string; step: string }) => {
   const [preprice, setPreprice] = useState<PrepriceInfo | null>(null);
   const [postprice, setPostprice] = useState<PostpriceInfo | null>(null);
 
-  const asyncWrapper = async () => {
-    setPreprice(await getPrepriceInfo());
-    setPostprice(await getPostpriceInfo(id));
-  };
+  const asyncWrapper = async () => {};
 
   useEffect(() => {
     asyncWrapper();

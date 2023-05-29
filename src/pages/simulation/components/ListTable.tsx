@@ -7,7 +7,7 @@ import { BorderColumn, BorderRow } from "../../components/Border";
 interface ListTableProps {
   title: string;
   prices: number[];
-  years: number[];
+  areas: number[];
 }
 
 // column width - 119px, 178px, 119px
@@ -36,7 +36,7 @@ const ListTable = (props: ListTableProps) => {
             <ListTableRow
               name={name}
               price={props.prices[idx]}
-              year={props.years[idx]}
+              area={props.areas[idx]}
               key={idx}
             />
             {idx !== nameList.length && (
@@ -99,7 +99,7 @@ const ListTableHeader = () => {
         height="full"
       >
         <MediumText color="gray" size={14}>
-          준공연도
+          전용 면적
         </MediumText>
       </Wrapper>
     </Wrapper>
@@ -109,7 +109,7 @@ const ListTableHeader = () => {
 interface ListTableRowProps {
   name: string;
   price: number;
-  year: number;
+  area: number;
 }
 
 const ListTableRow = (props: ListTableRowProps) => {
@@ -121,12 +121,12 @@ const ListTableRow = (props: ListTableRowProps) => {
       <BorderColumn width={1} color="grayLight" />
       <Wrapper direction="row" width={178} center={true} height="full">
         <RegularText size={14}>
-          {props.price.toLocaleString() + " 만원"}
+          {Math.round(props.price).toLocaleString() + " 만원"}
         </RegularText>
       </Wrapper>
       <BorderColumn width={1} color="grayLight" />
       <Wrapper direction="row" width={119} center={true} height="full">
-        <RegularText size={14}>{props.year + "년"}</RegularText>
+        <RegularText size={14}>{props.area}</RegularText>
       </Wrapper>
     </Wrapper>
   );
