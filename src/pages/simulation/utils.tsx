@@ -11,13 +11,13 @@ export const dateToqstring = (dates: number[]): string[] => {
     const year = parseInt(date.toString().slice(2, 4));
     const month = parseInt(date.toString().slice(4, 6)) - 1;
     let quarter;
-    if (month % 3 == 0) {
+    if (month < 3) {
       // 0, 1, 2
       quarter = "Q1";
-    } else if (month % 3 == 1) {
+    } else if (month < 6) {
       // 3, 4, 5
       quarter = "Q2";
-    } else if (month % 3 == 2) {
+    } else if (month < 9) {
       // 6, 7, 8
       quarter = "Q3";
     } else {
