@@ -38,7 +38,7 @@ export const rootState: RootState = {
   issue: {
     id: null,
     summary: null,
-
+    score: null,
   }
 }
 
@@ -83,5 +83,6 @@ export interface RootState {
   issue: {
     id: null | number,
     summary: null | string,
+    score: null | string,
   }
 }
