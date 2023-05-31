@@ -38,8 +38,8 @@ const StatBox = () => {
       if (type == "doughnut") return statInfo.prposArea_count;
       else return statInfo.ladUseSittnNm_count;
     } else if (statOption == "지가변동") {
-      if (type == "doughnut") return null;
-      else return null;
+      if (type == "doughnut") return statInfo.price_change_count;
+      else return statInfo.avgprice_by_years;
     } else {
       if (type == "doughnut") return null;
       else return null;
@@ -57,8 +57,8 @@ const StatBox = () => {
       if (type == "doughnut") return "지구지정 별 필지수";
       else return "이용상황 별 필지수";
     } else if (statOption == "지가변동") {
-      if (type == "doughnut") return null;
-      else return null;
+      if (type == "doughnut") return "지가변동별 필지수";
+      else return "연도별 지가변동";
     } else {
       if (type == "doughnut") return null;
       else return null;
@@ -85,10 +85,17 @@ const StatBox = () => {
               {getChartTitle("line") ?? `연도별 ${statOption} 변동`}
             </MediumText>
             <ChartContainer>
-              <DoughnutChart
-                labels={Object.keys(getChartData("line") ?? {})}
-                data={Object.values(getChartData("line") ?? {})}
-              />
+              {statOption === "지가변동" ? (
+                <LineChart
+                  labels={Object.keys(getChartData("line") ?? {})}
+                  data={Object.values(getChartData("line") ?? {})}
+                />
+              ) : (
+                <DoughnutChart
+                  labels={Object.keys(getChartData("line") ?? {})}
+                  data={Object.values(getChartData("line") ?? {})}
+                />
+              )}
             </ChartContainer>
           </StatWrapper>
         </Wrapper>
@@ -113,6 +120,11 @@ const StatOption = ({
         onActive={() => setStatOption("기본정보")}
       />
       <StatTag
+        name="지가변동"
+        active={statOption === "지가변동"}
+        onActive={() => setStatOption("지가변동")}
+      />
+      <StatTag
         name="토지특성"
         active={statOption === "토지특성"}
         onActive={() => setStatOption("토지특성")}
@@ -122,11 +134,7 @@ const StatOption = ({
         active={statOption === "이용용도"}
         onActive={() => setStatOption("이용용도")}
       />
-      <StatTag
-        name="지가변동"
-        active={statOption === "지가변동"}
-        onActive={() => setStatOption("지가변동")}
-      />
+
       <StatTag
         name="조합원"
         active={statOption === "조합원"}
