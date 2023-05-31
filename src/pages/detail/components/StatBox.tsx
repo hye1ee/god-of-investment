@@ -27,7 +27,6 @@ const StatBox = () => {
   }, []);
 
   const getChartData = (type: "doughnut" | "line") => {
-    console.log("stat", statInfo);
     if (statOption == "기본정보") {
       if (type == "doughnut") return statInfo.price_ranges;
       else return statInfo.area_ranges;

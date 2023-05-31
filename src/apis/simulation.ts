@@ -7,7 +7,6 @@ export const getLastDate = async (id: string): Promise<number> => {
     .get(host + "/construction/" + id + "/last_simul_date")
     .then((res) => {
       const date = res.data as number; // array of dong string
-      console.log(date);
       return date;
     })
 };
@@ -18,7 +17,6 @@ export const getDongHo = async (id: string): Promise<Record<string, string[]> | 
     .get(host + "/construction/" + id + "/aprt_info/dong_ho_list")
     .then((res) => {
       const dongho = res.data as Record<string, string[]>; // array of dong string
-      console.log(dongho);
       return dongho;
     })
     .catch(() => {

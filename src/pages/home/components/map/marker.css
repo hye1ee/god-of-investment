@@ -41,6 +41,9 @@
 }
 
 .green {
+  width: 2.4vw;
+  height: 2.22vh;
+  font-size: 0.8vh;
   background-color: #3b8132;
 }
 
