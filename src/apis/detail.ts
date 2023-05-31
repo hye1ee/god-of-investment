@@ -11,7 +11,7 @@ export const getConstructionInfo = async (consId: string): Promise<any> => {
 
 export const getConstructionSheet = async (pnu: string): Promise<any> => {
   return await axios
-    .get(host + "/lot/" + pnu)
+    .get(host + "/lot/" + pnu + "/building")
     .then((res) => {
       return res.data;
     });
