@@ -3,6 +3,8 @@ const { kakao } = window;
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { updateTarget } from "../../../../states/targetSlice";
 import { NavigateFunction } from "react-router-dom";
+import BlueTriangle from "../../../../assets/blueTriangle.png";
+import RedTriangle from "../../../../assets/redTriangle.png";
 
 interface MarkerProps {
   lat: number;
@@ -31,7 +33,7 @@ const Marker = (props: MarkerProps, hide: boolean, dispatch: Dispatch<AnyAction>
   if (markerBody.innerText == '재개발') markerBody.classList.add('red');
 
   const markerTail = document.createElement("img");
-  markerTail.src = markerBody.innerText == "재건축" ? "/src/assets/blueTriangle.png" : "/src/assets/redTriangle.png";
+  markerTail.src = markerBody.innerText == "재건축" ? BlueTriangle:RedTriangle;
 
 
   const markerInfo = MarkerInfo(props.info);

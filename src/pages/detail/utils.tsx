@@ -1,3 +1,5 @@
+import GreenTriangle from "../../assets/greenTriangle.png";
+
 export const getLatLon = (point: string | null) => {
   if (point == null) return { lat: 37.5519, lon: 126.9918 };
 
@@ -36,7 +38,7 @@ export const getMarker = ({ lat, lon }: { lat: number; lon: number }) => {
   markerBody.className = "markerBody green";
   markerBody.innerText = "정비사업";
   const markerTail = document.createElement("img");
-  markerTail.src = "/src/assets/greenTriangle.png";
+  markerTail.src = GreenTriangle;
 
   marker.append(markerBody, markerTail);
   overlay.setContent(marker);
