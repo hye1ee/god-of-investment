@@ -146,18 +146,36 @@ const StepBoxB = ({ id, step }: { id: string; step: string }) => {
               >
                 <Wrapper direction="row" width={860} height={250}>
                   <DoubleLineChart
-                    data1={preprice.change.data.slice(-4)}
-                    data2={postprice.change.data}
+                    data1={preprice.change.data.slice(-4).map((value) => value / preprice.list.areas[0])}
+                    // data1={preprice.change.data.slice(-4).map((value) => (value !== null ? value / preprice.list.areas[0] : null))}                    
+                    data2={postprice.change.data.map((value) => {
+                      if (value !== null && size !== null) {
+                        return value / size;
+                      } else {
+                        return null;
+                      }
+                    })}
+                    // data1={preprice.change.data.slice(-4)}
+                    // data2={postprice.change.data}
                     labels={postprice.change.labels}
                   />
                 </Wrapper>
                 <DataTable
-                  title="향후 준공 후 예상시세 예측"
-                  data={
-                    postprice.change.data.filter(
-                      (val) => val !== null
-                    ) as number[]
-                  }
+                  title="향후 준공 후 예상 평단가 예측"
+                  data={(postprice.change.data.map((value) => {
+                    if (value !== null && size !== null) {
+                      return Math.floor(value / size);
+                    } else {
+                      return null;
+                    }
+                  })).filter(
+                    (val) => val !== null
+                  ) as number[]}
+                  // {
+                  //   postprice.change.data.filter(
+                  //     (val) => val !== null
+                  //   ) as number[]
+                  // }
                   labels={postprice.change.labels}
                 />
               </StepBoxLayout>

@@ -11,10 +11,10 @@ export const rootState: RootState = {
   search: {
     location: {
       city: '서울시',
-      district: '종로구',
+      district: '용산구',
       filter: false,
     },
-    step: new Array(14).fill(true),
+    step: [...Array(7).fill(true), ...Array(7).fill(false)],
     type: {
       redevelop: true,
       reconstruct: true,
