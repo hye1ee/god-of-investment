@@ -1,23 +1,32 @@
 import styled from "styled-components";
 import { height_size, width_size } from "../../../utils/style";
 import { MediumText, RegularText } from "../../components/Text";
+import GroundIcon from "../../../assets/lot/ground.svg";
+import CurrentIcon from "../../../assets/lot/current.svg";
+import RegionIcon from "../../../assets/lot/region.svg";
+import AreaIcon from "../../../assets/lot/area.svg";
+import RoadIcon from "../../../assets/lot/road.svg";
+import ShapeIcon from "../../../assets/lot/shape.svg";
+import GradientIcon from "../../../assets/lot/gradient.svg";
+import PriceIcon from "../../../assets/lot/price.svg";
+import PlanIcon from "../../../assets/lot/plan.svg";
 
-const IconName: { [index: string]: string } = {
-  지목: "ground",
-  이용상황: "current",
-  용도지역: "region",
-  "면적(㎡)": "area",
-  도로: "road",
-  형상: "shape",
-  지세: "gradient",
-  "공시지가(원/㎡)": "price",
-  토지이용계획: "plan",
+const Icons: { [index: string]: string } = {
+  지목: GroundIcon,
+  이용상황: CurrentIcon,
+  용도지역: RegionIcon,
+  "면적(㎡)": AreaIcon,
+  도로: RoadIcon,
+  형상: ShapeIcon,
+  지세: GradientIcon,
+  "공시지가(원/㎡)": PriceIcon,
+  토지이용계획: PlanIcon,
 };
 
 const IconPair = ({ title, value }: { title: string; value: string }) => {
   return (
     <IconPairWrapper>
-      <IconWrapper src={`/src/assets/lot/${IconName[title] ?? "ground"}.svg`} />
+      <IconWrapper src={Icons[title]} />
       <PairWrapper>
         <MediumText size={12} color="black">
           {title}

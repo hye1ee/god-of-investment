@@ -10,7 +10,7 @@ import { scoreColor } from "../utils";
 import { LineChart } from "../../simulation/components/chart/LineChart";
 
 const SummaryBox = () => {
-  const [stat, setStat] = useState([]);
+  const [stat, setStat] = useState<any>(null);
   const summary = useSelector((state: RootState) => state.issue.summary);
   const score = useSelector((state: RootState) => state.issue.score);
   const consId = useSelector((state: RootState) => state.target.id);
@@ -49,16 +49,25 @@ const SummaryBox = () => {
       </BoxLayout>{" "}
       <BoxLayout width={820} color="purpleBright" title="사업 전망 예측">
         <Wrapper direction="row" width={780}>
-          <LineChart labels={["1", "2"]} data={[5, 10]} />
+          {/* line chart use stat's issue_count. label as dict's keys, data as dict's value*/}
+          <LineChart
+              labels={Object.keys(stat?.gpt_score ?? {})}
+              data={Object.values(stat?.gpt_score ?? {})}
+            />
         </Wrapper>
       </BoxLayout>
       <BoxLayout width={820} color="purpleBright" title="사업 관심도">
         <Wrapper direction="row" width={780}>
-          <LineChart labels={["1", "2"]} data={[5, 10]} />
+         <LineChart
+                labels={Object.keys(stat?.issue_count ?? {})}
+                data={Object.values(stat?.issue_count ?? {})}
+              />
         </Wrapper>
       </BoxLayout>
     </Wrapper>
   );
 };
+
+
 
 export default SummaryBox;

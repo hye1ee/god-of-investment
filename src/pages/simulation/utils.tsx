@@ -17,7 +17,7 @@ export const dateToqstring = (dates: number[]): string[] => {
     } else if (month < 6) {
       // 3, 4, 5
       quarter = "Q2";
-    } else if (month < 10) {
+    } else if (month < 9) {
       // 6, 7, 8
       quarter = "Q3";
     } else {
