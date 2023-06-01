@@ -14,7 +14,7 @@ export const rootState: RootState = {
       district: '용산구',
       filter: false,
     },
-    step: [...Array(7).fill(true), ...Array(7).fill(false)],
+    step: new Array(7).fill(true).concat(new Array(7).fill(false)),
     type: {
       redevelop: true,
       reconstruct: true,
