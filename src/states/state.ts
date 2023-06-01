@@ -14,7 +14,7 @@ export const rootState: RootState = {
       district: '종로구',
       filter: false,
     },
-    step: new Array(14).fill(true),
+    step: new Array(7).fill(true).concat(new Array(7).fill(false)),
     type: {
       redevelop: true,
       reconstruct: true,
