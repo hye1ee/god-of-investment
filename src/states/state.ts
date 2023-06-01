@@ -5,6 +5,9 @@ export const rootState: RootState = {
     email: '',
     depart: null,
   },
+  detail: {
+    target: null,
+  },
   search: {
     location: {
       city: '서울시',
@@ -31,6 +34,11 @@ export const rootState: RootState = {
       build: null,
       contribute: null,
     }
+  },
+  issue: {
+    id: null,
+    summary: null,
+    score: null,
   }
 }
 
@@ -41,6 +49,9 @@ export interface RootState {
     email: string,
     depart: number | null,
   },
+  detail: {
+    target: string | null,
+  }
   search: {
     location: {
       city: string,
@@ -68,5 +79,10 @@ export interface RootState {
       build: null | number,
       contribute: null | number,
     }
+  },
+  issue: {
+    id: null | number,
+    summary: null | string,
+    score: null | string,
   }
 }

@@ -18,7 +18,6 @@ export const PriceInput = (props: PriceInputProps) => {
     if (val.length == 0) val = "0";
     const isValid = /^[+-]?((\.\d+)|(\d+(\.\d+)?)|(\d+\.))$/.test(val);
     if (!isValid) return;
-
     props.onChange(val);
   };
 

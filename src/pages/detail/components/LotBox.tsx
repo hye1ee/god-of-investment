@@ -7,10 +7,11 @@ import { height_size, width_size } from "../../../utils/style";
 import Button from "../../components/Button";
 import IconPair from "./IconPair";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../states/store";
 import { getConstructionInfo, getConstructionLots } from "../../../apis/detail";
 import { getLatLon, getKakaoMap, getMarker } from "../utils";
+import { updateTarget } from "../../../states/detailSlice";
 
 const LotBox = () => {
   const [info, setInfo] = useState<any>(null);
@@ -20,6 +21,8 @@ const LotBox = () => {
 
   const consId = useSelector((state: RootState) => state.target.id);
   const [map, setMap] = useState<any>(null); // kakaomap obj
+
+  const dispatch = useDispatch();
 
   const asyncWrapper = async () => {
     if (consId == null) return;
@@ -56,7 +59,7 @@ const LotBox = () => {
         fillColor: "#A2FF99", // 채우기 색깔입니다
         fillOpacity: 0.8, // 채우기 불투명도 입니다
       });
-    console.log(targetPoly[1] && lots[getPolyIndex(targetPoly[1])]);
+    dispatch(updateTarget({ pnu: targetPoly[1] }));
   }, [targetPoly]);
 
   const getPolyIndex = (pnu: string): number => {
@@ -169,7 +172,7 @@ const LotImg = styled.img`
 `;
 
 const LotButtons = ({ pnu }: { pnu: string }) => {
-  const testUrl1 = `http://www.eum.go.kr/web/ar/lu/luLandDet.jsp?pnu=${pnu}&mode=search&[…]bn=umd&selSido=&selSgg=&selUmd=&selRi=&landGbn=187&bobn=&bubn=`;
+  const testUrl1 = `http://www.eum.go.kr/web/ar/lu/luLandDet.jsp?pnu=${pnu}&mode=search&selGbn=umd&fullAddress=&isNoScr=script&selSido=&selSgg=&selUmd=&selRi=&landGbn=&bobn=&bubn=#actcon0`;
   const testUrl2 = `http://www.eum.go.kr/web/cp/cv/cvUpisDet.jsp?pnu=${pnu}&mode=search&i[…]=script&selGbn=umd&selSido=&selSgg=&selUmd=&selRi=&landGbn=187`;
 
   return (

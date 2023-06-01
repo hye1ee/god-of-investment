@@ -34,7 +34,7 @@ export const getMarker = ({ lat, lon }: { lat: number; lon: number }) => {
 
   const markerBody = document.createElement("div");
   markerBody.className = "markerBody green";
-  markerBody.innerText = "정비사업";
+  markerBody.innerText = "대표지번";
   const markerTail = document.createElement("img");
   markerTail.src = "/src/assets/greenTriangle.png";
 

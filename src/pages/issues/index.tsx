@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import BodyLayout from "../components/BodyLayout";
 import { Wrapper } from "../components/Wrapper";
-import GraphBox from "./components/IssueBox";
-import IssueBox from "./components/SummaryBox";
+import IssueBox from "./components/IssueBox";
+import SummaryBox from "./components/SummaryBox";
 import RelateBox from "./components/RelateBox";
 
 export default () => {
@@ -12,8 +12,8 @@ export default () => {
         <RelateBox />
 
         <Wrapper direction="row" gap={22}>
-          <GraphBox />
           <IssueBox />
+          <SummaryBox />
         </Wrapper>
       </Wrapper>
     </BodyLayout>
