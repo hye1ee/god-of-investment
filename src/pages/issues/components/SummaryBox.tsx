@@ -17,7 +17,6 @@ const SummaryBox = () => {
 
   const asyncWrapper = async () => {
     if (!consId) return;
-    console.log(await getIssueStat(consId));
     //[TODO] 여기서 console에 찍히는 값은 변수 stat에 저장됩니다. 각각 data와 label분리하여 아래 line component부분에 넣어주세요!
     setStat(await getIssueStat(consId));
   };

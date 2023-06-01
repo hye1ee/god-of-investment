@@ -8,14 +8,16 @@ import { MediumText, RegularText } from "../../components/Text";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../states/store";
 import { getConstructionSheet } from "../../../apis/detail";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const SheetBox = () => {
   const pnu = useSelector((state: RootState) => state.detail.target);
+  const [info, setInfo] = useState<any>(null);
 
   const asyncWrapper = async () => {
     if (!pnu) return;
     const info = await getConstructionSheet(pnu);
+    setInfo(info);
     console.log(info);
   };
 
@@ -25,32 +27,38 @@ const SheetBox = () => {
 
   return (
     <BoxLayout width={800} color="white" title="건축물 대장">
-      {pnu ? (
+      {pnu && info ? (
         <Wrapper direction="row" width={"full"} gap={20}>
           <Wrapper direction="column" width={370} center={true}>
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="신축년도" value="1994년 08월 05일" />
+            <SheetRow title="신축년도" value={info.useAprDay} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="건폐율" value="43.43%" />
+            <SheetRow title="건폐율" value={info.bcRat} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="주용도" value="제2종근린생활시설" />
+            <SheetRow title="주용도" value={info.mainPurpsCdNm} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="지붕" value="기타지붕" />
+            <SheetRow title="지붕" value={info.roofCdNm} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="주차장" value="11대" />
+            <SheetRow title="주차장" value={info.totPkngCnt} />
             <BorderRow width={1} color="grayLight" />
           </Wrapper>
           <Wrapper direction="column" width={370} center={true}>
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="연면적" value="1,121.34(㎡)" />
+            <SheetRow title="연면적" value={info.totArea} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="용적률" value="432.3%" />
+            <SheetRow title="용적률" value={info.vlRat} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="주구조" value="일반철골구조" />
+            <SheetRow title="주구조" value={info.strctCdNm} />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="규모" value="지상5/지하1" />
+            <SheetRow
+              title="규모"
+              value={`지상 ${info.grndFlrCnt} / 지하 ${info.ugrndFlrCn}`}
+            />
             <BorderRow width={1} color="grayLight" />
-            <SheetRow title="승강기" value="-" />
+            <SheetRow
+              title="승강기"
+              value={info.rideUseElvtCnt + info.emgenUseElvtCnt}
+            />
             <BorderRow width={1} color="grayLight" />{" "}
           </Wrapper>
         </Wrapper>

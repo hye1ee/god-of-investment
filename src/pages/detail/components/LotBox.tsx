@@ -49,10 +49,6 @@ const LotBox = () => {
   }, [map]);
 
   useEffect(() => {
-    dispatch(updateTarget({ pnu: targetPoly[1] }));
-  }, [targetPoly]);
-
-  useEffect(() => {
     if (targetPoly[0] !== null)
       polys[getPolyIndex(targetPoly[0])].setOptions({
         fillColor: "#A2FF99", // 채우기 색깔입니다
@@ -63,7 +59,7 @@ const LotBox = () => {
         fillColor: "#A2FF99", // 채우기 색깔입니다
         fillOpacity: 0.8, // 채우기 불투명도 입니다
       });
-    console.log(targetPoly[1] && lots[getPolyIndex(targetPoly[1])]);
+    dispatch(updateTarget({ pnu: targetPoly[1] }));
   }, [targetPoly]);
 
   const getPolyIndex = (pnu: string): number => {

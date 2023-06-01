@@ -57,7 +57,6 @@ export const createUser = async (signupInfo: SignupInfoProps): Promise<boolean> 
 
 export const getLoginInfo = async ({ id }: { id: string }): Promise<any> => {
   return await axios.get(host + '/user/login/' + id).then((res) => {
-    console.log(res.data);
     return res.data;
   }).catch(() => { return false });
 };
