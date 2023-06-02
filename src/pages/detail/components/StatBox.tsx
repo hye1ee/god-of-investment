@@ -39,7 +39,23 @@ const StatBox = () => {
     } else if (statOption == "지가변동") {
       if (type == "doughnut") return statInfo.price_change_count;
       else return statInfo.avgprice_by_years;
-    } else {
+    } 
+    // 더미 데이터
+    else if (statOption == "조합원") { 
+      if (type == "doughnut") return {
+        "~20대": 5,
+        "30대": 14,
+        "40대": 30,
+        "50대": 52,
+        "60대~": 24
+      };
+      else return {
+        "1": 60,
+        "2~5": 23,
+        "5~10": 5,
+        "10~": 1,
+      }
+    }else {
       if (type == "doughnut") return null;
       else return null;
     }
@@ -58,7 +74,11 @@ const StatBox = () => {
     } else if (statOption == "지가변동") {
       if (type == "doughnut") return "지가변동별 필지수";
       else return "연도별 지가변동";
-    } else {
+    } else if (statOption == "조합원") {
+      if (type == "doughnut") return "[DUMMMY]조합원 연령";
+      else return "[DUMMY]필지 보유현황"
+    }
+      else {
       if (type == "doughnut") return null;
       else return null;
     }
