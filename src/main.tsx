@@ -15,12 +15,6 @@ import { Provider } from "react-redux";
 import { store } from "./states/store";
 import Signup from "./pages/signup";
 
-const {
-	VITE_KAKAOMAP_KEY
-} = import.meta.env;
-console.log(VITE_KAKAOMAP_KEY);
-
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
