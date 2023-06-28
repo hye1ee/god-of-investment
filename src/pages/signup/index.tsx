@@ -73,7 +73,7 @@ export default () => {
         signupInfo={signupInfo}
         setSignupInfo={(key, val) => {
           const newSignupInfo = { ...signupInfo };
-          newSignupInfo[key] = val;
+          newSignupInfo[key as keyof SignupInfoProps] = val;
           setSignupInfo(newSignupInfo);
         }}
         setModal={() => setModal(true)}

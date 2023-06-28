@@ -16,6 +16,9 @@ import SearchBar from "../search/SearchBar";
 import SearchModal from "../search/SearchModal";
 import { useNavigate } from "react-router-dom";
 
+import BlueTriangle from '../../../../assets/blueTriangle.png';
+import RedTriangle from '../../../../assets/blueTriangle.png';
+
 const Map = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

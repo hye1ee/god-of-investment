@@ -1,3 +1,5 @@
+import GreenTriangle from '../../assets/greenTriangle.png';
+
 export const getLatLon = (point: string | null) => {
   if (point == null) return { lat: 37.5519, lon: 126.9918 };
 

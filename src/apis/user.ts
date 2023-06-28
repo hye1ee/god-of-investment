@@ -13,8 +13,8 @@ export const createDepart = async (depart: string): Promise<boolean> => {
 export const getDeparts = async (): Promise<Record<string, number>> => {
   return await axios.get(host + "/departments")
     .then((res) => {
-      const result = {};
-      res.data.forEach((depart) => { result[depart.name] = depart.id; })
+      const result = {} as Record<string, number>;
+      res.data.forEach((depart: any) => { result[depart.name] = depart.id; })
       return result as Record<string, number>;
     });
 };

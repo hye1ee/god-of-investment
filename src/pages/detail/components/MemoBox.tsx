@@ -15,21 +15,21 @@ import { getUsers } from "../../../apis/user";
 const MemoBox = () => {
   const id = useSelector((state: RootState) => state.user.id);
   const consId = useSelector((state: RootState) => state.target.id);
-  if (!consId) return;
+  if (!consId) return <></>; 
 
   const [newMemo, setNewMemo] = useState("");
   const [memos, setMemos] = useState<any[]>([]);
 
   const asyncWrapper = async () => {
     const users = await getUsers();
-    const userTitle = {};
-    users.forEach((user) => {
+    const userTitle = {} as Record<string, string>;
+    users.forEach((user: any) => {
       userTitle[user.id] = `${user.name}(${user.role})`;
     });
 
     const newMemos = await getMemos();
 
-    newMemos.forEach((memo) => {
+    newMemos.forEach((memo: any) => {
       memo["title"] = userTitle[memo.user_id];
     });
     setMemos(newMemos);

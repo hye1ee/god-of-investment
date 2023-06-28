@@ -1,13 +1,5 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
-import { createPortal } from "react-dom";
-
-const Portal = ({ children }) => {
-  return createPortal(
-    <>{children}</>,
-    document.getElementById("overlay") as HTMLElement
-  );
-};
 
 export const Overlay = (props: {
   children: ReactNode;
